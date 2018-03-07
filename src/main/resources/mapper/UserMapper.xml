@@ -33,13 +33,13 @@
    </insert>  
     -->
    <select id="findByUserName" resultMap="user">
-    select * from user where user_name=#{userName}
+    select * from user_info where user_name=#{userName}
    </select>
     <select id="findByEmail" resultMap="user">
-    select * from user where email=#{email}
+    select * from user_info where email=#{email}
    </select>
     <select id="findByPhone" resultMap="user">
-    select * from user where phone=#{phone}
+    select * from user_info where phone=#{phone}
    </select>
    
       
