@@ -11,7 +11,7 @@ public class User{
 	private String Email;
 	private String Phone;
 	private String headPortrair;
-	private String sex;
+	private Integer sex;
 	private Date birthday;
 	private Long integral;
 	
@@ -57,16 +57,12 @@ public class User{
 	public void setHeadPortrair(String headPortrair) {
 		this.headPortrair = headPortrair;
 	}
-	public String getSex() {
+	
+	public Integer getSex() {
 		return sex;
 	}
-	//0：女；  1：男
 	public void setSex(Integer sex) {
-		if(sex==0) {
-			this.sex = "女";
-		}else {
-			this.sex = "男";
-		}
+		this.sex = sex;
 	}
 	public Date getBirthday() {
 		return birthday;

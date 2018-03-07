@@ -16,18 +16,18 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+ /* @RequestMapping(value = "/addUser", method = RequestMethod.GET)
   public boolean addUser(@RequestParam("loginname") String loginname,
       @RequestParam("password") String password) {
     return userService.addUser(loginname, password);
-  }
+  }*/
 
 
-  @RequestMapping(value = "/addUserWithBackId", method = RequestMethod.GET)
+/*  @RequestMapping(value = "/addUserWithBackId", method = RequestMethod.GET)
   public User addUserWithBackId(@RequestParam("loginname") String loginname,
       @RequestParam("password") String password) {
     return userService.addUserWithBackId(loginname, password);
-  }
+  }*/
 
   @ResponseBody
   @RequestMapping(value = "getUser", method = RequestMethod.GET)
