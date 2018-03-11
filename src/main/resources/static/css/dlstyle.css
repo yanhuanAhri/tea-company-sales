@@ -123,3 +123,13 @@ form,.am-cf,.partner{max-width:640px;margin:20px auto ;}
 	color: white;
 	background-color: #0E90D2;
 }
+.hide{
+	display: none;
+}
+.show{
+	color: white;
+	background-color: red;
+	padding: 2% 8%;
+	font-size: 14px;
+	text-align: center;
+}

@@ -30,36 +30,37 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String,Object> login(HttpServletRequest request, HttpSession session) {
+	public String login(Model model,HttpServletRequest request, HttpSession session) {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		//String remember=request.getParameter("remember-me");
+		//model.addAttribute("message","This is your message");
+
 		Map<String,Object> map=new HashMap<>();
 		if(account.isEmpty() || account==null) {
-			map.put("code", "0");
-			map.put("msg", "用户名为空");
-			return map;
+			model.addAttribute("code", "0");
+			model.addAttribute("msg", "用户名为空");
+			return "login";
 		}
 		if(password.isEmpty() || password==null) {
-			map.put("code", "0");
-			map.put("msg", "密码为空");
-			return map;
+			model.addAttribute("code", "0");
+			model.addAttribute("msg", "密码为空");
+			return "login";
 		}
 		User user=userService.login(account, password);
 		
 		if(user==null&&user.equals("")) {
-			map.put("code", "0");
-			map.put("msg", "用户名错误");
-			return map;
+			model.addAttribute("code", "0");
+			model.addAttribute("msg", "用户名错误");
+			return "login";
 		}
 		session.setAttribute("user", user);
-		map.put("code", "1");
-		map.put("msg", "登录成功");
+		model.addAttribute("code", "1");
+		model.addAttribute("msg", "登录成功");
 		/*if(remember.equals("true")) {
 			//cookie  存入cookie
 		}*/
-		return map;
+		return "";
 	}
 		
 		
