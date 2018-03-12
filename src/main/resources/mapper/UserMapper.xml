@@ -14,6 +14,7 @@
 	   <result property="sex" column="sex"/>
 	  <result property="birthday" column="birthday"/>
 	   <result property="integral" column="integral"/>
+	   <result property="createTime" column="create_time"/>
 	</resultMap>
       
     <!-- 若不需要自动返回主键，将useGeneratedKeys="true" keyProperty="id"去掉即可(当然如果不需要自动返回主键，直接用注解即可) -->  

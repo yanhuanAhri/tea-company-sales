@@ -1,6 +1,5 @@
 package com.yh.index;
 
-import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yh.entity.User;
 import com.yh.user.service.UserService;
@@ -49,9 +47,9 @@ public class LoginController {
 		}
 		User user=userService.login(account, password);
 		
-		if(user==null&&user.equals("")) {
+		if(user==null || user.equals("") || user.getUserName()==null) {
 			model.addAttribute("code", "0");
-			model.addAttribute("msg", "用户名错误");
+			model.addAttribute("msg", "用户名或密码错误");
 			return "login";
 		}
 		session.setAttribute("user", user);

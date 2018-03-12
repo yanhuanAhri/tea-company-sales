@@ -14,7 +14,15 @@ public class User{
 	private Integer sex;
 	private Date birthday;
 	private Long integral;
+	private Date createTime;
 	
+	
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	public Long getId() {
 		return id;   
 	}
