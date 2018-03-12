@@ -1,0 +1,11 @@
+<nav ng-if="pages.length >= 1">
+	<ul class="pagination">
+		<li><a ng-click="selectPage(1)">First</a></li>
+		<li><a ng-click="selectPage(currentPage - 1)">&lt;</a></li>
+		<li ng-repeat="pageNum in pages" ng-class="{active: pageNum==currentPage}"><a ng-click="selectPage(pageNum)">{{pageNum}}</a></li>
+		<li><a ng-click="selectPage(currentPage + 1)">&gt;</a></li>
+		<li><a ng-click="selectPage(numPages)">Last</a></li></li>
+		<li><a><page-select></page-select> of {{numPages}}</a></li>
+		<li><a><select ng-init="selectedPageRows = pageRows[2]" ng-model="selectedPageRows" ng-options="x for x in pageRows" ng-change="changePageRows(selectedPageRows)"></select></a></li>
+  </ul>
+</nav>
