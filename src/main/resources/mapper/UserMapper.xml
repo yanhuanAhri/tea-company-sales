@@ -14,7 +14,7 @@
 		<result property="sex" column="sex"/>
 		<result property="birthday" column="birthday"/>
 		<result property="integral" column="integral"/>
-		<result property="createTime" column="create_time" jdbcType="DATE"  javaType="java.util.Date"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"  javaType="java.util.Date"/>
 		<result property="updateTime" column="update_time"  jdbcType="TIMESTAMP" javaType="java.util.Date"/>
 		<!-- <result property="createTime" column="create_time" javaType="java.util.Date" /> -->
 	</resultMap>

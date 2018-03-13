@@ -1,23 +1,23 @@
 package com.yh.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-import com.mysql.fabric.xmlrpc.base.Data;
 
 public class Order {
 	private Long id;
 	private String commodityId;
 	private String commodityTitle;
 	private Integer buyNum;
-	private Data createTime;
+	private Date createTime;
 	private Long createUserId;
 	private BigDecimal paymentAmount;
 	private BigDecimal totalAmount;
 	private Integer status;
 	private Long receivingId;
 	private BigDecimal buyPrice;
-	private Data updateTime;
-	private Data putawayTime;
+	private Date updateTime;
+	private Date putawayTime;
 	public Long getId() {
 		return id;
 	}
@@ -42,10 +42,10 @@ public class Order {
 	public void setBuyNum(Integer buyNum) {
 		this.buyNum = buyNum;
 	}
-	public Data getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Data createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	public Long getCreateUserId() {
@@ -84,16 +84,16 @@ public class Order {
 	public void setBuyPrice(BigDecimal buyPrice) {
 		this.buyPrice = buyPrice;
 	}
-	public Data getUpdateTime() {
+	public Date getUpdateTime() {
 		return updateTime;
 	}
-	public void setUpdateTime(Data updateTime) {
+	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	public Data getPutawayTime() {
+	public Date getPutawayTime() {
 		return putawayTime;
 	}
-	public void setPutawayTime(Data putawayTime) {
+	public void setPutawayTime(Date putawayTime) {
 		this.putawayTime = putawayTime;
 	}
 	

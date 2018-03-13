@@ -1,6 +1,6 @@
 package com.yh.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ReceivingInfrom {
 	private Long id;
