@@ -15,8 +15,15 @@ public class User{
 	private Date birthday;
 	private Long integral;
 	private Date createTime;
+	private Date updateTime;
 	
 	
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}

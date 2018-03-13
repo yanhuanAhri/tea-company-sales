@@ -27,6 +27,11 @@ public class LoginController {
 		return "login";
 	}
 	
+	@RequestMapping(value="register.html",method=RequestMethod.GET)
+	private String goRegister(Model map) {
+		return "register";
+	}
+	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(Model model,HttpServletRequest request, HttpSession session) {
 		String account = request.getParameter("account");
