@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.yh.shoppingcart.mapper.ShoppingCartMapper"> 
+	<resultMap id="shoppingCart" type="ShoppingCart">
+		<id property="id" column="id"/>
+		<result property="commodityId" column="commodity_id"/>
+		<result property="commodityTitle" column="commodity_title"/>
+		<result property="buyNum" column="buy_num"/>
+		<result property="unitPrice" column="unit_price"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="updateTime" column="update_time"/>
+	</resultMap>
+	
+
+</mapper>

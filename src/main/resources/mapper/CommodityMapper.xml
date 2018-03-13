@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.yh.commodity.mapper.CommodityMapper"> 
+	<resultMap id="commodity" type="Commodity">
+		<id property="id" column="id"/>
+		<result property="commodityId" column="commodity_id"/>
+		<result property="productNum" column="product_num"/>
+		<result property="tradeName" column="trade_name"/>
+		<result property="price" column="price"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="updateUserId" column="update_user_id"/>
+		<result property="officialName" column="official_name"/>
+		<result property="productType" column="product_type"/>
+		<result property="pickYear" column="pick_year"/>
+		<result property="pickSeason" column="pick_season"/>
+		<result property="goodsGrade" column="goods_grade"/>
+		<result property="netContent" column="net_content"/>
+		<result property="purpose" column="purpose"/>
+	</resultMap>
+	
+
+</mapper>

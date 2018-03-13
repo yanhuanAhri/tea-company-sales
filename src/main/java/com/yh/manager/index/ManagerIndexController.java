@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Configuration
-@RequestMapping("/manager")
+//@RequestMapping("/manager")
 public class ManagerIndexController {
 	
-	 @GetMapping("/")
+	 @GetMapping("/manager")
      public String goIndex() {
         return "manager/index";
      }
