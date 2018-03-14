@@ -13,5 +13,9 @@ public class ManagerCommodityController {
 	private String orderList(ModelMap map) {
 		return "ad/orderlist/list";
 	}
-	
+	//addcommodity.html
+	@RequestMapping(value="addcommodity.html",method=RequestMethod.GET)
+	private String addCommodity(ModelMap map) {
+		return "manager/addcommodity";
+	}
 }

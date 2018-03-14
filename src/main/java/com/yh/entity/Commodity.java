@@ -8,12 +8,13 @@ public class Commodity {
 	private String commodityId;
 	private Long productNum;
 	private String tradeName;
-	private BigDecimal price;
+	private BigDecimal markePrice;
+	private BigDecimal promotionPrice;
 	private Date createTime;
 	private Long createUserId;
 	private Date updateTime;
 	private Long updateUserId;
-	private String officialName;
+	private String teaName;
 	private String productType;
 	private String pickYear;
 	private String pickSeason;
@@ -44,11 +45,18 @@ public class Commodity {
 	public void setTradeName(String tradeName) {
 		this.tradeName = tradeName;
 	}
-	public BigDecimal getPrice() {
-		return price;
+	
+	public BigDecimal getMarkePrice() {
+		return markePrice;
 	}
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setMarkePrice(BigDecimal markePrice) {
+		this.markePrice = markePrice;
+	}
+	public BigDecimal getPromotionPrice() {
+		return promotionPrice;
+	}
+	public void setPromotionPrice(BigDecimal promotionPrice) {
+		this.promotionPrice = promotionPrice;
 	}
 	public Date getCreateTime() {
 		return createTime;
@@ -74,11 +82,12 @@ public class Commodity {
 	public void setUpdateUserId(Long updateUserId) {
 		this.updateUserId = updateUserId;
 	}
-	public String getOfficialName() {
-		return officialName;
+	
+	public String getTeaName() {
+		return teaName;
 	}
-	public void setOfficialName(String officialName) {
-		this.officialName = officialName;
+	public void setTeaName(String teaName) {
+		this.teaName = teaName;
 	}
 	public String getProductType() {
 		return productType;
