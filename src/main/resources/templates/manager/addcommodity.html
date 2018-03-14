@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html ng-app="addcommodityApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -19,7 +19,7 @@
 <script src="angularjs/1.5.11/angular-messages.min.js"></script>
 <script src="angularjs/1.5.11/angular-touch.min.js"></script>
 <script src="angularjs/1.5.11/angular-animate.min.js"></script>
-
+<script src="js/manager/addcommodity.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -28,7 +28,7 @@
 
 <body>
 	<!-- Popup -->
-	<div id="Popup">
+	<div id="Popup"  ng-controller="addcommodityCtrl" style="padding: 0 5% 0 2%;">
 	<form action="" method="post">
 		<!-- SubPopup -->
 		<div id="SubPopup">
@@ -122,10 +122,10 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							采摘季节 </label>
 						<div class="col-sm-9 ">
-							<span><input type="radio" name="" value="" />春</span>
-							<span><input type="radio" name="" value="" />夏</span>
-							<span><input type="radio" name="" value="" />秋</span>
-							<span><input type="radio" name="" value="" />冬</span>
+							<input type="radio" name="" value="" />春&nbsp;&nbsp;
+							<input type="radio" name="" value="" />夏&nbsp;&nbsp;
+							<input type="radio" name="" value="" />秋&nbsp;&nbsp;
+							<input type="radio" name="" value="" />冬&nbsp;&nbsp;
 						</div>
 					</div>
 					<div class="form-group radioType">
@@ -133,10 +133,10 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							等级 </label>
 						<div class="col-sm-9 ">
-							<input type="radio" name="" value="" />一级
-							<input type="radio" name="" value="" />二级
-							<input type="radio" name="" value="" />特级
-							<input type="radio" name="" value="" />其他
+							<input type="radio" name="" value="" />一级&nbsp;&nbsp;
+							<input type="radio" name="" value="" />二级&nbsp;&nbsp;
+							<input type="radio" name="" value="" />特级&nbsp;&nbsp;
+							<input type="radio" name="" value="" />其他&nbsp;&nbsp;
 						</div>
 					</div>
 					<div class="form-group radioType">
@@ -160,9 +160,9 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							用途</label>
 						<div class="col-sm-9">
-							<input type="radio" name="" value="" />自饮
-							<input type="radio" name="" value="" />简装礼盒
-							<input type="radio" name="" value="" />精装礼盒
+							<input type="radio" name="" value="" />自饮&nbsp;&nbsp;
+							<input type="radio" name="" value="" />简装礼盒&nbsp;&nbsp;
+							<input type="radio" name="" value="" />精装礼盒&nbsp;&nbsp;
 						</div>
 					</div>
 				
@@ -203,7 +203,10 @@
 		</form>
 	</div>
 <!-- /Popup -->
+
 <script type="text/javascript">
+
+
 $(function(){
 $(".select").each(function(){
 var s=$(this);
@@ -216,5 +219,6 @@ dt.click(function(){dd.is(":hidden")?_show():_hide();});
 dd.find("a").click(function(){dt.html($(this).html());_hide();});
 $("body").click(function(i){ !$(i.target).parents(".select").first().is(s) ? _hide():"";});})})
 </script>
+
 </body>
 </html>

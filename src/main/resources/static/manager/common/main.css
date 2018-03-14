@@ -1,0 +1,135 @@
+@CHARSET "UTF-8";
+li {
+    list-style: none;
+}
+/* 宽度 */
+.automatic-width {
+    width: 100%;
+    float: left;
+}
+
+/* 定位 */
+.relative {
+    position: relative;
+}
+
+/* 浮动 */
+.float-left {
+    float: left;
+}
+
+/* 表格 */
+.grid-height {
+    width: 100%;
+    height: 883px;
+}
+.modal-dialog-common .col-sm-9 input,
+.modal-dialog-common .col-sm-9 select,
+.modal-dialog-common .col-sm-9 textarea {
+    max-width: 360px;
+}
+.grid-tip {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* 按钮 */
+.icon-loading {
+    display: inline-block;
+    margin-right: 8px;
+    animation: rotating 1s linear infinite;
+    -webkit-animation: rotating 1s linear infinite;
+}
+
+/* 标签按钮多色 */
+.labelBack0 {
+     background: red;
+ }
+.labelBack1 {
+    background: #B58835;
+}
+.labelBack2 {
+    background: #F5CD19;
+}
+.labelBack3 {
+    background: blue;
+}
+.labelBack4 {
+    background: #4BCC60;
+}
+.labelBack5 {
+    background: #A60924;
+}
+.labelBack6 {
+    background: #3C8DBC;
+}
+.labelBack7 {
+    background: #313335;
+}
+.labelBack8 {
+    background: #00D3C7;
+}
+.labelBack9 {
+    background: #FFFAE8;
+}
+.labelBack10 {
+    background: red;
+}
+.labelBack11 {
+    background: #B58835;
+}
+.labelBack12 {
+    background: #F5CD19;
+}
+.labelBack13 {
+    background: blue;
+}
+.labelBack14 {
+    background: #4BCC60;
+}
+.labelBack15 {
+    background: #A60924;
+}
+.labelBack16 {
+    background: #3C8DBC;
+}
+.labelBack17 {
+    background: #313335;
+}
+.labelBack18 {
+    background: #00D3C7;
+}
+.labelBack19 {
+    background: #FFFAE8;
+}
+
+
+@keyframes rotating {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(270deg);
+    }
+}
+
+@-webkit-keyframes rotating {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(270deg);
+    }
+}
+
+.text_2 {
+    overflow: hidden;
+    white-space: nowrap;
+}

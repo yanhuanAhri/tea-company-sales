@@ -6,12 +6,13 @@
 		<result property="commodityId" column="commodity_id"/>
 		<result property="productNum" column="product_num"/>
 		<result property="tradeName" column="trade_name"/>
-		<result property="price" column="price"/>
+		<result property="markePrice" column="marke_price"/>
+		<result property="promotionPrice" column="promotion_price"/>
 		<result property="createTime" column="create_time"/>
 		<result property="createUserId" column="create_user_id"/>
 		<result property="updateTime" column="update_time"/>
 		<result property="updateUserId" column="update_user_id"/>
-		<result property="officialName" column="official_name"/>
+		<result property="teaName" column="tea_name"/>
 		<result property="productType" column="product_type"/>
 		<result property="pickYear" column="pick_year"/>
 		<result property="pickSeason" column="pick_season"/>
@@ -19,6 +20,37 @@
 		<result property="netContent" column="net_content"/>
 		<result property="purpose" column="purpose"/>
 	</resultMap>
+	<!-- saveCommodity -->
+	<insert id="saveCommodity" parameterType="Commodity">
+	   insert into commodity 
+	   (commodity_id,product_num,trade_name,marke_price,promotion_price,create_time,create_user_id,tea_name,product_type,pick_year
+	   ,pick_season,goods_grade,net_content,purpose)
+	    values(#{commodityId},#{productNum})
+	</insert>
 	
+	<!--   添加新的管理员对象 
+	<insert id="addAdmin" parameterType="Admin">
+		insert into admin
+		(adminName,adminPassword,adminPhone,adminEmail,adminRealName,adminPower,adminStatus,leaveTime)
+		values(#{adminName},#{adminPassword},#{adminPhone},#{adminEmail},#{adminRealName},#{adminPower},#{adminStatus},#{leaveTime})
+	</insert>
 
+	修改管理员信息
+	<update id="updAdmin" parameterType="Admin">
+		<if test="id != null">
+			update admin
+			<set>
+				<if test="adminPassword!=null">adminPassword=#{adminPassword},</if>
+				<if test="adminPhone!=null">adminPhone=#{adminPhone},</if>
+				<if test="adminEmail!=null">adminEmail=#{adminEmail},</if>
+				<if test="adminRealName!=null">adminRealName=#{adminRealName},</if>
+				<if test="adminPower!=null">adminPower=#{adminPower},</if>
+				<if test="adminStatus!=null">adminStatus=#{adminStatus},</if>
+				<if test="leaveTime!=null">leaveTime=#{leaveTime}</if>
+			</set>
+			<where>id=#{id}</where>
+		</if>
+		
+	</update>
+	  -->
 </mapper>

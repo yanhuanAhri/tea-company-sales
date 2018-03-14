@@ -1,11 +1,14 @@
 package com.yh.manager.commodity.controller;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
+@Configuration
 @RequestMapping("/manager")
 public class ManagerCommodityController {
 	
@@ -13,9 +16,8 @@ public class ManagerCommodityController {
 	private String orderList(ModelMap map) {
 		return "ad/orderlist/list";
 	}
-	//addcommodity.html
-	@RequestMapping(value="addcommodity.html",method=RequestMethod.GET)
-	private String addCommodity(ModelMap map) {
-		return "manager/addcommodity";
-	}
+	 @GetMapping(value="/addcommodity.html")
+		private String addCommodity(ModelMap map) {
+			return "manager/addcommodity";
+		}
 }
