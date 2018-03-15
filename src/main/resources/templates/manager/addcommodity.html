@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html ng-app="addcommodityApp">
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -19,7 +19,9 @@
 <script src="angularjs/1.5.11/angular-messages.min.js"></script>
 <script src="angularjs/1.5.11/angular-touch.min.js"></script>
 <script src="angularjs/1.5.11/angular-animate.min.js"></script>
-<script src="js/manager/addcommodity.js"></script>
+<script src="plugins/ui-route/0.4.2/angular-ui-router.js"></script>
+
+<!-- <script src="js/manager/addcommodity.js"></script> -->
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -28,40 +30,41 @@
 
 <body>
 	<!-- Popup -->
-	<div id="Popup"  ng-controller="addcommodityCtrl" style="padding: 0 5% 0 2%;">
-	<form action="" method="post">
+	<div id="Popup"  style="padding: 0 5% 0 2%;">              
+	<form class="form-horizontal" th:action="@{/manager/saveCommodity}" method="post" >
 		<!-- SubPopup -->
-		<div id="SubPopup">
-		
-			<div class="form_boxC">
+			<div class="modal-body ng-scope" id="modal-body">
+
+
+				<div class="box-body">
 				
 				    <p>"<span class="f_cB">*</span>"号为必填项目</p>
 				   
 					<div class="form-group">
 						<label for="brand" class="col-sm-3 control-label"><font
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
-							商家品牌名 </label>
+							商品名 </label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="brand" name="brand"
-								ng-model="brand" placeholder="商家品牌名必填" autocomplete="off"
-								ng-minlength="2" ng-maxlength="50" required />
-							<div class="ng-message" ng-messages="myForm.brand.$error"
+							<input type="text" class="form-control" id="tradeName" name="tradeName"
+								 placeholder="商品名必填" autocomplete="off"
+								 required />
+							<!-- <div class="ng-message" ng-messages="myForm.tradeName.$error"
 								ng-messages-multiple>
-								<p class="error" ng-message="required">商家品牌名必填</p>
+								<p class="error" ng-message="required">商品名必填</p>
 								<p class="error" ng-message="minlength">最小长度为2个字符</p>
 								<p class="error" ng-message="maxlength">最大长度为50个字符</p>
-							</div>
+							</div> -->
 						</div>
 					</div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label for="brand" class="col-sm-3 control-label"><font
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							库存 </label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="brand" name="brand"
-								ng-model="brand" placeholder="商家品牌名必填" autocomplete="off"
-								ng-minlength="2" ng-maxlength="50" required />
-							<div class="ng-message" ng-messages="myForm.brand.$error"
+							<input type="text" class="form-control" id="productNum" name="productNum"
+								 placeholder="库存必填" autocomplete="off"
+								 required />
+							<div class="ng-message" ng-messages="myForm.productNum.$error"
 								ng-messages-multiple>
 								<p class="error" ng-message="required">商家品牌名必填</p>
 								<p class="error" ng-message="minlength">最小长度为2个字符</p>
@@ -74,10 +77,10 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							市价 </label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="brand" name="brand"
-								ng-model="brand" placeholder="商家品牌名必填" autocomplete="off"
-								ng-minlength="2" ng-maxlength="50" required />
-							<div class="ng-message" ng-messages="myForm.brand.$error"
+							<input type="text" class="form-control" id="markePrice" name="markePrice"
+								 placeholder="市价必填" autocomplete="off"
+								 required />
+							<div class="ng-message" ng-messages="myForm.markePrice.$error"
 								ng-messages-multiple>
 								<p class="error" ng-message="required">商家品牌名必填</p>
 								<p class="error" ng-message="minlength">最小长度为2个字符</p>
@@ -90,9 +93,9 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							活动价 </label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="brand" name="brand"
-								ng-model="brand" placeholder="商家品牌名必填" autocomplete="off"
-								ng-minlength="2" ng-maxlength="50" required />
+							<input type="text" class="form-control" id="promotionPrice" name="promotionPrice"
+							    placeholder="活动价必填" autocomplete="off"
+								 required />
 							<div class="ng-message" ng-messages="myForm.brand.$error"
 								ng-messages-multiple>
 								<p class="error" ng-message="required">商家品牌名必填</p>
@@ -102,14 +105,28 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">商品类属</label>
+						<div class="col-sm-10">
+						<ul id="media-apply-officel-account">
+							<li ng-repeat="a in officialAccounts" id="{{a.id}}">
+								<input ng-click="officalAccountChange($event)" id="{{a.id}}" type="checkbox" name="teaName"/><lable>{{a.name}}</lable>
+								<span  ng-repeat="s in adPlaces">productType
+									<input ng-click="adplaceClick($event)"  type="radio"  name="adplaces{{a.id}}" value="{{s.id}}"/>{{s.name}}
+								</span>
+							</li>
+						</ul>
+							
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="brand" class="col-sm-3 control-label"><font
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							采摘年份</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="brand" name="brand"
-								ng-model="brand" placeholder="商家品牌名必填" autocomplete="off"
-								ng-minlength="2" ng-maxlength="50" required />
-							<div class="ng-message" ng-messages="myForm.brand.$error"
+							<input type="text" class="form-control" id="pickYear" name="pickYear"
+								 placeholder="商家品牌名必填" autocomplete="off"
+								 required />
+							<div class="ng-message" ng-messages="myForm.pickYear.$error"
 								ng-messages-multiple>
 								<p class="error" ng-message="required">商家品牌名必填</p>
 								<p class="error" ng-message="minlength">最小长度为2个字符</p>
@@ -122,10 +139,10 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							采摘季节 </label>
 						<div class="col-sm-9 ">
-							<input type="radio" name="" value="" />春&nbsp;&nbsp;
-							<input type="radio" name="" value="" />夏&nbsp;&nbsp;
-							<input type="radio" name="" value="" />秋&nbsp;&nbsp;
-							<input type="radio" name="" value="" />冬&nbsp;&nbsp;
+							<input type="radio" name="pickSeason" value="" />春&nbsp;&nbsp;
+							<input type="radio" name="pickSeason" value="" />夏&nbsp;&nbsp;
+							<input type="radio" name="pickSeason" value="" />秋&nbsp;&nbsp;
+							<input type="radio" name="pickSeason" value="" />冬&nbsp;&nbsp;
 						</div>
 					</div>
 					<div class="form-group radioType">
@@ -133,10 +150,10 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							等级 </label>
 						<div class="col-sm-9 ">
-							<input type="radio" name="" value="" />一级&nbsp;&nbsp;
-							<input type="radio" name="" value="" />二级&nbsp;&nbsp;
-							<input type="radio" name="" value="" />特级&nbsp;&nbsp;
-							<input type="radio" name="" value="" />其他&nbsp;&nbsp;
+							<input type="radio" name="goodsGrade" value="" />一级&nbsp;&nbsp;
+							<input type="radio" name="goodsGrade" value="" />二级&nbsp;&nbsp;
+							<input type="radio" name="goodsGrade" value="" />特级&nbsp;&nbsp;
+							<input type="radio" name="goodsGrade" value="" />其他&nbsp;&nbsp;
 						</div>
 					</div>
 					<div class="form-group radioType">
@@ -144,10 +161,10 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							净含量</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="brand" name="brand"
-								ng-model="brand" placeholder="商家品牌名必填" autocomplete="off"
-								ng-minlength="2" ng-maxlength="50" required />
-							<div class="ng-message" ng-messages="myForm.brand.$error"
+							<input type="text" class="form-control" id="netContent" name="netContent"
+								 placeholder="商家品牌名必填" autocomplete="off"
+								 required />
+							<div class="ng-message" ng-messages="myForm.netContent.$error"
 								ng-messages-multiple>
 								<p class="error" ng-message="required">商家品牌名必填</p>
 								<p class="error" ng-message="minlength">最小长度为2个字符</p>
@@ -160,11 +177,11 @@
 							color="red" style="position: relative; top: 3px;">*&nbsp;</font>
 							用途</label>
 						<div class="col-sm-9">
-							<input type="radio" name="" value="" />自饮&nbsp;&nbsp;
-							<input type="radio" name="" value="" />简装礼盒&nbsp;&nbsp;
-							<input type="radio" name="" value="" />精装礼盒&nbsp;&nbsp;
+							<input type="radio" name="purpose" value="" />自饮&nbsp;&nbsp;
+							<input type="radio" name="purpose" value="" />简装礼盒&nbsp;&nbsp;
+							<input type="radio" name="purpose" value="" />精装礼盒&nbsp;&nbsp;
 						</div>
-					</div>
+					</div> -->
 				
 					<div class="form-group radioType" has-perm="INVOICE">
 						<label for="id" class="col-sm-3 control-label"><font
@@ -195,11 +212,14 @@
 			</div>
 		</div>
 		<!-- SubPopup -->
-		
-		<div >
-			<div class="btn_boxB floatR mag_l20"><input name="" type="button" value="取消" onmousemove="this.className='input_move'" onmouseout="this.className='input_out'"></div>
-			<div class="btn_box floatR"><input name="" type="button" value="提交" onmousemove="this.className='input_move'" onmouseout="this.className='input_out'"></div>
+		<div class="modal-footer ng-scope">
+			<button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-primary"  ng-disabled="myForm.$invalid">保存</button>
 		</div>
+		<!-- <div >
+			<div class="btn_boxB floatR mag_l20"><input name="" type="button" value="取消" onmousemove="this.className='input_move'" onmouseout="this.className='input_out'"></div>
+			<div class="btn_box floatR"><input name="" type="submit" value="提交" ></div>onmousemove="this.className='input_move'" onmouseout="this.className='input_out'"
+		</div> -->
 		</form>
 	</div>
 <!-- /Popup -->

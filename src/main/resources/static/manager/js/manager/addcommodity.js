@@ -18,55 +18,6 @@
 		var sort = null;
 		var filter = null;
 		
-		var platformSelData=[];
-		var data = {value: '',label: '全部'};
-		platformSelData.push(data);
-		var data = {value: 'T',label: '体重秤广告'};
-		platformSelData.push(data);
-		var data = {value: 'X',label: '新媒体广告'};
-		platformSelData.push(data);
-		var data = {value: 'H',label: 'H5广告'};
-		platformSelData.push(data);
-		
-		var progressBillingsSelData=[];
-		var data = {value: '',label: '全部'};
-		progressBillingsSelData.push(data);
-		var data = {value: '未结算',label: '未结算'};
-		progressBillingsSelData.push(data);
-		var data = {value: '一期已结算',label: '一期已结算'};
-		progressBillingsSelData.push(data);
-		var data = {value: '二期已结算',label: '二期已结算'};
-		progressBillingsSelData.push(data);
-		var data = {value: '已结清',label: '已结清'};
-		progressBillingsSelData.push(data);
-		
-		var payTypeSelData=[];
-		var data = {value: '',label: '全部'};
-		payTypeSelData.push(data);
-		var data = {value: '1',label: '一般'};
-		payTypeSelData.push(data);
-		var data = {value: '2',label: '置换'};
-		payTypeSelData.push(data);
-		var data = {value: '3',label: '置换+金额'};
-		payTypeSelData.push(data);
-		var data = {value: '4',label: '折扣'};
-		payTypeSelData.push(data);
-		
-		var natureSelData=[];
-		var data = {value: '',label: '全部'};
-		natureSelData.push(data);
-		var data = {value: '!=1',label: '非商业广告'};
-		natureSelData.push(data);
-		var data = {value: '=1',label: '商业广告'};
-		natureSelData.push(data);
-		
-		var clearTypeSelData=[];
-		var data = {value: '',label: '全部'};
-		clearTypeSelData.push(data);
-		var data = {value: '1',label: '总公司结算'};
-		clearTypeSelData.push(data);
-		var data = {value: '2',label: '分公司结算'};
-		clearTypeSelData.push(data);
 		
         //表格语言中文
         i18nService.setCurrentLang("zh-cn");
@@ -107,11 +58,8 @@
 			
 		};
 
-
         //获取表格订阅号下拉数据
 		/*service.getaddcommoditySubscriptions(officialCount);*/
-
-
 		
 		//formula()
 		$scope.showInfo = false;
@@ -123,7 +71,46 @@
 		     $scope.showInfo = false;  
 		}
 
+		$scope.addCommodity = function() {
+           var data = {
+               'productNum': $scope.productNum,
+               'tradeName':$scope.tradeName,
+               'markePrice': $scope.markePrice,
+               'promotionPrice':$scope.promotionPrice,
+               'teaName': $scope.teaName,
+               'tradeName':$scope.tradeName,
+               'productType': $scope.productType,
+               'pickYear':$scope.pickYear,
+               'pickSeason': $scope.pickSeason,
+               'goodsGrade':$scope.goodsGrade,
+               'netContent': $scope.netContent,
+               'purpose':$scope.purpose,
+             /*  
+               'markePrice': $scope.tradeName,
+               'secondReceivable': secondReceivable,
+           	'thirdReceivable': thirdReceivable,
+               //$scope.thirdReceivable,
+               'remark': $scope.remark,
+               //文件路径 收款截图和发票截图
+               //null ? '':document.querySelector('#mymaterial-file').files[0]
+               'gathering1':document.querySelector('#gathering1').files[0],
+               'gathering2':document.querySelector('#gathering2').files[0],
+               'gathering3':document.querySelector('#gathering3').files[0],
+               'invoice':document.querySelector('#invoice').files[0],
+              */
+           };
+         //  console.info(items);
 
+			service.savecommodity(data, items, function() {
+			/*	$uibModalInstance.close();
+				$uibModalInstance.close();*/
+				//id type
+				 var flag=items[0].type;
+				 items[0].id=items[0].type+items[0].id;
+	  			$ctrl.items = items;
+	  			
+			});
+		}
 
 
 		$scope.toggleFiltering = function(){
@@ -331,7 +318,28 @@
 
 
     app.factory('addcommodityService', ['$q', '$filter', '$timeout', '$http', function ($q, $filter, $timeout, $http) {
-
+    	
+    	var saveCommodity = function(data, items, closeFun) {
+			   var fileParams = new FormData();
+	            fileParams.append('msg', angular.toJson(data));
+	            fileParams.append('invoice', data.invoice);
+	            fileParams.append('gathering1', data.gathering1);
+	            fileParams.append('gathering2', data.gathering2);
+	            fileParams.append('gathering3', data.gathering3);
+	            $http({
+	                method:'POST',
+	                url: 'manager/saveCommodity',
+	                data: fileParams,
+	                headers: {'Content-Type': undefined},
+	                transformRequest: angular.identity
+	               }).success(function (response) {
+	                    toastr["success"]('更新成功');
+	                    closeFun();
+	                    items[2](items,items[3]);
+	                }).error(function(response, status, headers, congfig) {
+	            });
+		}
+    	
 		/*var getPage = function(page, pageSize, sort, filter, callbackFun) {
 			//addcommodity/pages/{pageNumber}
 			var url = '/addcommodity/pages/' + (page -1) + '?pageSize=' + pageSize;
@@ -349,26 +357,7 @@
 		};
 	
 		
-		var addOrder = function(data, items, closeFun) {
-			   var fileParams = new FormData();
-	            fileParams.append('msg', angular.toJson(data));
-	            fileParams.append('invoice', data.invoice);
-	            fileParams.append('gathering1', data.gathering1);
-	            fileParams.append('gathering2', data.gathering2);
-	            fileParams.append('gathering3', data.gathering3);
-	            $http({
-	                method:'POST',
-	                url: 'order',
-	                data: fileParams,
-	                headers: {'Content-Type': undefined},
-	                transformRequest: angular.identity
-	               }).success(function (response) {
-	                    toastr["success"]('更新成功');
-	                    closeFun();
-	                    items[2](items,items[3]);
-	                }).error(function(response, status, headers, congfig) {
-	            });
-		}
+		
 		var getOrderCollection = function(items,callbakcFun) {
 			var id=items[0].id;
 			
@@ -446,6 +435,7 @@
         //获取所属机构
 
 		return {
+			saveCommodity:saveCommodity,
 			/*getPage : getPage,
 			getOfficial:getOfficial,
 			getApplyQualify:getApplyQualify,

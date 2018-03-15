@@ -5,6 +5,7 @@
 		<id property="id" column="id"/>
 		<result property="commodityId" column="commodity_id"/>
 		<result property="productNum" column="product_num"/>
+		<result property="soldOutNum" column="sold_out_num"/>
 		<result property="tradeName" column="trade_name"/>
 		<result property="markePrice" column="marke_price"/>
 		<result property="promotionPrice" column="promotion_price"/>
@@ -21,12 +22,37 @@
 		<result property="purpose" column="purpose"/>
 	</resultMap>
 	<!-- saveCommodity -->
-	<insert id="saveCommodity" parameterType="Commodity">
+	<insert id="saveCommodity" parameterType="Commodity" useGeneratedKeys="true" keyProperty="id">
 	   insert into commodity 
-	   (commodity_id,product_num,trade_name,marke_price,promotion_price,create_time,create_user_id,tea_name,product_type,pick_year
-	   ,pick_season,goods_grade,net_content,purpose)
-	    values(#{commodityId},#{productNum})
+	   (commodity_id,product_num,trade_name,marke_price,promotion_price,create_time,create_user_id,tea_name,product_type,
+	   pick_year,pick_season,goods_grade,net_content,purpose) values 
+	   (#{commodityId},#{productNum},#{tradeName},#{markePrice},#{promotionPrice},#{createTime},#{createUserId},#{teaName},#{productType},
+	   #{pickYear},#{pickSeason},#{goodsGrade},#{netContent},#{purpose})
 	</insert>
+	
+	<update id="modifyCommodity" parameterType="Commodity">
+		<if test="id != null">
+			update commodity
+			<set>
+				<if test="commodityId != null">commodity_id=#{commodityId},</if>
+				<if test="productNum != null">product_num=#{productNum},</if>
+				<if test="soldOutNum != null">soldOutNum=#{sold_out_num},</if>
+				<if test="tradeName != null">trade_name=#{tradeName},</if>
+				<if test="markePrice != null">marke_price=#{markePrice},</if>
+				<if test="promotionPrice != null">promotion_price=#{promotionPrice},</if>
+				<if test="teaName != null">tea_name=#{teaName},</if>
+				<if test="productType != null">product_type=#{productType},</if>
+				<if test="pickYear != null">pick_year=#{pickYear},</if>
+				<if test="pickSeason != null">pick_season=#{pickSeason},</if>
+				<if test="goodsGrade != null">goods_grade=#{goodsGrade},</if>
+				<if test="netContent != null">net_content=#{netContent},</if>
+				<if test="purpose != null">purpose=#{purpose},</if>
+				<if test="updateUserId != null">update_user_id=#{updateUserId},</if>
+				<if test="updateTime != null">update_time=#{updateTime}</if>
+			</set>
+			<where>id=#{id}</where>
+		</if>
+	</update>
 	
 	<!--   添加新的管理员对象 
 	<insert id="addAdmin" parameterType="Admin">

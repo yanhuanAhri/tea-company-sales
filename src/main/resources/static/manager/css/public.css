@@ -259,38 +259,37 @@ li {
     overflow: auto;
 }
   
- 
-.form_boxC .radioType{
+form .radioType{
 	  clear: both;
 }
 
-.form_boxC .form-group img{
+form .form-group img{
     width: 180px;
     height: 125px;
     margin: 3px;
 }
-.form_boxC .a1 {
+form .a1 {
     display: inline-block;
 }
 
-.form_boxC .a1 .file {
+form .a1 .file {
     margin: 8px 0;
 }
 
-.form_boxC .col-sm-9.material .m{
+form .col-sm-9.material .m{
     float: left;
     text-align: center;
 }
-.form_boxC .c1 {
+form .c1 {
     display: inline-block;
 }
 
-.form_boxC .file{
+form .file{
     display: inline-block;
     position: relative;
 }
 
-.form_boxC .img-del {
+form .img-del {
     position: absolute;
     cursor: pointer;
     color: #ff8080;

@@ -7,6 +7,7 @@ public class Commodity {
 	private Long id;
 	private String commodityId;
 	private Long productNum;
+	private Long soldOutNum;
 	private String tradeName;
 	private BigDecimal markePrice;
 	private BigDecimal promotionPrice;
@@ -21,6 +22,14 @@ public class Commodity {
 	private String goodsGrade;
 	private Integer netContent;
 	private String purpose;
+	
+	
+	public Long getSoldOutNum() {
+		return soldOutNum;
+	}
+	public void setSoldOutNum(Long soldOutNum) {
+		this.soldOutNum = soldOutNum;
+	}
 	public Long getId() {
 		return id;
 	}
