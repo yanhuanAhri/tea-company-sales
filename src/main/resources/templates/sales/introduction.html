@@ -134,14 +134,15 @@
 									$(".jqzoom").imagezoom();
 									$("#thumblist li a").click(function() {
 										$(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
-										$(".jqzoom").attr('src', $(this).find("img").attr("mid"));
+										$(".jqzoom").attr('src',  $(this).find("img").attr("big"));
 										$(".jqzoom").attr('rel', $(this).find("img").attr("big"));
 									});
 								});
 							</script>
 
 							<div class="tb-booth tb-pic tb-s310">
-								<a href="../images/01.jpg"><img src="../images/01_mid.jpg" alt="细节展示放大镜特效" rel="../images/01.jpg" class="jqzoom" /></a>
+								<a th:href="${cover.path}"><img th:src="${cover.path}" alt="细节展示放大镜特效" th:attr="rel=${cover.path}" class="jqzoom" style="height: 100%;width: 100%"/></a>
+								<!-- <a href="../images/01.jpg"><img src="../images/01_mid.jpg" alt="细节展示放大镜特效" rel="../images/01.jpg" class="jqzoom" /></a> -->
 							</div>
 							<ul class="tb-thumb" id="thumblist" >
 								<li th:each="detail : ${detailList}" th:class="count==1 ? 'tb-selected':'tb-pic tb-s40'"><!-- class="tb-selected" -->
@@ -499,16 +500,16 @@
 											<h4>产品参数：</h4></div>
 										<div class="clear"></div>
 										<ul id="J_AttrUL">
-											<li title="">产品类型:&nbsp;烘炒类</li>
-											<li title="">原料产地:&nbsp;巴基斯坦</li>
-											<li title="">产地:&nbsp;湖北省武汉市</li>
-											<li title="">配料表:&nbsp;进口松子、食用盐</li>
-											<li title="">产品规格:&nbsp;210g</li>
-											<li title="">保质期:&nbsp;180天</li>
-											<li title="">产品标准号:&nbsp;GB/T 22165</li>
-											<li title="">生产许可证编号：&nbsp;QS4201 1801 0226</li>
-											<li title="">储存方法：&nbsp;请放置于常温、阴凉、通风、干燥处保存 </li>
-											<li title="">食用方法：&nbsp;开袋去壳即食</li>
+											<li title="" th:if="${commodity.specification}" th:text="'规格:&nbsp'+${commodity.specification}">规格:&nbsp;烘炒类</li>
+											<li title="" th:if="${commodity.originPlace}" th:text="'产地:&nbsp'+${commodity.originPlace}">产地:&nbsp;巴基斯坦</li>
+											<li title="" th:if="${commodity.foodProductionLicence}" th:text="'食品生产许可证:&nbsp'+${commodity.foodProductionLicence}">食品生产许可证:&nbsp;湖北省武汉市</li>
+											<li title="" th:if="${commodity.pickSeason}" th:text="'采摘季节:&nbsp'+${commodity.pickSeason}">采摘季节:&nbsp;进口松子、食用盐</li>
+											<li title="" th:if="${commodity.storeMethod}" th:text="'贮藏方法:&nbsp'+${commodity.storeMethod}">贮藏方法:&nbsp;210g</li>
+											<li title="" th:if="${commodity.expirationDate}" th:text="'保质期:&nbsp'+${commodity.expirationDate}">保质期:&nbsp;180天</li>
+											<li title="" th:if="${commodity.goodsGrade}" th:text="'等级:&nbsp'+${commodity.goodsGrade}">等级:&nbsp;GB/T 22165</li>
+											<li title="" th:if="${commodity.craft}" th:text="'工艺:&nbsp'+${commodity.craft}">工艺:&nbsp;180天</li>
+											<li title="" th:if="${commodity.packingSpeicification}" th:text="'包装规格:&nbsp'+${commodity.packingSpeicification}">包装规格:&nbsp;GB/T 22165</li>
+											
 										</ul>
 										<div class="clear"></div>
 									</div>
@@ -518,13 +519,13 @@
 											<h4>商品细节</h4>
 										</div>
 										<div class="twlistNews">
-											<img src="../images/tw1.jpg" />
-											<img src="../images/tw2.jpg" />
+											<img th:each="particular : ${particularList}" th:src="${particular.path}" />
+											<!-- <img src="../images/tw2.jpg" />
 											<img src="../images/tw3.jpg" />
 											<img src="../images/tw4.jpg" />
 											<img src="../images/tw5.jpg" />
 											<img src="../images/tw6.jpg" />
-											<img src="../images/tw7.jpg" />
+											<img src="../images/tw7.jpg" /> -->
 										</div>
 									</div>
 									<div class="clear"></div>
@@ -1175,28 +1176,28 @@
 
 						<div class="clear"></div>
 
-						<div class="footer">
-							<div class="footer-hd">
-								<p>
-									<a href="#">恒望科技</a>
-									<b>|</b>
-									<a href="#">商城首页</a>
-									<b>|</b>
-									<a href="#">支付宝</a>
-									<b>|</b>
-									<a href="#">物流</a>
-								</p>
-							</div>
-							<div class="footer-bd">
-								<p>
-									<a href="#">关于恒望</a>
-									<a href="#">合作伙伴</a>
-									<a href="#">联系我们</a>
-									<a href="#">网站地图</a>
-									<em>© 2015-2025 Hengwang.com 版权所有. 更多模板 <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></em>
-								</p>
-							</div>
+						<div class="footer ">
+						<div class="footer-hd ">
+							<p>
+								<a href="# ">馨绿茶叶</a>
+								<b>|</b>
+								<a href="# ">商城首页</a>
+								<b>|</b>
+								<a href="# ">支付宝</a>
+								<b>|</b>
+								<a href="# ">物流</a>
+							</p>
 						</div>
+						<div class="footer-bd ">
+							<p>
+								<a href="# ">关于馨绿</a>
+								<a href="# ">合作伙伴</a>
+								<a href="# ">联系我们</a>
+								<a href="# ">网站地图</a>
+								<em>© 20158-2028 xinlv.com 版权所有. yanhuan 毕业设计</em>
+							</p>
+						</div>
+					</div>
 					</div>
 
 				</div>

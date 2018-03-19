@@ -36,11 +36,11 @@ public class CommodityService {
 		
 		Commodity commodity=commodityMapper.findOneById(null, commodityNum);
 		//1：封面图，2：细节图，3：详情图
-		//List<CommodityImg> coverList=commodityImgMapper.findCommodityImgByType(1, commodityId, null);
+		CommodityImg cover=commodityImgMapper.findCommodityImgByType(1, commodity.getId(), null).get(0);
 		List<CommodityImg> detailList=commodityImgMapper.findCommodityImgByType(2, commodity.getId(), null);
 		List<CommodityImg> particularList=commodityImgMapper.findCommodityImgByType(3, commodity.getId(), null);
 		map.put("commodity", commodity);
-	//	map.put("coverList", coverList);
+		map.put("cover", cover);
 		map.put("detailList", detailList);
 		map.put("particularList", particularList);
 		return map;
