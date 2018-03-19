@@ -1,30 +1,36 @@
 package com.yh.commodity.controller;
 
-import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.yh.commodity.service.CommodityService;
-import com.yh.entity.Commodity;
 
 @Controller
 @Configuration
 public class CommodityController {
-	/*@Autowired
+	
+	@Autowired
 	private CommodityService commodityService;
 	
-	@PostMapping("saveCommodity")
+	@GetMapping("introduction")
+	public String toCommodityIntroduction(@RequestParam(name="commodityNum",required = true)String commodityNum,
+			Model model,HttpServletResponse response) {
+		Map<String,Object> map=commodityService.getCommodityMsg(commodityNum);
+		model.addAllAttributes(map);
+		return "sales/introduction";
+		///tea-company-sales/src/main/resources/templates/sales/introduction.html
+	}
+	
+	
+	/*@PostMapping("saveCommodity")
 	public void save(@RequestParam(name="commodity",required=true) Commodity commodity,
 			HttpServletResponse response ) {
 		commodityService.saveCommodity(commodity);

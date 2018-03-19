@@ -16,5 +16,6 @@ public interface CommodityMapper {
 	
 	public void modifyCommodity(@Param("commodity") Commodity commodity);
 	
-	public Commodity findById(@Param("id")Long id,@Param("commodityId")String commodityId);
+	public Commodity findOneById(@Param("id")Long id,@Param("commodityNum")String commodityNum);
+	
 }

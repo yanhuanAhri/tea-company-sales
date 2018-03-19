@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.yh.commodityimg.mapper.CommodityImgMapper"> 
+	<resultMap id="commodityImg" type="CommodityImg">
+		<id property="id" column="id"/>
+		<result property="commodityId" column="commodity_id"/>
+		<result property="commodityNum" column="commodity_num"/>
+		<result property="type" column="type"/>
+		<result property="path" column="path"/>
+		
+		<result property="createTime" column="create_time" />
+		<result property="createUserId" column="create_user_d"  />
+	</resultMap>
+	
+	<!--findByType  -->
+	<select id="findCommodityImgByType" resultMap="commodityImg">
+	   select * from commodity_img where type= #{type}
+	   <if test="commodityId!=null"> and commodity_id = #{commodityId}</if>
+	   <if test="commodityNum!=null"> and commodity_num = #{commodityNum} </if>
+	</select>
+</mapper>

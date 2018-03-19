@@ -36,7 +36,7 @@ public class LoginController {
 	public String login(Model model,HttpServletRequest request, HttpSession session) {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
-		//String remember=request.getParameter("remember-me");
+		//String remember=request.getParameter("remember-me");   
 		//model.addAttribute("message","This is your message");
 
 		Map<String,Object> map=new HashMap<>();

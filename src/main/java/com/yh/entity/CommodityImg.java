@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class CommodityImg {
 	private Long id;
-	private String commodityId;
+	private Integer commodityId;
+	private String commodityNum;
 	private Integer type;
 	private String path;
 	private Date createTime;
@@ -15,11 +16,18 @@ public class CommodityImg {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCommodityId() {
+	
+	public Integer getCommodityId() {
 		return commodityId;
 	}
-	public void setCommodityId(String commodityId) {
+	public void setCommodityId(Integer commodityId) {
 		this.commodityId = commodityId;
+	}
+	public String getCommodityNum() {
+		return commodityNum;
+	}
+	public void setCommodityNum(String commodityNum) {
+		this.commodityNum = commodityNum;
 	}
 	public Integer getType() {
 		return type;

@@ -3,11 +3,11 @@
 <mapper namespace="com.yh.commodity.mapper.CommodityMapper"> 
 	<resultMap id="commodity" type="Commodity">
 		<id property="id" column="id"/>
-		<result property="commodityId" column="commodity_id"/>
+		<result property="commodityNum" column="commodity_num"/>
 		<result property="productNum" column="product_num"/>
 		<result property="soldOutNum" column="sold_out_num"/>
 		<result property="tradeName" column="trade_name"/>
-		<result property="markePrice" column="marke_price"/>
+		<result property="marketPrice" column="market_price"/>
 		<result property="promotionPrice" column="promotion_price"/>
 		<result property="createTime" column="create_time"/>
 		<result property="createUserId" column="create_user_id"/>
@@ -20,25 +20,37 @@
 		<result property="goodsGrade" column="goods_grade"/>
 		<result property="netContent" column="net_content"/>
 		<result property="purpose" column="purpose"/>
+		<result property="specification" column="specification"/>
+		<result property="originPlace" column="origin_place"/>
+		<result property="foodProductionLicence" column="food_production_licence"/>
+		<result property="storeMethod" column="store_method"/>
+		<result property="expirationDate" column="expiration_date"/>
+		<result property="craft" column="craft"/>
+		<result property="packingSpeicification" column="packing_speicification"/>
 	</resultMap>
+	
 	<!-- saveCommodity -->
 	<insert id="saveCommodity" parameterType="Commodity" useGeneratedKeys="true" keyProperty="id">
 	   insert into commodity 
-	   (commodity_id,product_num,trade_name,marke_price,promotion_price,create_time,create_user_id,tea_name,product_type,
-	   pick_year,pick_season,goods_grade,net_content,purpose) values 
-	   (#{commodityId},#{productNum},#{tradeName},#{markePrice},#{promotionPrice},#{createTime},#{createUserId},#{teaName},#{productType},
-	   #{pickYear},#{pickSeason},#{goodsGrade},#{netContent},#{purpose})
+	   (commodity_num,product_num,trade_name,market_price,promotion_price,create_time,create_user_id,tea_name,product_type,
+	   pick_year,pick_season,goods_grade,net_content,purpose,specification,origin_place,food_production_licence,store_method,
+	   expiration_date,craft,packing_speicification)
+	    values 
+	   (#{commodityNum},#{productNum},#{tradeName},#{marketPrice},#{promotionPrice},#{createTime},#{createUserId},#{teaName},#{productType},
+	   #{pickYear},#{pickSeason},#{goodsGrade},#{netContent},#{purpose},#{specification},#{originPlace},#{foodProductionLicence},
+	   #{storeMethod}, #{expirationDate},#{craft},#{packingSpeicification})
 	</insert>
 	
+	<!-- modifyCommodity -->
 	<update id="modifyCommodity" parameterType="Commodity">
 		<if test="id != null">
 			update commodity
 			<set>
-				<if test="commodityId != null">commodity_id=#{commodityId},</if>
+				<if test="commodityId != null">commodity_num=#{commodityNum},</if>
 				<if test="productNum != null">product_num=#{productNum},</if>
 				<if test="soldOutNum != null">soldOutNum=#{sold_out_num},</if>
 				<if test="tradeName != null">trade_name=#{tradeName},</if>
-				<if test="markePrice != null">marke_price=#{markePrice},</if>
+				<if test="marketPrice != null">market_price=#{marketPrice},</if>
 				<if test="promotionPrice != null">promotion_price=#{promotionPrice},</if>
 				<if test="teaName != null">tea_name=#{teaName},</if>
 				<if test="productType != null">product_type=#{productType},</if>
@@ -47,12 +59,26 @@
 				<if test="goodsGrade != null">goods_grade=#{goodsGrade},</if>
 				<if test="netContent != null">net_content=#{netContent},</if>
 				<if test="purpose != null">purpose=#{purpose},</if>
+				<if test="specification != null">specification=#{specification},</if>
+				<if test="originPlace != null">origin_place=#{originPlace},</if>
+				<if test="foodProductionLicence != null">food_production_licence=#{foodProductionLicence},</if>
+				<if test="storeMethod != null">store_method=#{storeMethod},</if>
+				<if test="expirationDate != null">expiration_date=#{expirationDate},</if>
+				<if test="craft != null">craft=#{craft},</if>
+				<if test="packingSpeicification != null">packing_speicification=#{packingSpeicification}</if>
 				<if test="updateUserId != null">update_user_id=#{updateUserId},</if>
 				<if test="updateTime != null">update_time=#{updateTime}</if>
 			</set>
 			<where>id=#{id}</where>
 		</if>
 	</update>
+	
+	<!-- findOneById -->
+	<select id="findOneById" resultMap="commodity">
+	   select * from commodity where 1=1
+	    <if test="id!=null">  and id = #{id} </if>
+	    <if test="commodityNum!=null"> and commodity_num= #{commodityNum} </if>
+	</select>
 	
 	<!--   添加新的管理员对象 
 	<insert id="addAdmin" parameterType="Admin">

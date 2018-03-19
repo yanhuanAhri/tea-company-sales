@@ -34,11 +34,11 @@ public class ManagerCommodityController {
 		private String addCommodity(ModelMap map) {
 			return "manager/addcommodity";
 		}
-	
+	/*
 	@PostMapping("/saveCommodity")
 	@ResponseBody
 	public void save(@ModelAttribute Commodity commodity,
 			HttpServletResponse response ) {
 		commodityService.saveCommodity(commodity);
-	}
+	}*/
 }

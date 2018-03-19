@@ -5,11 +5,11 @@ import java.util.Date;
 
 public class Commodity {
 	private Long id;
-	private String commodityId;
+	private String commodityNum;
 	private Long productNum;
 	private Long soldOutNum;
 	private String tradeName;
-	private BigDecimal markePrice;
+	private BigDecimal marketPrice;
 	private BigDecimal promotionPrice;
 	private Date createTime;
 	private Long createUserId;
@@ -21,8 +21,15 @@ public class Commodity {
 	private String pickSeason;
 	private String goodsGrade;
 	private Integer netContent;
-	private String purpose;
+	private Integer purpose;
 	
+	private String specification;
+	private String originPlace;
+	private String foodProductionLicence;
+	private String storeMethod;
+	private Integer expirationDate;
+	private String craft;
+	private String packingSpeicification;
 	
 	public Long getSoldOutNum() {
 		return soldOutNum;
@@ -36,11 +43,13 @@ public class Commodity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCommodityId() {
-		return commodityId;
+	
+	
+	public String getCommodityNum() {
+		return commodityNum;
 	}
-	public void setCommodityId(String commodityId) {
-		this.commodityId = commodityId;
+	public void setCommodityNum(String commodityNum) {
+		this.commodityNum = commodityNum;
 	}
 	public Long getProductNum() {
 		return productNum;
@@ -55,11 +64,11 @@ public class Commodity {
 		this.tradeName = tradeName;
 	}
 	
-	public BigDecimal getMarkePrice() {
-		return markePrice;
+	public BigDecimal getMarketPrice() {
+		return marketPrice;
 	}
-	public void setMarkePrice(BigDecimal markePrice) {
-		this.markePrice = markePrice;
+	public void setMarketPrice(BigDecimal marketPrice) {
+		this.marketPrice = marketPrice;
 	}
 	public BigDecimal getPromotionPrice() {
 		return promotionPrice;
@@ -128,12 +137,55 @@ public class Commodity {
 	public void setNetContent(Integer netContent) {
 		this.netContent = netContent;
 	}
-	public String getPurpose() {
+	public Integer getPurpose() {
 		return purpose;
 	}
-	public void setPurpose(String purpose) {
+	public void setPurpose(Integer purpose) {
 		this.purpose = purpose;
 	}
+	public String getSpecification() {
+		return specification;
+	}
+	public void setSpecification(String specification) {
+		this.specification = specification;
+	}
+	public String getOriginPlace() {
+		return originPlace;
+	}
+	public void setOriginPlace(String originPlace) {
+		this.originPlace = originPlace;
+	}
+	public String getFoodProductionLicence() {
+		return foodProductionLicence;
+	}
+	public void setFoodProductionLicence(String foodProductionLicence) {
+		this.foodProductionLicence = foodProductionLicence;
+	}
+	public String getStoreMethod() {
+		return storeMethod;
+	}
+	public void setStoreMethod(String storeMethod) {
+		this.storeMethod = storeMethod;
+	}
+	public Integer getExpirationDate() {
+		return expirationDate;
+	}
+	public void setExpirationDate(Integer expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+	public String getCraft() {
+		return craft;
+	}
+	public void setCraft(String craft) {
+		this.craft = craft;
+	}
+	public String getPackingSpeicification() {
+		return packingSpeicification;
+	}
+	public void setPackingSpeicification(String packingSpeicification) {
+		this.packingSpeicification = packingSpeicification;
+	}
+	
 	
 	
 
