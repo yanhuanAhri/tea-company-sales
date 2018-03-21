@@ -63,7 +63,7 @@ public class LoginController {
 		/*if(remember.equals("true")) {
 			//cookie  存入cookie
 		}*/
-		return "";
+		return "home";
 	}
 		
 		

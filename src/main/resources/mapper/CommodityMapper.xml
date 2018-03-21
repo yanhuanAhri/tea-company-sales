@@ -27,6 +27,7 @@
 		<result property="expirationDate" column="expiration_date"/>
 		<result property="craft" column="craft"/>
 		<result property="packingSpeicification" column="packing_speicification"/>
+		<result property="status" column="status"/>
 	</resultMap>
 	
 	<!-- saveCommodity -->
@@ -34,11 +35,11 @@
 	   insert into commodity 
 	   (commodity_num,product_num,trade_name,market_price,promotion_price,create_time,create_user_id,tea_name,product_type,
 	   pick_year,pick_season,goods_grade,net_content,purpose,specification,origin_place,food_production_licence,store_method,
-	   expiration_date,craft,packing_speicification)
+	   expiration_date,craft,packing_speicification,status)
 	    values 
 	   (#{commodityNum},#{productNum},#{tradeName},#{marketPrice},#{promotionPrice},#{createTime},#{createUserId},#{teaName},#{productType},
 	   #{pickYear},#{pickSeason},#{goodsGrade},#{netContent},#{purpose},#{specification},#{originPlace},#{foodProductionLicence},
-	   #{storeMethod}, #{expirationDate},#{craft},#{packingSpeicification})
+	   #{storeMethod}, #{expirationDate},#{craft},#{packingSpeicification},#{status})
 	</insert>
 	
 	<!-- modifyCommodity -->
@@ -48,7 +49,7 @@
 			<set>
 				<if test="commodityId != null">commodity_num=#{commodityNum},</if>
 				<if test="productNum != null">product_num=#{productNum},</if>
-				<if test="soldOutNum != null">soldOutNum=#{sold_out_num},</if>
+				<if test="soldOutNum != null">sold_out_num=#{soldOutNum},</if>
 				<if test="tradeName != null">trade_name=#{tradeName},</if>
 				<if test="marketPrice != null">market_price=#{marketPrice},</if>
 				<if test="promotionPrice != null">promotion_price=#{promotionPrice},</if>
@@ -66,6 +67,7 @@
 				<if test="expirationDate != null">expiration_date=#{expirationDate},</if>
 				<if test="craft != null">craft=#{craft},</if>
 				<if test="packingSpeicification != null">packing_speicification=#{packingSpeicification}</if>
+				<if test="status!=null">status=#{status}</if>
 				<if test="updateUserId != null">update_user_id=#{updateUserId},</if>
 				<if test="updateTime != null">update_time=#{updateTime}</if>
 			</set>

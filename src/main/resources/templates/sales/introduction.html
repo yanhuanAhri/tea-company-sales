@@ -20,6 +20,7 @@
 		<script type="text/javascript" src="../js/jquery.imagezoom.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.flexslider.js"></script>
 		<script type="text/javascript" src="../js/list.js"></script>
+		<script type="text/javascript" src="../js/sales/introduction.js"></script>
 
 	</head>
 
@@ -242,7 +243,7 @@
 										</div>
 										<div class="theme-popbod dform">
 											<form class="theme-signin" name="loginform" action="" method="post">
-
+											  <input name="commodityNum" id="commodityNum" th:value="${commodity.commodityNum}" style="display: none">
 												<div class="theme-signin-left">
 
 													<div class="theme-options">
@@ -274,7 +275,7 @@
 														<div class="cart-title number">数量</div>
 														<dd>
 															<input id="min" class="am-btn am-btn-default" name="" type="button" value="-" />
-															<input id="text_box" name="" type="text" value="1" style="width:30px;" />
+															<input id="text_box" name="buyNum" type="text" value="1" style="width:30px;" />
 															<input id="add" class="am-btn am-btn-default" name="" type="button" value="+" />
 															<span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
 														</dd>
@@ -303,16 +304,16 @@
 													<a><span class="am-icon-heart am-icon-fw">收藏</span></a>
 													
 													</div>
-													<div>
+													<div >
 													
-														<li>
-															<div class="clearfix tb-btn tb-btn-buy theme-login">
-																<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="#">立即购买</a>
+														<li> 
+															<div class="clearfix tb-btn tb-btn-buy theme-login" style="margin-top: -25%">
+																<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="#" data-toggle="modal" data-target="#myModal">立即购买</a>
 															</div>
 														</li>
 														<li>
-															<div class="clearfix tb-btn tb-btn-basket theme-login">
-																<a id="LikBasket" title="加入购物车" href="#"><i></i>加入购物车</a>
+															<div class="clearfix tb-btn tb-btn-basket theme-login" style="margin-top: -43%">
+																<a id="LikBasket" title="加入购物车" href="#" data-toggle="modal" data-target="#myModal"><i></i>加入购物车</a>
 															</div>
 														</li>
 													</div>
@@ -1361,6 +1362,26 @@
 					</div>
 				</div>
 			</div>
+
+<!-- 弹框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+      </div>
+      <div class="modal-body">
+        您还没有登录该系统，请登录之后再进行该操作！！！
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 	</body>
 

@@ -4,6 +4,7 @@
 	<resultMap id="shoppingCart" type="ShoppingCart">
 		<id property="id" column="id"/>
 		<result property="commodityId" column="commodity_id"/>
+		<result property="commodityNum" column="commodity_num"/>
 		<result property="commodityTitle" column="commodity_title"/>
 		<result property="buyNum" column="buy_num"/>
 		<result property="unitPrice" column="unit_price"/>
@@ -12,5 +13,50 @@
 		<result property="updateTime" column="update_time"/>
 	</resultMap>
 	
+	<!-- saveShoppingCart -->
+	<insert id="saveShoppingCart" parameterType="ShoppingCart"  useGeneratedKeys="true" keyProperty="id">
+		insert into shopping_cart
+		(commodity_id,commodity_num,commodity_title,buy_num,unit_price,create_time,create_user_id,create_user_id)
+		 values 
+		(#{commodityId},#{commodityNum},#{commodityTitle},#{buyNum},#{unitPrice},#{createTime},#{createUserId},#{update_time})
+	</insert>
+	
+	<!-- modifyShoppingCart -->
+	<update id="modifyShoppingCart" parameterType="ShoppingCart">
+		<if test="id != null || commodityId !=null || commodityNum!=null">
+			update shopping_cart
+			<set>
+				<if test="commodityTitle != null">commodity_title=#{commodityTitle},</if>
+				<if test="buyNum != null">buy_num=#{buyNum},</if>
+				<if test="unitPrice != null">unit_price=#{unitPrice},</if>
+				<if test="createTime != null">create_time=#{createTime},</if>
+				<if test="createUserId != null">create_user_id=#{createUserId},</if>
+				<if test="updateTime != null">update_time=#{updateTime},</if>
+			</set>
+			<where>
+				<if test="id!=null">id=#{id}</if>
+				<if test="commodityId!=null">commodity_id=#{commodityId}</if>
+				<if test="commodityNum!=null">commodity_num=#{commodityNum}</if>
+			</where>
+		</if>
+	</update>
+	
+	<!-- deleteShoppingCart -->
+	<delete id="deleteShoppingCartByCommodityNum"  >
+		delete from shopping_cart where commodity_num in
+		<foreach collection="list" item="commodityNum" open="()" close=")" separator=",">
+		  #{commodityNum}
+		</foreach>
+	</delete>
+	<!-- <delete id="deleteMoreEmp" parameterType="int[]">  
+        delete from emp where empno in(7789,7790)  
+        forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item   
+            : 循环中为每个循环的数据指定一个别名 index : 循环中循环的下标 open : 开始 close : 结束 separator : 数组中元素之间的分隔符  
+        delete from emp where empno in  
+        <foreach collection="array" item="arr" index="no" open="("  
+            separator="," close=")">  
+            #{arr}  
+        </foreach>  
+    </delete> -->
 
 </mapper>

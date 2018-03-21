@@ -5,7 +5,8 @@ import java.util.Date;
 
 public class ShoppingCart {
 	private Long id;
-	private String commodityId;
+	private Long commodityId;
+	private String commodityNum;
 	private String commodityTitle;
 	private Integer buyNum;
 	private BigDecimal unitPrice;
@@ -18,11 +19,18 @@ public class ShoppingCart {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCommodityId() {
+	
+	public Long getCommodityId() {
 		return commodityId;
 	}
-	public void setCommodityId(String commodityId) {
+	public void setCommodityId(Long commodityId) {
 		this.commodityId = commodityId;
+	}
+	public String getCommodityNum() {
+		return commodityNum;
+	}
+	public void setCommodityNum(String commodityNum) {
+		this.commodityNum = commodityNum;
 	}
 	public String getCommodityTitle() {
 		return commodityTitle;
