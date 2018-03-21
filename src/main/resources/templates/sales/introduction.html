@@ -15,16 +15,26 @@
 
 		<script type="text/javascript" src="../basic/js/jquery-1.7.min.js"></script>
 		<script type="text/javascript" src="../basic/js/quick_links.js"></script>
-
+		<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+		
+		<script type="text/javascript" src="../angularjs/1.6.2/angular.min.js"></script>
+		<script type="text/javascript" src="../angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular-messages.min.js"></script>
+		<script src="angularjs/1.5.11/angular-touch.min.js"></script>
+		<script src="angularjs/1.5.11/angular-animate.min.js"></script>
+		
 		<script type="text/javascript" src="../AmazeUI-2.4.2/assets/js/amazeui.js"></script>
 		<script type="text/javascript" src="../js/jquery.imagezoom.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.flexslider.js"></script>
 		<script type="text/javascript" src="../js/list.js"></script>
 		<script type="text/javascript" src="../js/sales/introduction.js"></script>
+		
+		
 
 	</head>
 
-	<body>
+	<body ng-app="introdutionApp" ng-controller ="introductionCtrl">
 
 
 		<!--顶部导航条 -->
@@ -313,7 +323,7 @@
 														</li>
 														<li>
 															<div class="clearfix tb-btn tb-btn-basket theme-login" style="margin-top: -43%">
-																<a id="LikBasket" title="加入购物车" href="#" data-toggle="modal" data-target="#myModal"><i></i>加入购物车</a>
+																<a id="LikBasket" ng-click="addToShoppingCart()" title="加入购物车"  data-toggle="modal" data-target="#myModal"><i></i>加入购物车</a>
 															</div>
 														</li>
 													</div>
@@ -1364,7 +1374,7 @@
 			</div>
 
 <!-- 弹框 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1380,7 +1390,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 	</body>

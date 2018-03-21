@@ -13,30 +13,56 @@
 		<result property="updateTime" column="update_time"/>
 	</resultMap>
 	
+	<resultMap type="ShoppingCartVo" id="shoppingCartVo">
+		<result property="commodityId" column="commodity_id"/>
+		<result property="commodityNum" column="commodity_num"/>
+		<result property="commodityTitle" column="commodity_title"/>
+		<result property="buyNum" column="buy_num"/>
+		<result property="unitPrice" column="unit_price"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="status" column="status"/>
+		<result property="promotionPrice" column="promotion_price"/>
+	</resultMap>
+	
+	<!-- findByCreateUserIdAndStatus -->
+	<select id="findByCreateUserIdAndStatus" resultMap="shoppingCartVo">
+		select 
+		s.commodity_id as commodity_id,s.commodity_num as commodity_num,s.commodity_title as commodity_title,s.buy_num as buy_num,
+		s.unit_price as unit_price,s.create_user_id as create_user_id, s.update_time as update_time,c.`status` as `status`,
+		c.promotion_price as promotion_price 
+		from shopping_cart s 
+		left join commodity c on s.commodity_id=c.id 
+		where s.commodity_num=#{commodityNum}
+		<if test="status!=null"> and status= #{status}</if>
+		order by s.update_time desc
+	</select>
+	
 	<!-- saveShoppingCart -->
-	<insert id="saveShoppingCart" parameterType="ShoppingCart"  useGeneratedKeys="true" keyProperty="id">
+	<insert id="saveShoppingCart"  useGeneratedKeys="true" keyProperty="id">
 		insert into shopping_cart
-		(commodity_id,commodity_num,commodity_title,buy_num,unit_price,create_time,create_user_id,create_user_id)
+		(commodity_id,commodity_num,commodity_title,buy_num,unit_price,create_time,create_user_id,update_time)
 		 values 
-		(#{commodityId},#{commodityNum},#{commodityTitle},#{buyNum},#{unitPrice},#{createTime},#{createUserId},#{update_time})
+		(#{shoppingCart.commodityId},#{shoppingCart.commodityNum},#{shoppingCart.commodityTitle},#{shoppingCart.buyNum},
+		#{shoppingCart.unitPrice},#{shoppingCart.createTime},#{shoppingCart.createUserId},#{shoppingCart.updateTime})
 	</insert>
 	
 	<!-- modifyShoppingCart -->
-	<update id="modifyShoppingCart" parameterType="ShoppingCart">
-		<if test="id != null || commodityId !=null || commodityNum!=null">
+	<update id="modifyShoppingCart" >
+		<if test="shoppingCart.id != null || shoppingCart.commodityId !=null || shoppingCart.commodityNum!=null">
 			update shopping_cart
 			<set>
-				<if test="commodityTitle != null">commodity_title=#{commodityTitle},</if>
-				<if test="buyNum != null">buy_num=#{buyNum},</if>
-				<if test="unitPrice != null">unit_price=#{unitPrice},</if>
-				<if test="createTime != null">create_time=#{createTime},</if>
-				<if test="createUserId != null">create_user_id=#{createUserId},</if>
-				<if test="updateTime != null">update_time=#{updateTime},</if>
+				<if test="shoppingCart.commodityTitle != null">commodity_title=#{shoppingCart.commodityTitle},</if>
+				<if test="shoppingCart.buyNum != null">buy_num=#{shoppingCart.buyNum},</if>
+				<if test="shoppingCart.unitPrice != null">unit_price=#{shoppingCart.unitPrice},</if>
+				<if test="shoppingCart.createTime != null">create_time=#{shoppingCart.createTime},</if>
+				<if test="shoppingCart.createUserId != null">create_user_id=#{shoppingCart.createUserId},</if>
+				<if test="shoppingCart.updateTime != null">update_time=#{shoppingCart.updateTime},</if>
 			</set>
 			<where>
-				<if test="id!=null">id=#{id}</if>
-				<if test="commodityId!=null">commodity_id=#{commodityId}</if>
-				<if test="commodityNum!=null">commodity_num=#{commodityNum}</if>
+				<if test="shoppingCart.id!=null">id=#{id}</if>
+				<if test="shoppingCart.commodityId!=null">commodity_id=#{shoppingCart.commodityId}</if>
+				<if test="shoppingCart.commodityNum!=null">commodity_num=#{shoppingCart.commodityNum}</if>
 			</where>
 		</if>
 	</update>
@@ -48,6 +74,13 @@
 		  #{commodityNum}
 		</foreach>
 	</delete>
+	
+	<!-- findByCommodityNum -->
+	<select id="findByCommodityNum" resultMap="shoppingCart">
+		select * from shopping_cart where commodity_num= #{commodityNum}
+	</select>
+	
+	
 	<!-- <delete id="deleteMoreEmp" parameterType="int[]">  
         delete from emp where empno in(7789,7790)  
         forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item   

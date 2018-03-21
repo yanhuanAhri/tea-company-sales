@@ -1,12 +1,16 @@
 package com.yh.shoppingcart.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,23 +32,34 @@ public class ShoppingCartConteoller {
 	private ShoppingCartService shoppingCartService;
 	
 	
-	@PostMapping("addToShoppingCart")
+	/**
+	 * 加入购物车
+	 * @param commodityNum
+	 * @param buyNum
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("addToShoppingCart")
 	@ResponseBody
-	public String addToShoppingCart(@RequestParam(name="commodityNum",required = true)String commodityNum,
-			@RequestParam(name="buyNum",required = true)Integer buyNum,
-			Model model,HttpServletResponse response,HttpSession session) {
-		User user=(User) session.getAttribute("user");
-		if(user== null || user.getUserName()==null || user.getUserName().isEmpty()) {
-			//model.addAttribute("msg", "您还未登录，请先登录再将商品加入购物车");
-		//	return "sales/shopcart";
-			return "error";
-		}else {
-			shoppingCartService.saveShoppingCart(commodityNum, buyNum, user);
-			//model.addAttribute("msg", "success");
-			return "success";
-		}
-			//	return null;
-		
+	public Map<String,Object> addToShoppingCart(@RequestParam("commodityNum")String commodityNum,
+			@RequestParam("buyNum")String buyNum,
+			Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+			Map<String,Object> map=new HashMap<>();
+			User user=(User) session.getAttribute("user");
+			//String msg=null;
+			if(user== null || user.getUserName()==null || user.getUserName().isEmpty()) {
+				map.put("code", "404");
+				map.put("msg", "您还没有登录该系统，请登录之后再进行该操作！！！");
+				//msg= "error";
+			}else {
+				shoppingCartService.saveShoppingCart(commodityNum, Integer.valueOf(buyNum), user);
+				map.put("code", "1");
+				map.put("msg", "加入购物车成功");
+			}
+				return map;
 	}
 	
 	

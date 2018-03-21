@@ -31,9 +31,13 @@ public class CommodityService {
 		}
 	}
 	*/
+	/**
+	 * 查看商品详情
+	 * @param commodityNum 商品编号
+	 * @return
+	 */
 	public Map<String,Object> getCommodityMsg(String commodityNum){
 		Map<String,Object> map=new HashMap<>();
-		
 		Commodity commodity=commodityMapper.findOneById(null, commodityNum);
 		//1：封面图，2：细节图，3：详情图
 		CommodityImg cover=commodityImgMapper.findCommodityImgByType(1, commodity.getId(), null).get(0);
@@ -44,7 +48,6 @@ public class CommodityService {
 		map.put("detailList", detailList);
 		map.put("particularList", particularList);
 		return map;
-		
 	}
 
 }

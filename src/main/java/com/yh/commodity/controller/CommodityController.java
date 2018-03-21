@@ -20,6 +20,13 @@ public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 	
+	/**
+	 * 查看商品详情
+	 * @param commodityNum
+	 * @param model
+	 * @param response
+	 * @return
+	 */
 	@GetMapping("introduction")
 	public String toCommodityIntroduction(@RequestParam(name="commodityNum",required = true)String commodityNum,
 			Model model,HttpServletResponse response) {
