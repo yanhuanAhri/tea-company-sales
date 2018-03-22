@@ -1,7 +1,9 @@
 package com.yh.shoppingcart.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.yh.commodity.mapper.CommodityMapper;
 import com.yh.entity.Commodity;
 import com.yh.entity.ShoppingCart;
+import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
 import com.yh.shoppingcart.mapper.ShoppingCartMapper;
 
@@ -29,7 +32,7 @@ public class ShoppingCartService {
 	public void saveShoppingCart(String commodityNum,Integer buyNum,User user) {
 		ShoppingCart shoppingCart=new ShoppingCart();
 		if(commodityNum!=null && buyNum!=0) {
-			ShoppingCart shoppingCommdity=shoppingCartMapper.findByCommodityNum(commodityNum);
+			ShoppingCart shoppingCommdity=shoppingCartMapper.findByCommodityNum(commodityNum,user.getId());
 			//购物车商品新增
 			if(shoppingCommdity==null || shoppingCommdity.equals("")) {
 				Commodity commodity=commodityMapper.findOneById(null, commodityNum);
@@ -57,10 +60,38 @@ public class ShoppingCartService {
 		}
 	}
 	
-	public Map<String,Object> getShoppingCart(String commodityNum){
+	/**
+	 * 购物车列表信息
+	 * @param user
+	 * @return
+	 */
+	public Map<String,Object> getShoppingCart(User user){
 		Map<String,Object> map=new HashMap<>();
-		return null;
+		//状态（1有货，2缺货，3下架，4未上架）
+		List<ShoppingCartVo> cartList=shoppingCartMapper.findByCreateUserIdAndStatus(user.getId(), null);
+		//limit 分页
+		Object count=getCount(user,null).get("count");
+		map.put("count", count);
+		map.put("cartList", cartList);
+		return map;
 		
+	}
+	
+	/**
+	 * 购物车状态
+	 * @param user
+	 * @param status
+	 * @return
+	 */
+	public Map<String,Object> getCount(User user,Integer status){
+		Map<String,Object> map=new HashMap<>();
+		Integer count=shoppingCartMapper.getCount(user.getId(), null);
+		map.put("count", count);
+		return map;
+	}
+	
+	public void delShopping(List<String> commodityNums,User user) {
+		shoppingCartMapper.deleteShoppingCartByCommodityNum(commodityNums, user.getId());
 	}
 	
 	/*public void updateShoppingCart(String commodityNum,Integer buyNum,User user) {

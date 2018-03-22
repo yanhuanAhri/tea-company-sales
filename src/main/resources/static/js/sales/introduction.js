@@ -16,7 +16,7 @@ var app = angular.module("introdutionApp", []);
 				if(obj.data.code==1){
 					alert(obj.data.msg);
 				//	toastr["success"]("加入购物车成功");
-				}else if(obj.data.code=404){
+				}else if(obj.data.code==404){
 				//	toastr["warring"](" 您还没有登录该系统，请登录之后再进行该操作！！！");
 					alert(obj.data.msg);
 				}else{
@@ -34,17 +34,17 @@ var app = angular.module("introdutionApp", []);
 		
 		
 		var addToShopingCart = function(data, callbackFun) {
-		
 			var url='addToShoppingCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
 			$http.get(url).then(
     			function (response) {
 					callbackFun(response);
 			});
-
 		};
-			return {
-				addToShopingCart:addToShopingCart,
-			}
+		
+		return {
+			addToShopingCart:addToShopingCart,
+		}
+		
 	}]);
 
 

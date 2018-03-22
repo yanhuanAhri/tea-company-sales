@@ -1,7 +1,7 @@
 package com.yh.shoppingcart.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,17 +10,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.stat.TableStat.Mode;
-import com.yh.entity.Commodity;
 import com.yh.entity.User;
 import com.yh.shoppingcart.service.ShoppingCartService;
 
@@ -31,6 +27,10 @@ public class ShoppingCartConteoller {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	
+	@GetMapping("shoppingCart.html")
+	public String GoShopcart(Model model) {
+		return "sales/shopcart";
+	}
 	
 	/**
 	 * 加入购物车
@@ -62,7 +62,29 @@ public class ShoppingCartConteoller {
 				return map;
 	}
 	
+	@GetMapping("shoppingCart")
+	@ResponseBody
+	public Map<String,Object> GoShoppingCart(HttpServletResponse response,HttpSession session){
+		Map<String,Object> map=new HashMap<>();
+		User user=(User) session.getAttribute("user");
+		if(user== null || user.getUserName()==null || user.getUserName().isEmpty()) {
+			map.put("code", "404");
+			map.put("msg", "您还没有登录该系统，请登录之后再进行该操作！！！");
+			//msg= "error";
+		}else {
+			map=shoppingCartService.getShoppingCart(user);
+			map.put("code", "1");
+		}
+		return map;
+	}
 	
+	@DeleteMapping("delShopping")
+	@ResponseBody
+	public void delShopping(@RequestParam("commodityNums")List<String> commodityNums,
+	Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		User user=(User) session.getAttribute("user");
+		shoppingCartService.delShopping(commodityNums, user);
+	}
 	/*@GetMapping("introduction")
 	public String toCommodityIntroduction(@RequestParam(name="commodityNum",required = true)String commodityNum,
 			Model model,HttpServletResponse response) {

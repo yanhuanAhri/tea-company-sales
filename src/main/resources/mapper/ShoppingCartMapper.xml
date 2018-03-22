@@ -23,6 +23,7 @@
 		<result property="updateTime" column="update_time"/>
 		<result property="status" column="status"/>
 		<result property="promotionPrice" column="promotion_price"/>
+		<result property="cover" column="cover"/>
 	</resultMap>
 	
 	<!-- findByCreateUserIdAndStatus -->
@@ -30,12 +31,26 @@
 		select 
 		s.commodity_id as commodity_id,s.commodity_num as commodity_num,s.commodity_title as commodity_title,s.buy_num as buy_num,
 		s.unit_price as unit_price,s.create_user_id as create_user_id, s.update_time as update_time,c.`status` as `status`,
-		c.promotion_price as promotion_price 
+		c.promotion_price as promotion_price, i.path as cover
 		from shopping_cart s 
 		left join commodity c on s.commodity_id=c.id 
-		where s.commodity_num=#{commodityNum}
+		left join commodity_img i on i.commodity_id=c.id
+		where i.type=1
+		<if test="userId!=null"> and s.create_user_id =#{userId} </if>
 		<if test="status!=null"> and status= #{status}</if>
 		order by s.update_time desc
+	</select>
+	
+	<!-- getCount -->
+	<select id="getCount" resultType="Integer">
+		select 
+		count(1)
+		from shopping_cart s 
+		left join commodity c on s.commodity_id=c.id 
+		left join commodity_img i on i.commodity_id=c.id
+		where i.type=1
+		<if test="userId!=null"> and s.create_user_id =#{userId} </if>
+		<if test="status!=null"> and c.status= #{status}</if>
 	</select>
 	
 	<!-- saveShoppingCart -->
@@ -70,14 +85,16 @@
 	<!-- deleteShoppingCart -->
 	<delete id="deleteShoppingCartByCommodityNum"  >
 		delete from shopping_cart where commodity_num in
-		<foreach collection="list" item="commodityNum" open="()" close=")" separator=",">
+		<foreach collection="List" item="commodityNum" open="()" close=")" separator=",">
 		  #{commodityNum}
 		</foreach>
+		<if test="userId!=null"> and create_user_id = #{userId}</if>
 	</delete>
 	
 	<!-- findByCommodityNum -->
 	<select id="findByCommodityNum" resultMap="shoppingCart">
 		select * from shopping_cart where commodity_num= #{commodityNum}
+		<if test="userId!=null"> and create_user_id =#{userId}</if>
 	</select>
 	
 	

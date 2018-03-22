@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yh.commodity.service.CommodityService;
+import com.yh.shoppingcart.service.ShoppingCartService;
 
 @Controller
 @Configuration
@@ -19,6 +20,8 @@ public class CommodityController {
 	
 	@Autowired
 	private CommodityService commodityService;
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 	
 	/**
 	 * 查看商品详情
@@ -35,6 +38,7 @@ public class CommodityController {
 		return "sales/introduction";
 		///tea-company-sales/src/main/resources/templates/sales/introduction.html
 	}
+	
 	
 	
 	/*@PostMapping("saveCommodity")

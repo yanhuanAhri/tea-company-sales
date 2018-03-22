@@ -14,6 +14,14 @@ public class ShoppingCartVo {
 	private Integer status;
 	private BigDecimal promotionPrice;//商品活动价格
 	
+	private String cover;
+	
+	public String getCover() {
+		return cover;
+	}
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
 	public Long getCommodityId() {
 		return commodityId;
 	}
