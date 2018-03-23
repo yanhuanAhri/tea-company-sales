@@ -12,16 +12,23 @@ var app = angular.module("introdutionApp", []);
 				'buyNum':buyNum
 			};
 			service.addToShopingCart(data,function(obj){
-			
-				if(obj.data.code==1){
+				if(obj.data.code!=1){
+					window.location.href = "/login.html/"
+				}else{
 					alert(obj.data.msg);
 				//	toastr["success"]("加入购物车成功");
-				}else if(obj.data.code==404){
-				//	toastr["warring"](" 您还没有登录该系统，请登录之后再进行该操作！！！");
-					alert(obj.data.msg);
-				}else{
-					alert("加入购物车失败");
 				}
+				/*else if(obj.data.code==404){
+				//	toastr["warring"](" 您还没有登录该系统，请登录之后再进行该操作！！！");
+					//alert(obj.data.msg);
+					window.location.href = "/login.html/
+				}else{
+					//alert("加入购物车失败");
+					//$location.path('/login');
+					//return obj.data;
+				//	$state.go('producer', {producerId: producerId});
+					window.location.href = "/login.html/
+				}*/
 			});
 		}
 		

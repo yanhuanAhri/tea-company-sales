@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yh.commodity.service.CommodityService;
 import com.yh.entity.Commodity;
+import com.yh.sales.commodity.service.CommodityService;
 
 @Controller
 @Configuration

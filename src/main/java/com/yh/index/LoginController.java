@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yh.entity.User;
-import com.yh.user.service.UserService;
+import com.yh.sales.user.service.UserService;
 
 @Controller
 @Configuration
@@ -57,6 +57,7 @@ public class LoginController {
 			model.addAttribute("msg", "用户名或密码错误");
 			return "login";
 		}
+		//session.setMaxInactiveInterval(interval);//秒
 		session.setAttribute("user", user);
 		model.addAttribute("code", "1");
 		model.addAttribute("msg", "登录成功");

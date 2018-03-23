@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.yh.commodityimg.mapper.CommodityImgMapper"> 
+<mapper namespace="com.yh.sales.commodityimg.mapper.CommodityImgMapper"> 
 	<resultMap id="commodityImg" type="CommodityImg">
 		<id property="id" column="id"/>
 		<result property="commodityId" column="commodity_id"/>

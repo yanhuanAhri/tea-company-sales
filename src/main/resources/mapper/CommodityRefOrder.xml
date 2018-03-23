@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper"> 
+	<resultMap id="commodityRefOrder" type="CommodityRefOrder">
+		<id property="id" column="id"/>
+		<result property="commodityId" column="commodity_id"/>
+		<result property="commodityNum" column="commodity_num"/>
+		<result property="orderId" column="order_id"/>
+		<result property="orderNum" column="order_num"/>
+		<result property="commodityTitle" column="commodity_title"/>
+		<result property="buyNum" column="buy_num"/>
+		<result property="buyPrice" column="buy_price"/>
+	</resultMap>
+	
+
+</mapper>

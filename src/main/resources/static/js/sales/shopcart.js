@@ -17,11 +17,12 @@
 					'buyNum':parseInt(num)
 				};
 				service.modityBuyNum(data,function(obj){
-					if(obj.data.code==404){
-					//	toastr["warring"](" 您还没有登录该系统，请登录之后再进行该操作！！！");
-						alert(obj.data.msg);
+					if(obj.data.code!=1){
+						window.location.href = "/login.html/"
+					}else{
+						service.getShoppingCart(getShoppingCartCallback);
 					}
-					service.getShoppingCart(getShoppingCartCallback);
+					
 				});
 		}
 		
@@ -31,8 +32,11 @@
 					'commodityNums':commodityNum,
 				}
 				service.delShopping(data,function(obj){
-					
-				})
+					if(obj.data.code!=1){
+						window.location.href = "/login.html/"
+					}
+				});
+				service.getShoppingCart(getShoppingCartCallback);
 			}else{
 				return;
 			}
@@ -40,12 +44,13 @@
 		}
 		
 		var getShoppingCartCallback= function(data) {
-			if(data.code==404){
-				alert(data.msg);
+			if(data.code!=1){
+				window.location.href = "/login.html/"
 			}else{
 				$scope.count=data.count;
 				$scope.shoppingCart=data.cartList;
 			}
+			
 		}
 		
 		service.getShoppingCart(getShoppingCartCallback);

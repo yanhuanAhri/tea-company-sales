@@ -6,16 +6,14 @@ import java.util.Date;
 
 public class Order {
 	private Long id;
-	private String commodityId;
-	private String commodityTitle;
-	private Integer buyNum;
+	private String orderNum;
+	//private Integer buyNum;
 	private Date createTime;
 	private Long createUserId;
 	private BigDecimal paymentAmount;
 	private BigDecimal totalAmount;
 	private Integer status;
 	private Long receivingId;
-	private BigDecimal buyPrice;
 	private Date updateTime;
 	private Date putawayTime;
 	public Long getId() {
@@ -24,24 +22,14 @@ public class Order {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCommodityId() {
-		return commodityId;
+	
+	public String getOrderNum() {
+		return orderNum;
 	}
-	public void setCommodityId(String commodityId) {
-		this.commodityId = commodityId;
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
 	}
-	public String getCommodityTitle() {
-		return commodityTitle;
-	}
-	public void setCommodityTitle(String commodityTitle) {
-		this.commodityTitle = commodityTitle;
-	}
-	public Integer getBuyNum() {
-		return buyNum;
-	}
-	public void setBuyNum(Integer buyNum) {
-		this.buyNum = buyNum;
-	}
+	
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -78,12 +66,7 @@ public class Order {
 	public void setReceivingId(Long receivingId) {
 		this.receivingId = receivingId;
 	}
-	public BigDecimal getBuyPrice() {
-		return buyPrice;
-	}
-	public void setBuyPrice(BigDecimal buyPrice) {
-		this.buyPrice = buyPrice;
-	}
+	
 	public Date getUpdateTime() {
 		return updateTime;
 	}
