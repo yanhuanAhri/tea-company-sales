@@ -78,7 +78,7 @@ public class ShoppingCartConteoller {
 		return map;
 	}
 	
-	@DeleteMapping("delShopping")
+	@DeleteMapping("delShoppingCart")
 	@ResponseBody
 	public Map<String,Object> delShopping(@RequestParam("commodityNums")List<String> commodityNums,
 	Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session) {

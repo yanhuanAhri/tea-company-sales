@@ -32,7 +32,14 @@ public class Commodity {
 	private String packingSpeicification;
 	
 	private Integer status;
+	private Integer repertoryStatus;
 	
+	public Integer getRepertoryStatus() {
+		return repertoryStatus;
+	}
+	public void setRepertoryStatus(Integer repertoryStatus) {
+		this.repertoryStatus = repertoryStatus;
+	}
 	public Integer getStatus() {
 		return status;
 	}

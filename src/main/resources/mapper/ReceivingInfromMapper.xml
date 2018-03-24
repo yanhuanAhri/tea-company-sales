@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.yh.sales.receiving.mapper.ReceivingMapper"> 
-	<resultMap id="receiving" type="ReceivingInfrom">
+	<resultMap id="receivingInfo" type="ReceivingInfrom">
 		<id property="id" column="id"/>
 		<result property="consignee" column="consignee"/>
 		<result property="receiptAddress" column="receipt_address"/>
@@ -9,8 +9,61 @@
 		<result property="isDefault" column="is_default"/>
 		<result property="createTime" column="create_time"/>
 		<result property="createUserId" column="create_user_id"/>
-		<result property="updateTime" column="update_time"/>
+		<result property="updateTime" column="update_time"  jdbcType="TIMESTAMP" javaType="java.util.Date"/>
 	</resultMap>
 	
-
+	<!-- findByCreateUserId -->
+	<select id="findByCreateUserId" resultMap="receivingInfo">
+		select * from receiving_info where 1=1
+		<if test="userId!=null"> and create_user_id=#{userId}</if>
+		order by update_time desc
+	</select>
+	
+	<!-- findById -->
+	<select id="findById" resultType="ReceivingInfrom">
+		select * from receiving_info where id=#{id}
+	</select>
+	
+	<!-- getCounts -->
+	<select id="getCounts" resultType="Integer">
+		select count(1) from receiving_info 
+		<if test="userId!=null">where create_user_id=#{userId}</if>
+	</select>
+	
+	
+	<!-- saveReceiving -->
+	<insert id="saveReceiving" useGeneratedKeys="true" keyProperty="id">
+		insert into receiving_info
+		(consignee,receipt_address,consignee_phone,is_default,create_time,create_user_id,update_time)
+		values
+		(#{receiving.consignee},#{receiving.receiptAddress},#{receiving.consigneePhone},#{receiving.isDefault},
+		#{receiving.createTime},#{receiving.createUserId},#{receiving.updateTime})
+	</insert>
+	
+	<!-- modifyReceiving -->
+	<update id="modifyReceiving">
+		update receiving_info
+		<set>
+			<if test="receiving.consignee!=null">consignee=#{receiving.consignee},</if>
+			<if test="receiving.receiptAddress!=null">receipt_address=#{receiving.receiptAddress},</if>
+			<if test="receiving.consigneePhone!=null">consignee_phone=#{receiving.consigneePhone},</if>
+			<if test="receiving.isDefault!=null">is_default=#{receiving.isDefault},</if>
+			<if test="receiving.updateTime!=null">update_time=#{receiving.updateTime},</if>
+		</set>
+		<where>
+			<if test="receiving.id!=null">id=#{receiving.id}</if>
+			<if test="userId!=null">and create_user_id=#{userId}</if>
+			<if test="isDefault!=null">and is_default=#{isDefault}</if>
+		</where>
+	</update>
+	
+	<!-- deleteReceiving -->
+	<delete id="deleteReceiving">
+		<if test="receivingId!=null || userId!=null">
+			delete from receiving_info where 1=1
+			<if test="receivingId!=null"> and id=#{receivingId}</if>
+			<if test="userId!=null">and create_user_id=#{userId}</if>
+		</if>
+	</delete>
+	
 </mapper>

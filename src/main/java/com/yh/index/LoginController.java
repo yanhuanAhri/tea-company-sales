@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.druid.util.StringUtils;
 import com.yh.entity.User;
 import com.yh.sales.user.service.UserService;
 
@@ -64,7 +65,13 @@ public class LoginController {
 		/*if(remember.equals("true")) {
 			//cookie  存入cookie
 		}*/
-		return "home";
+		String url=(String) session.getAttribute("url");
+		if(StringUtils.isEmpty(url)) {
+			return "home";
+		}else {
+			return url;
+		}
+		
 	}
 		
 		

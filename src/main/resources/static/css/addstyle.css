@@ -23,6 +23,8 @@ a.new-abtn-type{display: block;padding: 8px; overflow:hidden; border-radius: 2px
 .new-option-r i{color: #d4d4d4;padding-right: 5px;font-size:14px ;}
 .user-address li.user-addresslist.defaultAddr .new-option-r i{color: #ee3495;}
 
+.new-addr-btn a.a {color: black;cursor: pointer;}
+
 /*地址增加*/
 .am-modal{background: #fff;width: 100%;margin: 0px 0px !important;left: 0;top:0 ;height: 100%;}
 .am-form-content.address select{ float: left;width:32% ;margin-left:1% ;}

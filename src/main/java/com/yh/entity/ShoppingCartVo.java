@@ -12,10 +12,18 @@ public class ShoppingCartVo {
 	private Long createUserId;
 	private Date updateTime;
 	private Integer status;
+	private Integer repertoryStatus;
 	private BigDecimal promotionPrice;//商品活动价格
 	
 	private String cover;
 	
+	
+	public Integer getRepertoryStatus() {
+		return repertoryStatus;
+	}
+	public void setRepertoryStatus(Integer repertoryStatus) {
+		this.repertoryStatus = repertoryStatus;
+	}
 	public String getCover() {
 		return cover;
 	}

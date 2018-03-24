@@ -14,5 +14,9 @@
 		<result property="putawayTime" column="putaway_time"/>
 	</resultMap>
 	
+	<!-- saveOrder -->
+	<insert id="saveOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+	
+	</insert>
 
 </mapper>

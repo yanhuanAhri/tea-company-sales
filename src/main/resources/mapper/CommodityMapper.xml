@@ -28,6 +28,7 @@
 		<result property="craft" column="craft"/>
 		<result property="packingSpeicification" column="packing_speicification"/>
 		<result property="status" column="status"/>
+		<result property="repertoryStatus" column="repertory_status"/>
 	</resultMap>
 	
 	<!-- saveCommodity -->
@@ -35,11 +36,11 @@
 	   insert into commodity 
 	   (commodity_num,product_num,trade_name,market_price,promotion_price,create_time,create_user_id,tea_name,product_type,
 	   pick_year,pick_season,goods_grade,net_content,purpose,specification,origin_place,food_production_licence,store_method,
-	   expiration_date,craft,packing_speicification,status)
+	   expiration_date,craft,packing_speicification,status,repertory_status)
 	    values 
 	   (#{commodityNum},#{productNum},#{tradeName},#{marketPrice},#{promotionPrice},#{createTime},#{createUserId},#{teaName},#{productType},
 	   #{pickYear},#{pickSeason},#{goodsGrade},#{netContent},#{purpose},#{specification},#{originPlace},#{foodProductionLicence},
-	   #{storeMethod}, #{expirationDate},#{craft},#{packingSpeicification},#{status})
+	   #{storeMethod}, #{expirationDate},#{craft},#{packingSpeicification},#{status},#{repertoryStatus})
 	</insert>
 	
 	<!-- modifyCommodity -->
@@ -68,6 +69,7 @@
 				<if test="craft != null">craft=#{craft},</if>
 				<if test="packingSpeicification != null">packing_speicification=#{packingSpeicification}</if>
 				<if test="status!=null">status=#{status}</if>
+				<if test="repertoryStatus!=null">repertory_status=#{repertoryStatus}</if>
 				<if test="updateUserId != null">update_user_id=#{updateUserId},</if>
 				<if test="updateTime != null">update_time=#{updateTime}</if>
 			</set>

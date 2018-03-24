@@ -68,7 +68,7 @@ public class ShoppingCartService {
 	public Map<String,Object> getShoppingCart(User user){
 		Map<String,Object> map=new HashMap<>();
 		//状态（1有货，2缺货，3下架，4未上架）
-		List<ShoppingCartVo> cartList=shoppingCartMapper.findByCreateUserIdAndStatus(user.getId(), null);
+		List<ShoppingCartVo> cartList=shoppingCartMapper.findByCreateUserIdAndStatus(user.getId(), null,null);
 		//limit 分页
 		Object count=getCount(user,null).get("count");
 		map.put("count", count);
@@ -78,18 +78,23 @@ public class ShoppingCartService {
 	}
 	
 	/**
-	 * 购物车状态
+	 * 购物车数量
 	 * @param user
 	 * @param status
 	 * @return
 	 */
 	public Map<String,Object> getCount(User user,Integer status){
 		Map<String,Object> map=new HashMap<>();
-		Integer count=shoppingCartMapper.getCount(user.getId(), null);
+		Integer count=shoppingCartMapper.getCount(user.getId(), null,null);
 		map.put("count", count);
 		return map;
 	}
 	
+	/**
+	 * 根据商品编号删除购物车中的商品
+	 * @param commodityNums
+	 * @param user
+	 */
 	public void delShopping(List<String> commodityNums,User user) {
 		shoppingCartMapper.deleteShoppingCartByCommodityNum(commodityNums, user.getId());
 	}

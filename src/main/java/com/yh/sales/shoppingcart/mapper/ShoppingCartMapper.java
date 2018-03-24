@@ -21,10 +21,10 @@ public interface ShoppingCartMapper {
 	public void deleteShoppingCartByCommodityNum(@Param("commodityNumList")List<String> commodityNumList,@Param("userId")Long userId);
 	//public void modifyCommodity(@Param("commodity") Commodity commodity);
 	
-	public List<ShoppingCartVo> findByCreateUserIdAndStatus(@Param("userId")Long userId,@Param("status")Integer status);
+	public List<ShoppingCartVo> findByCreateUserIdAndStatus(@Param("userId")Long userId,@Param("status")Integer status,@Param("repertoryStatus")Integer repertoryStatus);
 	
 	public ShoppingCart findByCommodityNum(@Param("commodityNum")String commodityNum,@Param("userId")Long userId);
 	
-	public Integer getCount(@Param("userId")Long userId,@Param("status")Integer status);
+	public Integer getCount(@Param("userId")Long userId,@Param("status")Integer status,@Param("repertoryStatus")Integer repertoryStatus);
 
 }

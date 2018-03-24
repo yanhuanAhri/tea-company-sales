@@ -86,7 +86,7 @@
 			});
 		};
 		var delShopping=function(data,callbackFun){
-			var url='delShopping?commodityNums='+data.commodityNums;
+			var url='delShoppingCart?commodityNums='+data.commodityNums;
 			$http.delete(url).then(
 	    			function (response) {
 						callbackFun(response);

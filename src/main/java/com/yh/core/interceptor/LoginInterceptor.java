@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.alibaba.druid.util.StringUtils;
 import com.yh.entity.User;
 
 //@Configuration // extends HandlerInterceptorAdapter
@@ -27,8 +28,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
-		 String url = request.getRequestURI(); 
-		 if(isPass(url)){  
+		 String path = request.getRequestURI(); 
+		 if(isPass(path)){  
 	         //如果是公开地址则放行  
 	         return true;  
 	      }  
@@ -37,6 +38,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		 if(user!= null && user.getUserName()!=null && !user.getUserName().isEmpty()) {
 			 return true;
 		 }
+		 //request.getRealPath(path);
 		 //request.getRequestDispatcher("login.html").forward(request, response);
 		   /*if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){ //如果是ajax请求响应头会有x-requested-with  
 	            PrintWriter out = ((ServletResponse) request).getWriter();  
@@ -45,7 +47,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	            return false;
 	        }else{*/
 	            //非ajax请求时，session失效的处理
-        	response.sendRedirect(request.getContextPath()+"/login.html");
+		 String url=returnUrl(path);
+		 if(!StringUtils.isEmpty(url)) {
+			 session.setAttribute("url", url);
+		 }
+    	response.sendRedirect(request.getContextPath()+"/login.html");
 	     //  }
 		 
 
@@ -72,5 +78,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		return false;
+	}
+	private String returnUrl(String path) {
+		if(path.contains("shoppingCart") || path.contains("ShoppingCart")) {
+			return "sales/shopcart";
+		}else if(path.contains("receiving") || path.contains("Receiving") || path.contains("address")) {
+			return "person/address";
+		}
+		return "";
+		
 	}
 }
