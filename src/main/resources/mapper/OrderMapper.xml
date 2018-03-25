@@ -12,6 +12,8 @@
 		<result property="receivingId" column="receiving_id"/>
 		<result property="updateTime" column="update_time"/>
 		<result property="putawayTime" column="putaway_time"/>
+		<result property="logisticsMode" column="logistics_mode"/>
+		<result property="paymentMode" column="payment_mode"/>
 	</resultMap>
 	
 	<!-- saveOrder -->

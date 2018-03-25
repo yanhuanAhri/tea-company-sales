@@ -20,7 +20,7 @@
 	</select>
 	
 	<!-- findById -->
-	<select id="findById" resultType="ReceivingInfrom">
+	<select id="findById" resultMap="receivingInfo">
 		select * from receiving_info where id=#{id}
 	</select>
 	

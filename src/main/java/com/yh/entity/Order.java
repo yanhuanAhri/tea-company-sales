@@ -16,6 +16,22 @@ public class Order {
 	private Long receivingId;
 	private Date updateTime;
 	private Date putawayTime;
+	private String logisticsMode;
+	private String paymentMode;
+	
+	
+	public String getLogisticsMode() {
+		return logisticsMode;
+	}
+	public void setLogisticsMode(String logisticsMode) {
+		this.logisticsMode = logisticsMode;
+	}
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
 	public Long getId() {
 		return id;
 	}

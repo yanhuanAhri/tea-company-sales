@@ -129,7 +129,7 @@
 										<span class="street">雄楚大道666号(中南财经政法大学)</span></p> -->
 								</div>
 								<div class="new-addr-btn">
-									<a href="javascript:void(0);" class="a" ng-click=getReceiving(d.id)><i class="am-icon-edit"></i>编辑</a>
+									<a class="a" ng-click="getReceiving(d.id)" ><i class="am-icon-edit"></i>编辑</a>
 									<span class="new-addr-bar">|</span>
 									<a href="javascript:void(0);" onclick="delClick(this);"><i class="am-icon-trash"></i>删除</a>
 								</div>
@@ -150,7 +150,7 @@
 										<span class="street">雄楚大道666号(中南财经政法大学)</span></p> -->
 								</div>
 								<div class="new-addr-btn">
-									<a  class="a" ng-click=getReceiving(r.id)><i class="am-icon-edit"></i>编辑</a>
+									<a  class="a" ng-click="getReceiving(r.id)"><i class="am-icon-edit"></i>编辑</a>
 									<span class="new-addr-bar">|</span>
 									<a href="javascript:void(0);" onclick="delClick(this);"><i class="am-icon-trash"></i>删除</a>
 								</div>
@@ -198,7 +198,7 @@
 										<div class="am-form-group">
 											<label for="user-intro" class="am-form-label">详细地址</label>
 											<div class="am-form-content">
-												<textarea id="addressMsg" name="addressMsg" ng-model="addressMsg" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
+												<textarea  id="addressMsg" name="addressMsg" ng-model="addressMsg" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
 												<small>100字以内写出你的详细地址...</small>
 												<!-- <input type="text" class="form-control" id="textPublishReadTotal" name="textPublishReadTotal"
 													placeholder="周图文阅读数必填" ng-model="textPublishReadTotal"
