@@ -12,5 +12,33 @@
 		<result property="buyPrice" column="buy_price"/>
 	</resultMap>
 	
+	<!-- saveCommodityRefOrder -->
+	<insert id="saveCommodityRefOrder" parameterType="CommodityRefOrder" useGeneratedKeys="true" keyProperty="id">
+		insert into commodity_ref_order
+		(commodity_id,commodity_num,order_id,order_num,commodity_title,buy_num,buy_price)
+		values
+		(#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice})
+	</insert>
+	
+	<!-- updateCommodityRefOrder -->
+	<update id="updateCommodityRefOrder">
+		update commodity_ref_order
+		 <set>
+		   	<if test="commodityRefOrder.commodityId!=null">commodity_id=#{commodityRefOrder.commodityId},</if>
+		   	<if test="commodityRefOrder.commodityNum!=null">commodity_num=#{commodityRefOrder.commodity_num},</if>
+		   	<if test="commodityRefOrder.orderId!=null">order_id=#{commodityRefOrder.orderId},</if>
+		   	<if test="commodityRefOrder.orderNum!=null">order_num=#{commodityRefOrder.orderNum},</if>
+		   	<if test="commodityRefOrder.commodityTitle!=null">commodity_title=#{commodityRefOrder.commodityTitle},</if>
+		   	<if test="commodityRefOrder.buyNum!=null">buy_num=#{commodityRefOrder.buyNum},</if>
+		   	<if test="commodityRefOrder.buyPrice!=null">buy_price=#{commodityRefOrder.buyPrice},</if>
+	   </set>
+	   <where>
+	   		<if test="ref.id!=null">id=#{ref.id}</if>
+	   		<if test="ref.commodityId!=null">and commodity_id=#{ref.commodityId},</if>
+		   	<if test="ref.commodityNum!=null">and commodity_num=#{ref.commodity_num},</if>
+		   	<if test="ref.orderId!=null">and order_id=#{ref.orderId},</if>
+		   	<if test="ref.orderNum!=null">and order_num=#{ref.orderNum},</if>
+	   </where>
+	</update>
 
 </mapper>

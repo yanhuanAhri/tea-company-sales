@@ -14,11 +14,38 @@
 		<result property="putawayTime" column="putaway_time"/>
 		<result property="logisticsMode" column="logistics_mode"/>
 		<result property="paymentMode" column="payment_mode"/>
+		<result property="remark" column="remark"/>
 	</resultMap>
 	
 	<!-- saveOrder -->
 	<insert id="saveOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
-	
+		insert into order
+		(order_num,create_time,create_user_id,payment_mount,total_amount,status,receiving_id,
+		update_time,putaway_time,logistics_mode,payment_mode,remark)
+		values
+		(#{orderNum},#{createTime},#{createUserId},#{paymentAmount},#{totalAmount},#{status},
+		#{receivingId},#{updateTime},#{putawayTime},#{logisticsMode},#{paymentMode},#{remark})
 	</insert>
+	
+	<!-- updateOrder -->
+	<update id="updateOrder">
+	   update receiving_info
+	   <set>
+		   	<if test="order.orderNum!=null">order_num=#{order.orderNum},</if>
+		   	<if test="order.paymentMount!=null">payment_mount=#{order.paymentMount},</if>
+		   	<if test="order.totalAmount!=null">total_amount=#{order.totalAmount},</if>
+		   	<if test="order.status!=null">status=#{order.status},</if>
+		   	<if test="order.receivingId!=null">receiving_id=#{order.receivingId},</if>
+		   	<if test="order.putawayTime!=null and order.status==0">putaway_time=#{order.putawayTime},</if>
+		   	<if test="order.logisticsMode!=null">logistics_mode=#{order.logisticsMode},</if>
+		   	<if test="order.payment_mode!=null">putaway_time=#{order.paymentMode},</if>
+		   	<if test="order.updateTime!=null">update_time=#{order.updateTime},</if>
+		   	<if test="order.remark!=null">remark=#{remark}</if>
+	   </set>
+	   <where>
+	   		<if test="order.id!=null">id=#{order.id}</if>
+	   		<if test="orderNum!=null">and order_num=#{orderNum}</if>
+	   </where>
+	</update>
 
 </mapper>

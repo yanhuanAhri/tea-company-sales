@@ -47,7 +47,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	            return false;
 	        }else{*/
 	            //非ajax请求时，session失效的处理
-		 String url=returnUrl(path);
+		 String params=request.getQueryString();
+		 String url=returnUrl(path, params);
 		 if(!StringUtils.isEmpty(url)) {
 			 session.setAttribute("url", url);
 		 }
@@ -79,11 +80,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}
 		return false;
 	}
-	private String returnUrl(String path) {
+	private String returnUrl(String path,String params) {
 		if(path.contains("shoppingCart") || path.contains("ShoppingCart")) {
 			return "sales/shopcart";
 		}else if(path.contains("receiving") || path.contains("Receiving") || path.contains("address")) {
 			return "person/address";
+		}else if(path.contains("introduction") || path.contains("commodity") || path.contains("Commodity")) {
+			return "introduction"+"?"+params;
 		}
 		return "";
 		

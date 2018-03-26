@@ -12,14 +12,21 @@ public class Order {
 	private Long createUserId;
 	private BigDecimal paymentAmount;
 	private BigDecimal totalAmount;
-	private Integer status;
+	private Integer status;//订单状态   0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后
 	private Long receivingId;
 	private Date updateTime;
 	private Date putawayTime;
 	private String logisticsMode;
 	private String paymentMode;
+	private String remark;
 	
 	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public String getLogisticsMode() {
 		return logisticsMode;
 	}

@@ -252,8 +252,10 @@
 											<a href="javascript:;" title="关闭" class="close">×</a>
 										</div>
 										<div class="theme-popbod dform">
-											<form class="theme-signin" name="loginform" action="" method="post">
+											<form id="buyForm" class="theme-signin" name="loginform" action="buyCommodity" method="post">
+											  <input name="type" id="type" value="C" style="display: none">
 											  <input name="commodityNum" id="commodityNum" th:value="${commodity.commodityNum}" style="display: none">
+											  <input name="buyNum" id="buyNum"  style="display: none">
 												<div class="theme-signin-left">
 
 													<div class="theme-options">
@@ -318,7 +320,7 @@
 													
 														<li> 
 															<div class="clearfix tb-btn tb-btn-buy theme-login" style="margin-top: -25%">
-																<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="#" data-toggle="modal" data-target="#myModal">立即购买</a>
+																<a id="LikBuy" title="点此按钮到下一步确认购买信息" ng-click="buyNow()" data-toggle="modal" data-target="#myModal">立即购买</a>
 															</div>
 														</li>
 														<li>

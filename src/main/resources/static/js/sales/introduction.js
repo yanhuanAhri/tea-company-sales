@@ -7,6 +7,9 @@ var app = angular.module("introdutionApp", []);
 		$scope.addToShoppingCart=function(){
 			var commodityNum=$("#commodityNum").val();
 			var buyNum= $("input[name=buyNum]").val();
+			if(buyNum<2){
+				buyNum=1;
+			}
 			 var data={
 				'commodityNum':commodityNum,
 				'buyNum':buyNum
@@ -18,20 +21,28 @@ var app = angular.module("introdutionApp", []);
 					alert(obj.data.msg);
 				//	toastr["success"]("加入购物车成功");
 				}
-				/*else if(obj.data.code==404){
-				//	toastr["warring"](" 您还没有登录该系统，请登录之后再进行该操作！！！");
-					//alert(obj.data.msg);
-					window.location.href = "/login.html/
-				}else{
-					//alert("加入购物车失败");
-					//$location.path('/login');
-					//return obj.data;
-				//	$state.go('producer', {producerId: producerId});
-					window.location.href = "/login.html/
-				}*/
 			});
 		}
 		
+		$scope.buyNow=function(){
+			var commodityNum=$("#commodityNum").val();
+			var buyNum= $("input[name=buyNum]").val();
+			if(buyNum<2){
+				buyNum=1;
+			}
+			$("#buyNum").val(buyNum);
+			 var data={
+				'commodityNum':commodityNum,
+				'buyNum':buyNum,
+				'type':'C'
+			};
+			 $("#buyForm").attr('action',"/buyCommodity?commodityNum="+commodityNum);
+			 $("#buyForm").submit();
+			// $('#buyForm').attr('action':'buyCommodity');
+			// $('#buyForm').submit('msg':data);
+			 //('/buyCommodity', { 'msg': data},'post')
+			// service.buyNow(data);
+		}
 		
 	}]);
 		
@@ -41,15 +52,31 @@ var app = angular.module("introdutionApp", []);
 		
 		
 		var addToShopingCart = function(data, callbackFun) {
-			var url='addToShoppingCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
+			var url='addCommodityToShopCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
 			$http.get(url).then(
     			function (response) {
 					callbackFun(response);
 			});
 		};
 		
+		var buyNow=function(data){
+			/*var fileParams = new FormData();
+            fileParams.append('msg', angular.toJson(data));
+            $http({
+                method:'POST',
+                url: 'buyCommodity',
+                data: fileParams,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+               }).then(function (response) {
+                });*/
+            
+			//不能用ajax提交，待续……
+			$http.post("buyCommodity",angular.toJson(data)).then(function (response) {});
+		}
 		return {
 			addToShopingCart:addToShopingCart,
+			buyNow:buyNow,
 		}
 		
 	}]);

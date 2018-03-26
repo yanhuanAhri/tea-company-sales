@@ -1,9 +1,11 @@
 package com.yh.index;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(Model model,HttpServletRequest request, HttpSession session) {
+	public String login(Model model,HttpServletRequest request, HttpSession session,HttpServletResponse response) {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		//String remember=request.getParameter("remember-me");   
@@ -66,12 +68,20 @@ public class LoginController {
 			//cookie  存入cookie
 		}*/
 		String url=(String) session.getAttribute("url");
-		if(StringUtils.isEmpty(url)) {
-			return "home";
-		}else {
-			return url;
-		}
+		if(!StringUtils.isEmpty(url)) {
+			if(url.contains("?")) {
+				try {
+					response.sendRedirect(request.getContextPath()+url);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				return url;
+			}
 		
+		}
+		return "home";
 	}
 		
 		

@@ -15,7 +15,7 @@ input[type="text"]{-webkit-appearance:none;appearance:none;outline:none;-webkit-
 h3 { font-size: 14px;font-weight: 700;}
 .control{display: none;}
 .address h3 { border-bottom:none;}
-.address li.user-addresslist{display:none;width:100%;padding:10px;position: relative;min-height:80px ;}
+.address li.user-addresslist{display:none;width:100%;padding:10px;position: relative;min-height:80px ; cursor: pointer;}
 .address-left{ width:90%;float:left;position: relative;}
 .user.DefaultAddr {font-size: 14px;font-weight: 700;}
 .address-right{ float:right; margin-right:5px;padding-top:15px ;}	

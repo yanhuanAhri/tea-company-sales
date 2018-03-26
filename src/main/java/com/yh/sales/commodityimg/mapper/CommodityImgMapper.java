@@ -12,6 +12,12 @@ import com.yh.entity.CommodityImg;
 @Mapper
 public interface CommodityImgMapper {
 	
+	/**
+	 * @param type 1：封面图，2：细节图，3：详情图
+	 * @param commodityId
+	 * @param commodityNum
+	 * @return
+	 */
 	public List<CommodityImg> findCommodityImgByType(@Param("type") Integer type,@Param("commodityId")Long commodityId,@Param("commodityNum")String commodityNum);
 	
 }
