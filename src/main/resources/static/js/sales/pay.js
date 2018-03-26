@@ -4,9 +4,10 @@
 		//全局变量
 		//$scope.shoppingCart=[];
 		$scope.flag=0;
+		$scope.tip=true;
 		
-		$scope.modifyBuyNum=function(commodityNum,symbol){
-			/*var buyNum=$("#buyNum").val();
+		/*$scope.modifyBuyNum=function(commodityNum,symbol){
+			var buyNum=$("#buyNum").val();
 			var num=symbol+1;
 			buyNum=parseInt(buyNum)+parseInt(num);
 			if(buyNum==0){
@@ -24,7 +25,50 @@
 						service.getShoppingCart(getShoppingCartCallback);
 					}
 					
-				});*/
+				});
+		}*/
+		
+		$scope.createOrder=function(event){
+			var commodity=[];
+			$(".buy").each(function(index,val) {
+				//console.info(val);
+				var commodityNum=$(val).find(".commodityNum").val();
+				var buyNum=$(val).find(".buyNum").val();
+				if(buyNum=='0'){
+					alert("购买的商品数量不能小于1哦~");
+					$scope.tip=false;
+					return false;
+				}
+				var commodityMsg = {
+						'commodityNum':commodityNum,
+						'buyNum':buyNum
+					};
+				commodity.push(commodityMsg);
+			})
+			if(!$scope.tip){
+				//$("#J_Go").removeClass("theme-login");
+				//event.preventDefault();
+				return;
+			}
+			var logisticsMode=$('.op_express_delivery_hot').children(".selected").text();
+			var paymentMode=$('.pay-list').children(".selected").text();
+			var data={
+					'paymentAmount':$scope.paymentAmount,
+					'totalAmount':$scope.totalAmount,
+					'receivingId':$scope.flag,
+					'logisticsMode':logisticsMode,
+					'paymentMode':paymentMode,
+					'remark':$('#remark').val(),
+					'commodity':commodity,
+			}
+			service.createOrder(data,function(response){
+				
+			});
+			 $("#inputPassword").click();
+			
+			//$("#J_Go").addClass("theme-login");
+
+			//$('#createOrder').addClass("theme-login");
 		}
 		
 		//选择用户地址
@@ -56,7 +100,8 @@
 			$(".expressage").each(function() {
 				expressagePrice += parseFloat($(this).text());
 			});
-			$scope.price=commodityPrice+expressagePrice;
+			$scope.totalAmount=commodityPrice+expressagePrice;
+			$scope.paymentAmount=commodityPrice+expressagePrice;
 		}
 		getPrice();
 		
@@ -73,35 +118,15 @@
 						callbackFun(response.data);
 			});
 		};
-	/*	var getReceivingById=function(id,callbackFun){
-			$http.get('getReceiving?id='+id).then(
-	    			function (response) {
-						callbackFun(response.data);
-			});
-		};*/
-		/*var getShoppingCart = function(callbackFun) {
-			var url='shoppingCart';
-			$http.get(url).then(
-    			function (response) {
-					callbackFun(response.data);
-			});
-		};
-		var modityBuyNum = function(data, callbackFun) {
-			var url='addToShoppingCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
-			$http.get(url).then(
-    			function (response) {
-					callbackFun(response);
-			});
-		};
-		var delShopping=function(data,callbackFun){
-			var url='delShoppingCart?commodityNums='+data.commodityNums;
-			$http.delete(url).then(
+		var createOrder=function(data,callbackFun){
+			$http.post('createOrder',angular.toJson(data)).then(
 	    			function (response) {
 						callbackFun(response);
 				});
-		}*/
+		}
 		return {
 			getAllReceiving:getAllReceiving,
+			createOrder:createOrder,
 		/*	getReceivingById:getReceivingById,*/
 			
 		}

@@ -1,5 +1,6 @@
 package com.yh.sales.order.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yh.entity.Commodity;
+import com.yh.entity.CommodityRefOrder;
 import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
 import com.yh.sales.commodity.mapper.CommodityMapper;
 import com.yh.sales.commodityimg.mapper.CommodityImgMapper;
+import com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper;
+import com.yh.sales.receiving.mapper.ReceivingMapper;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -25,6 +29,10 @@ public class OrderService {
 	private CommodityMapper commodityMapper;
 	@Autowired
 	private CommodityImgMapper commodityImgMapper;
+	@Autowired
+	private CommodityRefOrderMapper commodityRefOrderMapper;
+	@Autowired
+	private ReceivingMapper receivingMapper;
 	
 	
 	/**
@@ -103,6 +111,32 @@ public class OrderService {
 			}
 		}
 		return list;
+	}
+	
+	public void createOrder(String msg,User user) {
+		if(StringUtils.isNotBlank(msg)) {
+			JSONObject msgObj=JSONObject.fromObject(msg);
+			//{"paymentAmount":243.1,"totalAmount":243.1,"receivingId":0,"logisticsMode":"圆通",
+			//"paymentMode":"银联","remark":"","commodity":[{"commodityNum":"201601","buyNum":"1"}]}
+			BigDecimal paymentAmount=new BigDecimal(msgObj.getString("paymentAmount"));
+			BigDecimal totalAmount=new BigDecimal(msgObj.getString("totalAmount"));
+			Long receivingId=msgObj.getLong("receivingId");
+			String logisticsMode=msgObj.getString("logisticsMode");
+			String paymentMode=msgObj.getString("paymentMode");
+			String remark=msgObj.getString("remark");
+			String commodityMsg=msgObj.getString("commodity");
+			if(StringUtils.isNotBlank(commodityMsg)) {
+				//JSONObject commodityObj=JSONObject.fromObject(commodityMsg);
+				JSONArray commodityArr=JSONArray.fromObject(commodityMsg);
+				for(int i=0;i<commodityArr.size();i++) {
+					JSONObject commdodity=commodityArr.getJSONObject(i);
+					String commodityNum=commdodity.getString("commodityNum");
+					Integer buyNum=commdodity.getInt("buyNum");
+					System.out.println();
+				}
+			}
+			
+		}
 	}
 	
 }

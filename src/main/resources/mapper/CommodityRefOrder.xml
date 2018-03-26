@@ -13,11 +13,14 @@
 	</resultMap>
 	
 	<!-- saveCommodityRefOrder -->
-	<insert id="saveCommodityRefOrder" parameterType="CommodityRefOrder" useGeneratedKeys="true" keyProperty="id">
+	<insert id="saveCommodityRefOrder" parameterType="java.util.ArrayList" >
 		insert into commodity_ref_order
 		(commodity_id,commodity_num,order_id,order_num,commodity_title,buy_num,buy_price)
 		values
-		(#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice})
+		 <foreach collection="list" item="item" index="index" separator=",">  
+      	 	(#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice})
+   		 </foreach>  
+		<!-- (#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice}) -->
 	</insert>
 	
 	<!-- updateCommodityRefOrder -->

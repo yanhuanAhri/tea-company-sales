@@ -155,11 +155,11 @@
 					<div class="logistics">
 						<h3>选择物流方式</h3>
 						<ul class="op_express_delivery_hot">
-							<li data-value="yuantong" class="OP_LOG_BTN  selected"><i class="c-gap-right" style="background-position:0px -468px"></i>圆通<span></span></li>
-							<li data-value="shentong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -1008px"></i>申通<span></span></li>
-							<li data-value="yunda" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -576px"></i>韵达<span></span></li>
+							<li data-value="yuantong" class="OP_LOG_BTN selected"><i class="c-gap-right" style="background-position:0px -468px"></i>圆通<span></span></li>
+							<li data-value="shentong" class="OP_LOG_BTN "><i class="c-gap-right" style="background-position:0px -1008px"></i>申通<span></span></li>
+							<li data-value="yunda" class="OP_LOG_BTN "><i class="c-gap-right" style="background-position:0px -576px"></i>韵达<span></span></li>
 							<li data-value="zhongtong" class="OP_LOG_BTN op_express_delivery_hot_last "><i class="c-gap-right" style="background-position:0px -324px"></i>中通<span></span></li>
-							<li data-value="shunfeng" class="OP_LOG_BTN  op_express_delivery_hot_bottom"><i class="c-gap-right" style="background-position:0px -180px"></i>顺丰<span></span></li>
+							<li data-value="shunfeng" class="OP_LOG_BTN op_express_delivery_hot_bottom"><i class="c-gap-right" style="background-position:0px -180px"></i>顺丰<span></span></li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -202,7 +202,7 @@
 							</div>
 							<div class="clear"></div>
 				<!-- 	<p th:each="b : ${buyCommodityList}"><span th:text="${b.commodityTitle}"></span></p> -->
-							<div class="item-list" th:each="buy : ${buyCommodityList}">
+							<div class="item-list buy" th:each="buy : ${buyCommodityList}">
 									<!-- <span th:text="${buy.commodityTitle}"></span> -->
 								<div class="bundle  bundle-last">
 
@@ -210,6 +210,7 @@
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
 												<li class="td td-item"><!-- th:text="${user.userName} -->
+													<input class="commodityNum" th:value="${buy.commodityNum}" style="display: none;">
 													<div class="item-pic"><!-- ng-href="introduction?commodityNum={{s.commodityNum}}" -->
 														<a class="J_MakePoint" th:href="'introduction?commodityNum='+${buy.commodityNum}">
 															<img th:src="${buy.cover}" class="itempic J_ItemImg" width=85px height=85px></a>
@@ -240,7 +241,7 @@
 														<span class="phone-title">购买数量</span>
 														<div class="sl">
 															<input class="min am-btn" name="" type="button" value="-" />
-															<input id="buyNum" class="text_box" name="" type="text" th:value="${buy.buyNum}" style="width:30px;" />
+															<input class="text_box buyNum" name="" type="text" th:value="${buy.buyNum}" style="width:30px;" />
 															<input class="add am-btn" name="" type="button" value="+" />
 														</div>
 													</div>
@@ -265,10 +266,10 @@
 
 										</ul>
 										<div class="clear"></div>
-
 									</div>
 								</div>
 							</div>
+							
 							<div class="clear"></div>
 							<!--  -->
 
@@ -280,7 +281,7 @@
 								<div class="order-user-info">
 									<div id="holyshit257" class="memo">
 										<label>买家留言：</label>
-										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+										<input type="text" id="remark" name="remark" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
 										<div class="msg hidden J-msg">
 											<p class="error">最多输入500个字符</p>
 										</div>
@@ -343,7 +344,7 @@
 							<!--含运费小计 -->
 							<div class="buy-point-discharge ">
 								<p class="price g_price ">
-									合计（含运费） <span>¥</span><em class="pay-sum">{{price}}</em>
+									合计（含运费） <span>¥</span><em class="pay-sum">{{totalAmount}}</em>
 								</p>
 							</div>
 
@@ -353,7 +354,7 @@
 									<div class="box">
 										<div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
 											<span class="price g_price ">
-                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">{{price}}</em>
+                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">{{paymentAmount}}</em>
 											</span>
 										</div>
 																								<!--  ng-if="d.isDefault==1" -->
@@ -376,8 +377,9 @@
 									</div>
 
 									<div id="holyshit269" class="submitOrder">
-										<div class="go-btn-wrap"><!-- href="success.html" -->
-											<a id="J_Go"  href="javascript:void(0);"  class="btn-go theme-login" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+										<div class="go-btn-wrap">
+											<a id="J_Go" ng-click="createOrder(this)" id="createOrder" class="btn-go"  tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+											<span id="inputPassword" class="theme-login" style="display: none;"></span>
 										</div>
 									</div>
 									<div class="clear"></div>
@@ -414,7 +416,7 @@
 			<div class="theme-popover-mask"></div>
 			
 			<!-- 弹框 -->
-			<div class="theme-popover">
+			<div class="theme-popover" ng-if="tip">
 
 				<!--标题 -->
 				<div class="am-cf am-padding">
