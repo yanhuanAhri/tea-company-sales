@@ -49,16 +49,9 @@ public class ShoppingCartConteoller {
 			Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session) {
 			Map<String,Object> map=new HashMap<>();
 			User user=(User) session.getAttribute("user");
-			//String msg=null;
-			/*if(user== null || user.getUserName()==null || user.getUserName().isEmpty()) {
-				map.put("code", "404");
-				map.put("msg", "您还没有登录该系统，请登录之后再进行该操作！！！");
-				//msg= "error";
-			}else {*/
 				shoppingCartService.saveShoppingCart(commodityNum, Integer.valueOf(buyNum), user);
 				map.put("code", "1");
 				map.put("msg", "加入购物车成功");
-		//	}
 				return map;
 	}
 	
@@ -67,14 +60,8 @@ public class ShoppingCartConteoller {
 	public Map<String,Object> GoShoppingCart(HttpServletResponse response,HttpSession session){
 		Map<String,Object> map=new HashMap<>();
 		User user=(User) session.getAttribute("user");
-		/*if(user== null || user.getUserName()==null || user.getUserName().isEmpty()) {
-			map.put("code", "404");
-			map.put("msg", "您还没有登录该系统，请登录之后再进行该操作！！！");
-			//msg= "error";
-		}else {*/
 			map=shoppingCartService.getShoppingCart(user);
 			map.put("code", "1");
-	//	}
 		return map;
 	}
 	

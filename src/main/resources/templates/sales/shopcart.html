@@ -72,6 +72,7 @@
 
 			<!--购物车 -->
 			<div class="concent">
+			<form action="buyCommodity" method="post">
 				<div id="cartTable">
 					<div class="cart-table-th">
 						<div class="wp">
@@ -210,13 +211,14 @@
 							<strong class="price">¥<em id="J_Total">0.00</em></strong>
 						</div>
 						<div class="btn-area">
-							<a href="pay.html" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
+							<a ng-click="settleAccounts()" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
 								<span>结&nbsp;算</span></a>
 						</div>
 					</div>
 
 				</div>
-
+			</form>
+			<!-- 尾 -->
 				<div class="footer">
 					<div class="footer-hd">
 						<p>
@@ -244,7 +246,7 @@
 
 			<!--操作页面-->
 
-			<div class="theme-popover-mask"></div>
+			<!-- <div class="theme-popover-mask"></div>
 
 			<div class="theme-popover">
 				<div class="theme-span"></div>
@@ -299,7 +301,7 @@
 
 					</form>
 				</div>
-			</div>
+			</div> -->
 		<!--引导 -->
 		<div class="navCir">
 			<li><a href="home2.html"><i class="am-icon-home "></i>首页</a></li>

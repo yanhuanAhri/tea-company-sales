@@ -42,6 +42,9 @@
 			}
 		   
 		}
+		$scope.settleAccounts=function(){
+			//buyCommodity
+		}
 		
 		var getShoppingCartCallback= function(data) {
 			if(data.code!=1){

@@ -3,6 +3,7 @@ package com.yh.sales.order.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,14 +11,18 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yh.core.util.SerialUtil;
 import com.yh.entity.Commodity;
 import com.yh.entity.CommodityRefOrder;
+import com.yh.entity.Order;
 import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
 import com.yh.sales.commodity.mapper.CommodityMapper;
 import com.yh.sales.commodityimg.mapper.CommodityImgMapper;
 import com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper;
+import com.yh.sales.order.mapper.OrderMapper;
 import com.yh.sales.receiving.mapper.ReceivingMapper;
+import com.yh.sales.user.mapper.UserMapper;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -33,6 +38,10 @@ public class OrderService {
 	private CommodityRefOrderMapper commodityRefOrderMapper;
 	@Autowired
 	private ReceivingMapper receivingMapper;
+	@Autowired
+	private OrderMapper orderMapper;
+	@Autowired
+	private UserMapper userMapper;
 	
 	
 	/**
@@ -40,6 +49,7 @@ public class OrderService {
 	 * @param msg 请求体
 	 * @param user
 	 * @return
+	 *     库存和已售
 	 */
 	public  List<ShoppingCartVo> toBepaidMsg(String msg,User user){
 		List<ShoppingCartVo> list=new ArrayList<>();
@@ -113,30 +123,93 @@ public class OrderService {
 		return list;
 	}
 	
-	public void createOrder(String msg,User user) {
+	/**
+	 * 订单创建
+	 * @param msg
+	 * @param user
+	 */
+	public Map<String,Object> createOrder(String msg,User user) {
+		Map<String,Object> map=new HashMap<>();
 		if(StringUtils.isNotBlank(msg)) {
 			JSONObject msgObj=JSONObject.fromObject(msg);
-			//{"paymentAmount":243.1,"totalAmount":243.1,"receivingId":0,"logisticsMode":"圆通",
-			//"paymentMode":"银联","remark":"","commodity":[{"commodityNum":"201601","buyNum":"1"}]}
-			BigDecimal paymentAmount=new BigDecimal(msgObj.getString("paymentAmount"));
-			BigDecimal totalAmount=new BigDecimal(msgObj.getString("totalAmount"));
-			Long receivingId=msgObj.getLong("receivingId");
-			String logisticsMode=msgObj.getString("logisticsMode");
-			String paymentMode=msgObj.getString("paymentMode");
-			String remark=msgObj.getString("remark");
+			//保存商品
+			Order order=new Order();
+			order.setOrderNum(SerialUtil.generateOrderSerial("ORDER"+user.getUserName().toUpperCase()));
+			order.setCreateTime(new Date());
+			order.setCreateUserId(user.getId());
+			order.setPaymentAmount(new BigDecimal(msgObj.getString("paymentAmount")));
+			order.setTotalAmount(new BigDecimal(msgObj.getString("totalAmount")));
+			order.setStatus(0);
+			order.setReceivingId(msgObj.getLong("receivingId"));
+			order.setUpdateTime(new Date());
+			order.setLogisticsMode(msgObj.getString("logisticsMode"));
+			order.setPaymentMode(msgObj.getString("paymentMode"));
+			order.setRemark(msgObj.getString("remark"));
 			String commodityMsg=msgObj.getString("commodity");
+			//商品关系
 			if(StringUtils.isNotBlank(commodityMsg)) {
-				//JSONObject commodityObj=JSONObject.fromObject(commodityMsg);
-				JSONArray commodityArr=JSONArray.fromObject(commodityMsg);
-				for(int i=0;i<commodityArr.size();i++) {
-					JSONObject commdodity=commodityArr.getJSONObject(i);
-					String commodityNum=commdodity.getString("commodityNum");
-					Integer buyNum=commdodity.getInt("buyNum");
-					System.out.println();
+				orderMapper.saveOrder(order);
+				saveOrderRef(order.getOrderNum(),commodityMsg);
+				map.put("orderNum", order.getOrderNum());
+			}
+		}
+		return map;
+	}
+	
+	/**
+	 * 保存商品订单关系表数据
+	 * @param orderNum
+	 * @param commodityMsg
+	 */
+	private void saveOrderRef(String orderNum,String commodityMsg) {
+		Order order=orderMapper.findOne(orderNum, null);
+		JSONArray commodityArr=JSONArray.fromObject(commodityMsg);
+		List<CommodityRefOrder> list=new ArrayList<>();
+		for(int i=0;i<commodityArr.size();i++) {
+			JSONObject commodity=commodityArr.getJSONObject(i);
+			CommodityRefOrder orderRef=new CommodityRefOrder();
+			orderRef.setCommodityId(commodity.getLong("commodityId"));
+			orderRef.setCommodityNum(commodity.getString("commodityNum"));
+			orderRef.setOrderId(order.getId());
+			orderRef.setOrderNum(order.getOrderNum());
+			orderRef.setCommodityTitle(commodity.getString("commodityTitle"));
+			orderRef.setBuyNum(commodity.getInt("buyNum"));
+			orderRef.setBuyPrice(new BigDecimal(commodity.getString("buyPrice")));
+			list.add(orderRef);
+		}
+		commodityRefOrderMapper.saveCommodityRefOrder(list);
+	}
+	
+	/**
+	 * 付款
+	 * @param user
+	 * @param payMsg
+	 * @return
+	 */
+	public Boolean pay(User user,String payMsg) {
+		//paymentCode
+		if(StringUtils.isNotBlank(payMsg)) {
+			if(payMsg.contains("&")) {
+				String paymentCode=null,orderNum=null;
+				String[] payArr=payMsg.split("&");
+				for(int i=0;i<payArr.length;i++) {
+					if(payArr[i].contains("paymentCode")) {
+						paymentCode=payArr[i].split("=")[1];
+					}else if(payArr[i].contains("orderNum")) {
+						orderNum=payArr[i].split("=")[1];
+					}
+				}
+				if(paymentCode.equals(userMapper.findById(user.getId()).getPaymentCode())) {
+					Order order=new Order();
+					order.setPutawayTime(new Date());
+					order.setUpdateTime(new Date());
+					order.setStatus(2);
+					orderMapper.updateOrder(order, orderNum);
+					return true;
 				}
 			}
-			
 		}
+		return false;
 	}
 	
 }

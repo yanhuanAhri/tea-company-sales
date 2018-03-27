@@ -14,5 +14,5 @@ public interface OrderMapper {
 	
 	public void updateOrder(@Param("order")Order order,@Param("orderNum")String orderNum);
 	
-	
+	public Order findOne(@Param("orderNum")String orderNum,@Param("id")Long id);
 }

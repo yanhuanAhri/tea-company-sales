@@ -34,6 +34,9 @@
 				//console.info(val);
 				var commodityNum=$(val).find(".commodityNum").val();
 				var buyNum=$(val).find(".buyNum").val();
+				var commodityTitle=$(val).find(".commodityTitle").text();
+				var buyPrice=$(val).find(".price-now").text();
+				var commodityId=$(val).find(".commodityId").text();
 				if(buyNum=='0'){
 					alert("购买的商品数量不能小于1哦~");
 					$scope.tip=false;
@@ -41,7 +44,10 @@
 				}
 				var commodityMsg = {
 						'commodityNum':commodityNum,
-						'buyNum':buyNum
+						'buyNum':buyNum,
+						'commodityTitle':commodityTitle,
+						'buyPrice':buyPrice,
+						'commodityId':commodityId
 					};
 				commodity.push(commodityMsg);
 			})
@@ -52,6 +58,10 @@
 			}
 			var logisticsMode=$('.op_express_delivery_hot').children(".selected").text();
 			var paymentMode=$('.pay-list').children(".selected").text();
+			if(!logisticsMode || !paymentMode){
+				alert("请选择支付方式和物流方式~");
+				return;
+			}
 			var data={
 					'paymentAmount':$scope.paymentAmount,
 					'totalAmount':$scope.totalAmount,
@@ -62,13 +72,13 @@
 					'commodity':commodity,
 			}
 			service.createOrder(data,function(response){
-				
+				if(response.data.code!=1){
+					window.location.href = "/login.html/"
+				}else{
+					$scope.orderNum=response.data.orderNum;
+					$("#inputPassword").click();
+				}
 			});
-			 $("#inputPassword").click();
-			
-			//$("#J_Go").addClass("theme-login");
-
-			//$('#createOrder').addClass("theme-login");
 		}
 		
 		//选择用户地址

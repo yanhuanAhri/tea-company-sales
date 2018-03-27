@@ -18,7 +18,8 @@
 		(commodity_id,commodity_num,order_id,order_num,commodity_title,buy_num,buy_price)
 		values
 		 <foreach collection="list" item="item" index="index" separator=",">  
-      	 	(#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice})
+      	 	(#{item.commodityId},#{item.commodityNum},#{item.orderId},#{item.orderNum},
+      	 	#{item.commodityTitle},#{item.buyNum},#{item.buyPrice})
    		 </foreach>  
 		<!-- (#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice}) -->
 	</insert>

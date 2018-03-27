@@ -17,28 +17,29 @@
 		<result property="remark" column="remark"/>
 	</resultMap>
 	
-	<!-- saveOrder -->
+	<!-- saveOrder --><!-- useGeneratedKeys="true" keyProperty="id" -->
 	<insert id="saveOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
-		insert into order
-		(order_num,create_time,create_user_id,payment_mount,total_amount,status,receiving_id,
+		insert into `order`
+		(order_num,create_time,create_user_id,payment_amount,total_amount,`status`,receiving_id,
 		update_time,putaway_time,logistics_mode,payment_mode,remark)
 		values
-		(#{orderNum},#{createTime},#{createUserId},#{paymentAmount},#{totalAmount},#{status},
-		#{receivingId},#{updateTime},#{putawayTime},#{logisticsMode},#{paymentMode},#{remark})
+		(#{order.orderNum},#{order.createTime},#{order.createUserId},#{order.paymentAmount},#{order.totalAmount},
+		#{order.status},#{order.receivingId},#{order.updateTime},#{order.putawayTime},#{order.logisticsMode},
+		#{order.paymentMode},#{order.remark})
 	</insert>
 	
 	<!-- updateOrder -->
 	<update id="updateOrder">
-	   update receiving_info
+	   update `order`
 	   <set>
 		   	<if test="order.orderNum!=null">order_num=#{order.orderNum},</if>
-		   	<if test="order.paymentMount!=null">payment_mount=#{order.paymentMount},</if>
+		   	<if test="order.paymentAmount!=null">payment_amount=#{order.paymentAmount},</if>
 		   	<if test="order.totalAmount!=null">total_amount=#{order.totalAmount},</if>
 		   	<if test="order.status!=null">status=#{order.status},</if>
 		   	<if test="order.receivingId!=null">receiving_id=#{order.receivingId},</if>
-		   	<if test="order.putawayTime!=null and order.status==0">putaway_time=#{order.putawayTime},</if>
+		   	<if test="order.putawayTime!=null">putaway_time=#{order.putawayTime},</if>
 		   	<if test="order.logisticsMode!=null">logistics_mode=#{order.logisticsMode},</if>
-		   	<if test="order.payment_mode!=null">putaway_time=#{order.paymentMode},</if>
+		   	<if test="order.paymentMode!=null">payment_mode=#{order.paymentMode},</if>
 		   	<if test="order.updateTime!=null">update_time=#{order.updateTime},</if>
 		   	<if test="order.remark!=null">remark=#{remark}</if>
 	   </set>
@@ -47,5 +48,12 @@
 	   		<if test="orderNum!=null">and order_num=#{orderNum}</if>
 	   </where>
 	</update>
+	
+	<!-- findOne -->
+	<select id="findOne" resultMap="order">
+		select * from `order` where 1=1
+		<if test="orderNum!=null"> and order_num=#{orderNum}</if>
+		<if test="id!=null"> and id=#{id}</if>
+	</select>
 
 </mapper>

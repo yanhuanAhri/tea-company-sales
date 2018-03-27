@@ -101,8 +101,8 @@ color: #FFF;}
 /*地址操作*/
 .address h3{float: left;border: none;margin-top:20px ;}
 .control{display: block;float: left;margin-left: 20px;margin-top:10px ;}
-.am-form-content {margin-left:75px;}   
-.am-form-label {width:60px;float: left;}	
+.am-form-content {margin-left:75px;padding: 2% 0;}   
+.am-form-label {width:100px;float: left;}	
 
 .paycont{max-width:1000px ;margin:10px;}
 .paycont h3{padding-bottom:10px ;}
@@ -157,7 +157,7 @@ color: #FFF;}
 
 
 .theme-popover-mask{z-index:10000000;position:fixed;left:0;top:0;width:100%;height:100%;background:#000;opacity:0.5;filter:alpha(opacity=50);-moz-opacity:0.5;display:none;}
-.theme-popover{z-index:10000009;position:fixed;bottom:50%;left:50%;width:500px;height:400px;margin-bottom:-200px;margin-left:-250px;display:none;background:#fff;overflow: hidden;}
+.theme-popover{z-index:10000009;position:fixed;bottom:50%;left:50%;width:500px;height:300px;margin-bottom:-200px;margin-left:-250px;display:none;background:#fff;overflow: hidden;}
 .theme-poptit{padding:12px;position:relative;}
 .theme-poptit .close:hover{color:#444;}
 

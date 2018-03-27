@@ -16,8 +16,14 @@ public class User{
 	private Long integral;
 	private Date createTime;
 	private Date updateTime;
+	private String paymentCode;
 	
-	
+	public String getPaymentCode() {
+		return paymentCode;
+	}
+	public void setPaymentCode(String paymentCode) {
+		this.paymentCode = paymentCode;
+	}
 	public Date getUpdateTime() {
 		return updateTime;
 	}

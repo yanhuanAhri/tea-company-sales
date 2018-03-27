@@ -23,4 +23,5 @@ public interface UserMapper {
     public User findByUserName(@Param("userName") String userName);
     public User findByEmail(@Param("email") String email);
     public User findByPhone(@Param("phone") String phone);
+    public User findById(@Param("id")Long id);
 }

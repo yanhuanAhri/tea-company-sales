@@ -16,6 +16,7 @@
 		<result property="integral" column="integral"/>
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"  javaType="java.util.Date"/>
 		<result property="updateTime" column="update_time"  jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="paymentCode" column="payment_code"/>
 		<!-- <result property="createTime" column="create_time" javaType="java.util.Date" /> -->
 	</resultMap>
       
@@ -36,13 +37,16 @@
    </insert>  
     -->
    <select id="findByUserName" resultMap="user">
-    select * from user_info where user_name=#{userName}
+    	select * from user_info where user_name=#{userName}
    </select>
     <select id="findByEmail" resultMap="user">
-    select * from user_info where email=#{email}
+    	select * from user_info where email=#{email}
    </select>
     <select id="findByPhone" resultMap="user">
-    select * from user_info where phone=#{phone}
+    	select * from user_info where phone=#{phone}
+   </select>
+   <select id="findById" resultMap="user">
+   		select * from user_info where id=#{id}
    </select>
    
       

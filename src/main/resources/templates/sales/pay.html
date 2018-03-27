@@ -203,13 +203,13 @@
 							<div class="clear"></div>
 				<!-- 	<p th:each="b : ${buyCommodityList}"><span th:text="${b.commodityTitle}"></span></p> -->
 							<div class="item-list buy" th:each="buy : ${buyCommodityList}">
-									<!-- <span th:text="${buy.commodityTitle}"></span> -->
 								<div class="bundle  bundle-last">
 
 									<div class="bundle-main">
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
 												<li class="td td-item"><!-- th:text="${user.userName} -->
+													<span class="commodityId" th:text="${buy.commodityId}" style="display: none;"></span>
 													<input class="commodityNum" th:value="${buy.commodityNum}" style="display: none;">
 													<div class="item-pic"><!-- ng-href="introduction?commodityNum={{s.commodityNum}}" -->
 														<a class="J_MakePoint" th:href="'introduction?commodityNum='+${buy.commodityNum}">
@@ -217,7 +217,7 @@
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
-															<a th:href="'introduction?commodityNum='+${buy.commodityNum}" class="item-title J_MakePoint" data-point="tbcart.8.11" th:text="${buy.commodityTitle}">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</a>
+															<a th:href="'introduction?commodityNum='+${buy.commodityNum}" class="item-title J_MakePoint commodityTitle" data-point="tbcart.8.11" th:text="${buy.commodityTitle}">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</a>
 														</div>
 													</div>
 												</li>
@@ -230,7 +230,7 @@
 												<li class="td td-price">
 													<div class="item-price price-promo-promo">
 														<div class="price-content">
-															<em class="J_Price price-now" th:text="${buy.promotionPrice}">39.00</em>
+															<span class="J_Price price-now" th:text="${buy.promotionPrice}">39.00</span>
 														</div>
 													</div>
 												</li>
@@ -420,57 +420,32 @@
 
 				<!--标题 -->
 				<div class="am-cf am-padding">
-					<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add address</small></div>
+					<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">确认付款</strong> / <small>Confirm the payment</small></div>
 				</div>
 				<hr/>
 
 				<div class="am-u-md-12">
-					<form class="am-form am-form-horizontal">
-
+					<form class="am-form am-form-horizontal" action="paymentOrder" method="post">
 						<div class="am-form-group">
-							<label for="user-name" class="am-form-label">收货人</label>
+							<label for="user-name" class="am-form-label">付款金额：</label>
+							<div class="am-form-content">￥{{paymentAmount}}</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-name" class="am-form-label">支付密码：</label>
 							<div class="am-form-content">
-								<input type="text" id="user-name" placeholder="收货人">
+								<input type="password" name="paymentCode" id="user-name" placeholder="请输入支付密码" style="width: 80%;">
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-form-label">手机号码</label>
+						<div class="am-form-group" style="display: none;">
+							<label for="user-name" class="am-form-label">订单编号：</label>
 							<div class="am-form-content">
-								<input id="user-phone" placeholder="手机号必填" type="email">
+								<input type="text" name="orderNum" id="orderNum" placeholder="请输入支付密码" ng-model="orderNum" style="width: 80%;">
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-form-label">所在地</label>
-							<div class="am-form-content address">
-								<select data-am-selected>
-									<option value="a">浙江省</option>
-									<option value="b">湖北省</option>
-								</select>
-								<select data-am-selected>
-									<option value="a">温州市</option>
-									<option value="b">武汉市</option>
-								</select>
-								<select data-am-selected>
-									<option value="a">瑞安区</option>
-									<option value="b">洪山区</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="am-form-group">
-							<label for="user-intro" class="am-form-label">详细地址</label>
-							<div class="am-form-content">
-								<textarea class="" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
-								<small>100字以内写出你的详细地址...</small>
-							</div>
-						</div>
-
 						<div class="am-form-group theme-poptit">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<div class="am-btn am-btn-danger">保存</div>
-								<div class="am-btn am-btn-danger close">取消</div>
+								<button type="submit" class="am-btn am-btn-danger">确认</button><!-- success.html -->
+								<div class="am-btn am-btn-danger close">取消</div><!-- 返回订单详情页 -->
 							</div>
 						</div>
 					</form>

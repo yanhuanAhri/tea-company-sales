@@ -35,6 +35,15 @@ public class OrderController {
 		return "sales/pay";
 	}*/
 	
+	/**
+	 * 将要购买的商品详情展示
+	 * @param msg
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("buyCommodity")
 	public String toPay(@RequestBody String msg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session) {
@@ -44,13 +53,44 @@ public class OrderController {
 		return "sales/pay";
 	}
 	
+	/**
+	 * 生成订单
+	 * @param msg
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("createOrder")
 	@ResponseBody
 	public Map<String,Object> createOrder(@RequestBody String msg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		Map<String,Object> map=new HashMap<>();
 		User user=(User) session.getAttribute("user");
-		orderService.createOrder(msg, user);
+		Map<String,Object> map=orderService.createOrder(msg, user);
+		map.put("code", "1");
 		return map;
+	}
+	
+	/**
+	 * 订单支付
+	 * @param paymentCode
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("paymentOrder")
+	public String toPaysuccess(@RequestBody String payMsg,Model model,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		User user=(User) session.getAttribute("user");
+		if(orderService.pay(user, payMsg)) {
+			return "sales/paysuccess";
+		}else {
+			//要修改成失败界面
+			return "login";
+		}
+		
 	}
 }
