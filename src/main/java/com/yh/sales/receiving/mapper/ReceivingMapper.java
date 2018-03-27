@@ -25,5 +25,7 @@ public interface ReceivingMapper {
 	
 	public Integer getCounts(@Param("userId")Long userId);
 	
+	public List<ReceivingInfrom> findByStatus(@Param("userId")Long userId,@Param("isDefault")Integer isDefault);
+	
 	
 }

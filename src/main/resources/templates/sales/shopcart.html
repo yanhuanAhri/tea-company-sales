@@ -188,11 +188,11 @@
 				<div class="float-bar-wrapper">
 					<div id="J_SelectAll2" class="select-all J_SelectAll">
 						<div class="cart-checkbox">
-							<input ng-click="allSelect()" class="check-all check" id="J_SelectAllCbx2" name="select-all" value="true" type="checkbox">
+							<input ng-click="allSelect()" ng-checked="selectAll" class="check-all check" id="J_SelectAllCbx2" name="select-all" value="true" type="checkbox">
 							<label for="J_SelectAllCbx2"></label>
 						</div>
 						<span ng-if="!selectAll">全选</span>
-						<span ng-if="selectAll" >取消全选</span><!--style="width: 100%"  -->
+						<span ng-if="selectAll">取消全选</span><!--style="width: 100%"  -->
 					</div>
 					<div class="operations" >
 						<a href="#" hidefocus="true" class="deleteAll" ng-click="delAll()">删除</a>

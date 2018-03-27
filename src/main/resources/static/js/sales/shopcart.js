@@ -60,8 +60,12 @@
 		}
 		//下单
 		$scope.settleAccounts=function(){
-			 $("#buyForm").attr('action',"/buyCommodity?shoppingCart=''");//?commodityNum="+commodityNum
-			 $("#buyForm").submit();
+			if($scope.commodityNums.length!=0){
+				$("#buyForm").attr('action',"/buyCommodity?shoppingCart=''");//?commodityNum="+commodityNum
+				 $("#buyForm").submit();
+			}else{
+				alert("请先选择一个商品~");
+			}
 		}
 		//全选
 		$scope.allSelect=function(){
@@ -87,10 +91,11 @@
 				$scope.commodityNums.push(commodityNum)
 				$scope.totalAmount=parseFloat($scope.totalAmount)+parseFloat(price);
 			}
-			/*for(var i=0;i<$scope.commodityNums.length;i++){
-				
-			}*/
-			
+			if($scope.commodityNums.length==$scope.count){
+				$scope.selectAll=true;
+			}else{
+				$scope.selectAll=false;
+			}
 		}
 		
 		var getShoppingCartCallback= function(data) {

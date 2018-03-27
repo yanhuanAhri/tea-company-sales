@@ -6,27 +6,6 @@
 		$scope.flag=0;
 		$scope.tip=true;
 		
-		/*$scope.modifyBuyNum=function(commodityNum,symbol){
-			var buyNum=$("#buyNum").val();
-			var num=symbol+1;
-			buyNum=parseInt(buyNum)+parseInt(num);
-			if(buyNum==0){
-				alert("该商品数量不能再减少了~");
-				return;
-			}
-			var data={
-					'commodityNum':commodityNum,
-					'buyNum':parseInt(num)
-				};*/
-				/*service.modityBuyNum(data,function(obj){
-					if(obj.data.code!=1){
-						window.location.href = "/login.html/"
-					}else{
-						service.getShoppingCart(getShoppingCartCallback);
-					}
-					
-				});
-		}*/
 		
 		$scope.createOrder=function(event){
 			var commodity=[];

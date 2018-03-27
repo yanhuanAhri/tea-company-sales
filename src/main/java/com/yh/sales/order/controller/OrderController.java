@@ -35,6 +35,11 @@ public class OrderController {
 		return "sales/pay";
 	}*/
 	
+	@GetMapping("myOrder.html")
+	public String goMyOrder(Model model) {
+		return "person/order";
+	}
+	
 	/**
 	 * 将要购买的商品详情展示
 	 * @param msg
@@ -47,8 +52,9 @@ public class OrderController {
 	@PostMapping("buyCommodity")
 	public String toPay(@RequestBody String msg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		String params=request.getQueryString();
 		User user=(User) session.getAttribute("user");
-		List<ShoppingCartVo> list=orderService.toBepaidMsg(msg, user);
+		List<ShoppingCartVo> list=orderService.toBepaidMsg(msg, user,params);
 		model.addAttribute("buyCommodityList", list);
 		return "sales/pay";
 	}
@@ -85,7 +91,9 @@ public class OrderController {
 	public String toPaysuccess(@RequestBody String payMsg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session) {
 		User user=(User) session.getAttribute("user");
-		if(orderService.pay(user, payMsg)) {
+		Map<String, Object> map=orderService.pay(user, payMsg);
+		if(map!=null && !map.isEmpty()) {
+			model.addAllAttributes(map);
 			return "sales/paysuccess";
 		}else {
 			//要修改成失败界面

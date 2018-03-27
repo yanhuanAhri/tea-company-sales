@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import com.yh.core.util.SerialUtil;
 import com.yh.entity.Commodity;
 import com.yh.entity.CommodityRefOrder;
 import com.yh.entity.Order;
+import com.yh.entity.ReceivingInfrom;
 import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
 import com.yh.sales.commodity.mapper.CommodityMapper;
@@ -48,6 +51,7 @@ public class OrderService {
 	@Autowired
 	private ShoppingCartMapper shoppingCartMapper;
 	
+	private static Map<String,Object> toDelete=new HashMap<>();
 	
 	/**
 	 * 跳转到支付界面，商品数据展示
@@ -56,9 +60,10 @@ public class OrderService {
 	 * @return
 	 *     库存和已售
 	 */
-	public  List<ShoppingCartVo> toBepaidMsg(String msg,User user){
+	public  List<ShoppingCartVo> toBepaidMsg(String msg,User user,String params){
 		List<ShoppingCartVo> list=new ArrayList<>();
 		if(StringUtils.isNotBlank(msg)) {
+			toDelete.put(user.getId().toString()+"type", params);
 			//商品详情跳转结算结算展示数据
 			if(msg.contains("&")) {
 				//shoppingCart=''&commodityArr[]=201702&commodityArr[]=201601
@@ -72,6 +77,7 @@ public class OrderService {
 						}
 					}
 					if(commodityNumList!=null && !commodityNumList.isEmpty()) {
+						toDelete.put(user.getId().toString(), commodityNumList);
 						list.addAll(shoppingCartMapper.findByCommodityNumList(commodityNumList, user.getId()));
 					}
 				}else {
@@ -131,7 +137,13 @@ public class OrderService {
 			order.setPaymentAmount(new BigDecimal(msgObj.getString("paymentAmount")));
 			order.setTotalAmount(new BigDecimal(msgObj.getString("totalAmount")));
 			order.setStatus(0);
-			order.setReceivingId(msgObj.getLong("receivingId"));
+			//receivingId=0,是用默认地址
+			if(msgObj.getLong("receivingId")==0) {
+				ReceivingInfrom receivingInfrom=receivingMapper.findByStatus(user.getId(), 1).get(0);
+				order.setReceivingId(receivingInfrom.getId());
+			}else {
+				order.setReceivingId(msgObj.getLong("receivingId"));
+			}
 			order.setUpdateTime(new Date());
 			order.setLogisticsMode(msgObj.getString("logisticsMode"));
 			order.setPaymentMode(msgObj.getString("paymentMode"));
@@ -142,6 +154,15 @@ public class OrderService {
 				orderMapper.saveOrder(order);
 				saveOrderRef(order.getOrderNum(),commodityMsg);
 				map.put("orderNum", order.getOrderNum());
+				//购物车下单，删除
+				String params=toDelete.get(user.getId().toString()+"type").toString();
+				if(params.contains("shoppingCart")) {
+					List<String> commodityNumList=(List<String>) toDelete.get(user.getId().toString());
+					if(commodityNumList!=null && !commodityNumList.isEmpty()) {
+						shoppingCartMapper.deleteShoppingCartByCommodityNum(commodityNumList, user.getId());
+					}
+				}
+				
 			}
 		}
 		return map;
@@ -177,8 +198,10 @@ public class OrderService {
 	 * @param payMsg
 	 * @return
 	 */
-	public Boolean pay(User user,String payMsg) {
+	public Map<String,Object> pay(User user,String payMsg) {
 		//paymentCode
+		Map<String,Object> map=new HashMap<>();
+		//paymentCode=123456&orderNum=ORDERZHANGSAN15221560486001
 		if(StringUtils.isNotBlank(payMsg)) {
 			if(payMsg.contains("&")) {
 				String paymentCode=null,orderNum=null;
@@ -191,16 +214,21 @@ public class OrderService {
 					}
 				}
 				if(paymentCode.equals(userMapper.findById(user.getId()).getPaymentCode())) {
+					//支付密码正确修改订单状态
 					Order order=new Order();
 					order.setPutawayTime(new Date());
 					order.setUpdateTime(new Date());
 					order.setStatus(2);
 					orderMapper.updateOrder(order, orderNum);
-					return true;
+					Order orderMsg=orderMapper.findOne(orderNum, null);
+					//订单支付成功后需要的数据
+					map.put("totalAmount", orderMsg.getTotalAmount());
+					ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId());
+					map.put("receiving", receiving);
 				}
 			}
 		}
-		return false;
+		return map;
 	}
 	
 }

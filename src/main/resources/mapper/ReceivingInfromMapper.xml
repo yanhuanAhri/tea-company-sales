@@ -24,6 +24,13 @@
 		select * from receiving_info where id=#{id}
 	</select>
 	
+	<!-- findByStatus -->
+	<select id="findByStatus" resultMap="receivingInfo">
+		select * from receiving_info where 1=1
+		<if test="userId!=null">and create_user_id=#{userId}</if>
+		<if test="isDefault!=null">and is_default=#{isDefault}</if>
+	</select>
+	
 	<!-- getCounts -->
 	<select id="getCounts" resultType="Integer">
 		select count(1) from receiving_info 
