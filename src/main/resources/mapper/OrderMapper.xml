@@ -55,5 +55,10 @@
 		<if test="orderNum!=null"> and order_num=#{orderNum}</if>
 		<if test="id!=null"> and id=#{id}</if>
 	</select>
+	
+	<!-- findByStatus -->
+	<select id="findByStatus" resultMap="order">
+	
+	</select>
 
 </mapper>
