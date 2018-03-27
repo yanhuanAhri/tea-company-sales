@@ -1,5 +1,7 @@
 package com.yh.sales.order.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -15,4 +17,12 @@ public interface OrderMapper {
 	public void updateOrder(@Param("order")Order order,@Param("orderNum")String orderNum);
 	
 	public Order findOne(@Param("orderNum")String orderNum,@Param("id")Long id);
+	
+	/**
+	 * 根据用户id和订单状态查看订单信息
+	 * @param userId
+	 * @param status //订单状态   0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后
+	 * @return
+	 */
+	public List<Order> findByStatus(@Param("userId")Long userId,@Param("status")Integer status);
 }
