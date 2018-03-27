@@ -39,10 +39,7 @@ public class LoginController {
 	public String login(Model model,HttpServletRequest request, HttpSession session,HttpServletResponse response) {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
-		//String remember=request.getParameter("remember-me");   
-		//model.addAttribute("message","This is your message");
 
-		Map<String,Object> map=new HashMap<>();
 		if(account.isEmpty() || account==null) {
 			model.addAttribute("code", "0");
 			model.addAttribute("msg", "用户名为空");
@@ -60,13 +57,9 @@ public class LoginController {
 			model.addAttribute("msg", "用户名或密码错误");
 			return "login";
 		}
-		//session.setMaxInactiveInterval(interval);//秒
 		session.setAttribute("user", user);
 		model.addAttribute("code", "1");
 		model.addAttribute("msg", "登录成功");
-		/*if(remember.equals("true")) {
-			//cookie  存入cookie
-		}*/
 		String url=(String) session.getAttribute("url");
 		if(!StringUtils.isEmpty(url)) {
 			if(url.contains("?")) {
@@ -79,7 +72,6 @@ public class LoginController {
 			}else {
 				return url;
 			}
-		
 		}
 		return "home";
 	}

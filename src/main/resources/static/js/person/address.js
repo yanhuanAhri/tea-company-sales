@@ -54,10 +54,14 @@ var app = angular.module("addressApp", ['ngMessages']);
 						($("#addressCity").child.attr("selected", "selected")
 					});*/
 					//待修改
-					selection('addressProvince',addressArr[0]);
-					selection('addressCity',addressArr[1]);
+					//selection('addressProvince',addressArr[0]);
+					
+					
+					//selection('addressCity',addressArr[1]);
 					//text(addressCity[1]);
-					$("#addressDistrict").text(addressArr[2]);
+					$("#addressProvince").html('<option selected>' + addressArr[0] + "</option>");
+					$("#addressCity").html('<option selected>' + addressArr[1] + "</option>");
+					$("#addressDistrict").html('<option selected>' + addressArr[2] + "</option>");
 					$scope.addressMsg=addressArr[3];
 					//service.getAllReceiving(getAllReceivingCallback);
 				}

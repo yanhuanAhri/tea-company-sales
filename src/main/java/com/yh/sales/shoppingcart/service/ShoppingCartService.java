@@ -96,7 +96,9 @@ public class ShoppingCartService {
 	 * @param user
 	 */
 	public void delShopping(List<String> commodityNums,User user) {
-		shoppingCartMapper.deleteShoppingCartByCommodityNum(commodityNums, user.getId());
+		if(commodityNums!=null && !commodityNums.isEmpty()) {
+			shoppingCartMapper.deleteShoppingCartByCommodityNum(commodityNums, user.getId());
+		}
 	}
 	
 	/*public void updateShoppingCart(String commodityNum,Integer buyNum,User user) {

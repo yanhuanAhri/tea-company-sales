@@ -3,6 +3,9 @@
 	
 		//全局变量
 		$scope.shoppingCart=[];
+		$scope.commodityNums=[];
+		$scope.selectAll=false;
+		$scope.totalAmount=0;
 		
 		$scope.modifyBuyNum=function(commodityNum,symbol){
 			var buyNum=$("#buyNum").val();
@@ -25,7 +28,7 @@
 					
 				});
 		}
-		
+		//单个删除
 		$scope.delshop=function(commodityNum){
 			if(confirm("确认要删除该商品吗")){
 				var data={
@@ -34,16 +37,60 @@
 				service.delShopping(data,function(obj){
 					if(obj.data.code!=1){
 						window.location.href = "/login.html/"
+					}else{
+						service.getShoppingCart(getShoppingCartCallback);
 					}
 				});
-				service.getShoppingCart(getShoppingCartCallback);
-			}else{
-				return;
 			}
-		   
 		}
+		//删除所有
+		$scope.delAll=function(){
+			if(confirm("确认要删除这些商品吗")){
+				var data={
+						'commodityNums':$scope.commodityNums,
+					}
+				service.delShopping(data,function(obj){
+					if(obj.data.code!=1){
+						window.location.href = "/login.html/"
+					}else{
+						service.getShoppingCart(getShoppingCartCallback);
+					}
+				});
+			}
+		}
+		//下单
 		$scope.settleAccounts=function(){
-			//buyCommodity
+			 $("#buyForm").attr('action',"/buyCommodity?shoppingCart=''");//?commodityNum="+commodityNum
+			 $("#buyForm").submit();
+		}
+		//全选
+		$scope.allSelect=function(){
+			$scope.commodityNums=[];
+			$scope.totalAmount=0;
+			if($scope.selectAll){
+				$scope.selectAll=false;
+			}else{
+				for(var i=0;i<$scope.shoppingCart.length;i++){
+					$scope.commodityNums.push($scope.shoppingCart[i].commodityNum);
+					$scope.totalAmount=parseFloat($scope.totalAmount)+parseFloat($scope.shoppingCart[i].promotionPrice)*parseInt($scope.shoppingCart[i].buyNum);
+				}
+				$scope.selectAll=true;
+			}
+		}
+		//单选
+		$scope.select=function(commodityNum,price){
+			var index=$.inArray(commodityNum, $scope.commodityNums);//不包含在数组中,则返回 -1
+			if(index!='-1'){
+				$scope.commodityNums.splice(index,1);
+				$scope.totalAmount=parseFloat($scope.totalAmount)-parseFloat(price);
+			}else{
+				$scope.commodityNums.push(commodityNum)
+				$scope.totalAmount=parseFloat($scope.totalAmount)+parseFloat(price);
+			}
+			/*for(var i=0;i<$scope.commodityNums.length;i++){
+				
+			}*/
+			
 		}
 		
 		var getShoppingCartCallback= function(data) {
@@ -58,17 +105,6 @@
 		
 		service.getShoppingCart(getShoppingCartCallback);
 
-		/*function(obj){
-			if(obj.data.code==1){
-				alert(obj.data.msg);
-			//	toastr["success"]("加入购物车成功");
-			}else if(obj.data.code=404){
-			//	toastr["warring"](" 您还没有登录该系统，请登录之后再进行该操作！！！");
-				alert(obj.data.msg);
-			}else{
-				alert("加入购物车失败");
-			}
-		}*/
 	}]);
 
 

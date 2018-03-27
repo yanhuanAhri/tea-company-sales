@@ -23,7 +23,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			".css", ".map", ".js", ".woff", ".woff2", ".ttf", ".xls", ".xlsx", ".doc", ".docx", ".txt", ".ppt",
 			".pptx");
 	
-	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/home","/login.html","/login");
+	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/home","/login.html","/login","home.html","/");
 	 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -86,6 +86,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}else if(path.contains("receiving") || path.contains("Receiving") || path.contains("address")) {
 			return "person/address";
 		}else if(path.contains("introduction") || path.contains("commodity") || path.contains("Commodity")) {
+			if(params.contains("shoppingCart")) {
+				return "sales/shopcart";
+			}
 			return "introduction"+"?"+params;
 		}
 		return "";

@@ -13,7 +13,7 @@
 		<result property="updateTime" column="update_time"/>
 	</resultMap>
 	
-	<resultMap type="ShoppingCartVo" id="shoppingCartVo">
+	<resultMap id="shoppingCartVo" type="ShoppingCartVo" >
 		<result property="commodityId" column="commodity_id"/>
 		<result property="commodityNum" column="commodity_num"/>
 		<result property="commodityTitle" column="commodity_title"/>
@@ -41,6 +41,23 @@
 		<if test="status!=null"> and status= #{status}</if>
 		<if test="repertoryStatus!=null"> and c.repertory_status=#{repertoryStatus}</if>
 		order by s.update_time desc
+	</select>
+	
+	<!-- findByCommodityNum -->
+	<select id="findByCommodityNumList" resultMap="shoppingCartVo">
+		select 
+		s.commodity_id as commodity_id,s.commodity_num as commodity_num,s.commodity_title as commodity_title,s.buy_num as buy_num,
+		s.unit_price as unit_price,s.create_user_id as create_user_id, s.update_time as update_time,c.`status` as `status`,
+		c.repertory_status as repertory_status,c.promotion_price as promotion_price, i.path as cover
+		from shopping_cart s 
+		left join commodity c on s.commodity_id=c.id 
+		left join commodity_img i on i.commodity_id=c.id
+		where i.type=1 
+		<if test="userId!=null"> and s.create_user_id =#{userId} </if>
+		and s.commodity_num in
+		<foreach collection="commodityNumList" item="commodityNum" open="(" close=")" separator=",">  
+            #{commodityNum}  
+        </foreach>  
 	</select>
 	
 	<!-- getCount -->

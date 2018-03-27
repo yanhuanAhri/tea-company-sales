@@ -23,6 +23,8 @@ public interface ShoppingCartMapper {
 	
 	public List<ShoppingCartVo> findByCreateUserIdAndStatus(@Param("userId")Long userId,@Param("status")Integer status,@Param("repertoryStatus")Integer repertoryStatus);
 	
+	public List<ShoppingCartVo> findByCommodityNumList(@Param("commodityNumList")List<String> commodityNumList,@Param("userId")Long userId);
+	
 	public ShoppingCart findByCommodityNum(@Param("commodityNum")String commodityNum,@Param("userId")Long userId);
 	
 	public Integer getCount(@Param("userId")Long userId,@Param("status")Integer status,@Param("repertoryStatus")Integer repertoryStatus);

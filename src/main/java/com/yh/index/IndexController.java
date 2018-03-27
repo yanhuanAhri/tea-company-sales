@@ -12,6 +12,10 @@ public class IndexController {
      public String goIndex() {
         return "home";
      }
+	 @GetMapping("home.html")
+	 public String goHome() {
+        return "home";
+	 }
 	
 	   
 }

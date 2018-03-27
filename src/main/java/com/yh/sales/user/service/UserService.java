@@ -11,17 +11,6 @@ public class UserService {
   @Autowired  
   private UserMapper userMapper;  
       
-   /* public boolean addUser(String username, String password){  
-        return userMapper.insertUser(username, password)==1?true:false;  
-    }  
-      
-    public User addUserWithBackId(String loginname, String password){  
-        User user = new User();  
-        user.setUserName(loginname);  
-        user.setPassword(password);  
-        userMapper.insertUserWithBackId(user);//该方法后，主键已经设置到user中了  
-        return user;  
-    }  */
     
   public User login(String account,String password) {
 	  User user=userMapper.findByUserName(account);

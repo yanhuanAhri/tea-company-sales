@@ -52,8 +52,6 @@
 				commodity.push(commodityMsg);
 			})
 			if(!$scope.tip){
-				//$("#J_Go").removeClass("theme-login");
-				//event.preventDefault();
 				return;
 			}
 			var logisticsMode=$('.op_express_delivery_hot').children(".selected").text();

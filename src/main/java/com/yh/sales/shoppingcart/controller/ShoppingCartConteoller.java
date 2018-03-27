@@ -71,8 +71,8 @@ public class ShoppingCartConteoller {
 	Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session) {
 		User user=(User) session.getAttribute("user");
 		Map<String,Object> map=new HashMap<>();
-		map.put("code", "1");
 		shoppingCartService.delShopping(commodityNums, user);
+		map.put("code", "1");
 		return map;
 	}
 	/*@GetMapping("introduction")

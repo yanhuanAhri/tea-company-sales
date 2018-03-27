@@ -1,6 +1,8 @@
 package com.yh.sales.order.service;
 
 import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import com.yh.sales.commodityimg.mapper.CommodityImgMapper;
 import com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper;
 import com.yh.sales.order.mapper.OrderMapper;
 import com.yh.sales.receiving.mapper.ReceivingMapper;
+import com.yh.sales.shoppingcart.mapper.ShoppingCartMapper;
 import com.yh.sales.user.mapper.UserMapper;
 
 import net.sf.json.JSONArray;
@@ -42,6 +45,8 @@ public class OrderService {
 	private OrderMapper orderMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private ShoppingCartMapper shoppingCartMapper;
 	
 	
 	/**
@@ -56,68 +61,54 @@ public class OrderService {
 		if(StringUtils.isNotBlank(msg)) {
 			//商品详情跳转结算结算展示数据
 			if(msg.contains("&")) {
-				//msg:type=C&commodityNum=201601&buyNum=1
-				String type=null,commodityNum=null,buyNum=null;
-				String[] str=msg.split("&");
-				for(int i=0;i<str.length;i++) {
-					if(str[i].contains("type")) {
-						 type=str[i].split("=")[1];
-					}else if(str[i].contains("commodityNum")) {
-						 commodityNum=str[i].split("=")[1];
-					}
-					else if(str[i].contains("buyNum")) {
-						 buyNum=str[i].split("=")[1];
-					}
-				}
-				if(type!=null && commodityNum!=null && buyNum!=null) {
-					if(type.equals("C")) {
-						Commodity commodity=commodityMapper.findOneById(null, commodityNum);
-						if(commodity!=null && commodity.getStatus()==1) {
-							ShoppingCartVo buyVo=new ShoppingCartVo();
-							buyVo.setCommodityId(commodity.getId());
-							buyVo.setCommodityNum(commodity.getCommodityNum());
-							buyVo.setCommodityTitle(
-									"【"+commodity.getTradeName()+"】 "+commodity.getTeaName()+" "+commodity.getPickYear()+" "
-								   +commodity.getPickSeason()+" "+commodity.getProductType()+" "+commodity.getGoodsGrade()
-								   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));
-							buyVo.setBuyNum(Integer.valueOf(buyNum));
-							buyVo.setStatus(commodity.getStatus());
-							buyVo.setRepertoryStatus(commodity.getRepertoryStatus());
-							buyVo.setPromotionPrice(commodity.getPromotionPrice());
-							buyVo.setCover(commodityImgMapper.findCommodityImgByType(1, null, commodityNum).get(0).getPath());
-							list.add(buyVo);
+				//shoppingCart=''&commodityArr[]=201702&commodityArr[]=201601
+				if(msg.contains("shoppingCart")) {
+					msg=URLDecoder.decode(msg);
+					String[] str=msg.split("&");
+					List<String> commodityNumList=new ArrayList<>();
+					for(int j=0;j<str.length;j++) {
+						if(str[j].contains("commodityArr")) {
+							commodityNumList.add(str[j].split("=")[1]);
 						}
-				}
-			}
-			
-			/*JSONObject obj=JSONObject.fromObject(msg);
-			JSONArray msgArr=JSONArray.fromObject(obj);
-			for(int i=0;i<msgArr.size();i++) {
-				JSONObject msgObje=msgArr.getJSONObject(i);
-				String type=msgObje.getString("type");//type 结算来源类型；C-商品详情； S-购物车
-				//商品详情跳转结算结算展示数据
-				if(type.equals("C")) {
-					Commodity commodity=commodityMapper.findOneById(null, msgObje.getString("commodityNum"));
-					if(commodity!=null && commodity.getStatus()==1) {
-						ShoppingCartVo buyVo=new ShoppingCartVo();
-						buyVo.setCommodityId(commodity.getId());
-						buyVo.setCommodityNum(commodity.getCommodityNum());
-						buyVo.setCommodityTitle(
-								"【"+commodity.getTradeName()+"】 "+commodity.getTeaName()+" "+commodity.getPickYear()+" "
-							   +commodity.getPickSeason()+" "+commodity.getProductType()+" "+commodity.getGoodsGrade()
-							   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));
-						buyVo.setBuyNum(msgObje.getInt("buyNum"));
-						buyVo.setStatus(commodity.getStatus());
-						buyVo.setRepertoryStatus(commodity.getRepertoryStatus());
-						buyVo.setPromotionPrice(commodity.getPromotionPrice());
-						list.add(buyVo);
 					}
-					
+					if(commodityNumList!=null && !commodityNumList.isEmpty()) {
+						list.addAll(shoppingCartMapper.findByCommodityNumList(commodityNumList, user.getId()));
+					}
+				}else {
+					//msg:type=C&commodityNum=201601&buyNum=1
+					String type=null,commodityNum=null,buyNum=null;
+					String[] str=msg.split("&");
+					for(int i=0;i<str.length;i++) {
+						if(str[i].contains("type")) {
+							 type=str[i].split("=")[1];
+						}else if(str[i].contains("commodityNum")) {
+							 commodityNum=str[i].split("=")[1];
+						}
+						else if(str[i].contains("buyNum")) {
+							 buyNum=str[i].split("=")[1];
+						}
+					}
+					if(type!=null && commodityNum!=null && buyNum!=null) {
+						if(type.equals("C")) {
+							Commodity commodity=commodityMapper.findOneById(null, commodityNum);
+							if(commodity!=null && commodity.getStatus()==1) {
+								ShoppingCartVo buyVo=new ShoppingCartVo();
+								buyVo.setCommodityId(commodity.getId());
+								buyVo.setCommodityNum(commodity.getCommodityNum());
+								buyVo.setCommodityTitle(
+										"【"+commodity.getTradeName()+"】 "+commodity.getTeaName()+" "+commodity.getPickYear()+" "
+									   +commodity.getPickSeason()+" "+commodity.getProductType()+" "+commodity.getGoodsGrade()
+									   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));
+								buyVo.setBuyNum(Integer.valueOf(buyNum));
+								buyVo.setStatus(commodity.getStatus());
+								buyVo.setRepertoryStatus(commodity.getRepertoryStatus());
+								buyVo.setPromotionPrice(commodity.getPromotionPrice());
+								buyVo.setCover(commodityImgMapper.findCommodityImgByType(1, null, commodityNum).get(0).getPath());
+								list.add(buyVo);
+							}
+						}
+					}
 				}
-				//购物车跳转结算界面展示数据
-				else if(type.equals("S")) {
-					
-				}*/
 			}
 		}
 		return list;
