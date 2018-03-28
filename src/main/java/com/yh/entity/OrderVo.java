@@ -19,6 +19,7 @@ public class OrderVo {
 	private String logisticsMode;
 	private String paymentMode;
 	private String remark;
+	
 	private List<CommodityRefOrder> commodityRefOrder;
 	
 	

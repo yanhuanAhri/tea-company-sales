@@ -15,10 +15,21 @@
 
 		<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="../AmazeUI-2.4.2/assets/js/amazeui.js"></script>
+		
+		<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+		
+		<script type="text/javascript" src="../angularjs/1.6.2/angular.min.js"></script>
+		<script type="text/javascript" src="../angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular-messages.min.js"></script>
+		<script src="angularjs/1.5.11/angular-touch.min.js"></script>
+		<script src="angularjs/1.5.11/angular-animate.min.js"></script>
+		
+		<script type="text/javascript" src="../js/person/order.js"></script>
 
 	</head>
 
-	<body>
+	<body ng-app="orderApp" ng-controller ="orderCtrl">
 		<!--头 -->
 		<header>
 			<article>
@@ -121,7 +132,7 @@
 											<td class="td-inner">数量</td>
 										</div>
 										<div class="th th-operation">
-											<td class="td-inner">商品操作</td>
+											<td class="td-inner">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><!-- 商品操作 -->
 										</div>
 										<div class="th th-amount">
 											<td class="td-inner">合计</td>
@@ -138,41 +149,47 @@
 										<div class="order-list">
 											
 											<!--交易成功-->
-											<div class="order-status5">
+											<div class="order-status5" ng-repeat="o in myOrder">
 												<div class="order-title">
-													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
-													<span>成交时间：2015-12-20</span>
+													<div class="dd-num">订单编号：<a href="javascript:;">{{o.orderNum}}</a></div>
+													<span>成交时间：{{o.createTime | date:'yyyy-MM-dd'}}</span>
 													<!--    <em>店铺：小桔灯</em>-->
 												</div>
 												<div class="order-content">
 													<div class="order-left">
-														<ul class="item-list">
+														<ul class="item-list" ng-repeat="r in o.commodityRefOrder">
 															<li class="td td-item">
 																<div class="item-pic">
-																	<a href="#" class="J_MakePoint">
-																		<img src="../images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg">
+																	<a ng-href="introduction?commodityNum={{r.commodityNum}}" class="J_MakePoint">
+																		<img ng-src="{{r.cover}}" class="itempic J_ItemImg" width=85px height=85px>
 																	</a>
 																</div>
 																<div class="item-info">
 																	<div class="item-basic-info">
-																		<a href="#">
-																			<p>美康粉黛醉美唇膏 持久保湿滋润防水不掉色</p>
-																			<p class="info-little">颜色：12#川南玛瑙
-																				<br/>包装：裸装 </p>
+																		<a ng-href="introduction?commodityNum={{r.commodityNum}}">
+																			<p>{{r.commodityTitle}}</p>
+																			<!-- <p class="info-little">颜色：12#川南玛瑙
+																				<br/>包装：裸装 </p> -->
 																		</a>
 																	</div>
 																</div>
 															</li>
 															<li class="td td-price">
 																<div class="item-price">
-																	333.00
+																	{{r.buyPrice}}
 																</div>
 															</li>
 															<li class="td td-number">
 																<div class="item-number">
-																	<span>×</span>2
+																	<span>×</span>{{r.buyNum}}
 																</div>
 															</li>
+															<!-- <li class="td td-operation" ng-if="o.status==2 || o.status==3 || o.status==4">
+																<div class="item-operation">
+																	<a href="refund.html">退款</a>
+																	<a href="refund.html" ng-if="o.status==3 || o.status==4">/退货</a>
+																</div>
+															</li> -->
 															<li class="td td-operation">
 																<div class="item-operation">
 																	
@@ -180,85 +197,22 @@
 															</li>
 														</ul>
 
-														<ul class="item-list">
-															<li class="td td-item">
-																<div class="item-pic">
-																	<a href="#" class="J_MakePoint">
-																		<img src="../images/62988.jpg_80x80.jpg" class="itempic J_ItemImg">
-																	</a>
-																</div>
-																<div class="item-info">
-																	<div class="item-basic-info">
-																		<a href="#">
-																			<p>礼盒袜子女秋冬 纯棉袜加厚 韩国可爱 </p>
-																			<p class="info-little">颜色分类：李清照
-																				<br/>尺码：均码</p>
-																		</a>
-																	</div>
-																</div>
-															</li>
-															<li class="td td-price">
-																<div class="item-price">
-																	333.00
-																</div>
-															</li>
-															<li class="td td-number">
-																<div class="item-number">
-																	<span>×</span>2
-																</div>
-															</li>
-															<li class="td td-operation">
-																<div class="item-operation">
-																	
-																</div>
-															</li>
-														</ul>
-
-														<ul class="item-list">
-															<li class="td td-item">
-																<div class="item-pic">
-																	<a href="#" class="J_MakePoint">
-																		<img src="../images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg">
-																	</a>
-																</div>
-																<div class="item-info">
-																	<div class="item-basic-info">
-																		<a href="#">
-																			<p>美康粉黛醉美唇膏 持久保湿滋润防水不掉色</p>
-																			<p class="info-little">颜色：12#川南玛瑙
-																				<br/>包装：裸装 </p>
-																		</a>
-																	</div>
-																</div>
-															</li>
-															<li class="td td-price">
-																<div class="item-price">
-																	333.00
-																</div>
-															</li>
-															<li class="td td-number">
-																<div class="item-number">
-																	<span>×</span>2
-																</div>
-															</li>
-															<li class="td td-operation">
-																<div class="item-operation">
-																	
-																</div>
-															</li>
-														</ul>
+														
 													</div>
 													<div class="order-right">
 														<li class="td td-amount">
 															<div class="item-amount">
-																合计：676.00
-																<p>含运费：<span>10.00</span></p>
+																合计：{{o.totalAmount}}
+																<p>含运费：<span>{{o.paymentAmount}}</span></p>
 															</div>
 														</li>
-														<div class="move-right">
+														<!-- 订单状态  -10-交易关闭、0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后 -->
+														<!-- 交易成功 -->
+														<div class="move-right" ng-if="o.status==4 || o.status==1 || o.status==10">
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">交易成功</p>
+																	<p class="order-info"><a href="orderinfo.html"  ng-if="o.status==4">去评价</a></p>
 																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
 																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
 																</div>
@@ -268,6 +222,62 @@
 																	删除订单</div>
 															</li>
 														</div>
+														
+														<!-- 待付款 -->
+														<div class="move-right" ng-if="o.status==0">
+															<li class="td td-status">
+																<div class="item-status">
+																	<p class="Mystatus">等待买家付款</p>
+																	<p class="order-info"><a href="orderinfo.html">取消订单</a></p>
+																	<p class="order-info"><a href="orderinfo.html" style="color: #FF6A6A">&nbsp;&nbsp;付&nbsp;款&nbsp;&nbsp;</a></p>
+																</div>
+															</li>
+															<!-- <li class="td td-change">
+																<div class="am-btn am-btn-danger anniu">
+																	删除订单</div>
+															</li> -->
+														</div>
+														<!-- 交易关闭   交易失败-->
+														<div class="move-right" ng-if="o.status=='-10'">
+															<li class="td td-status">
+																<div class="item-status">
+																	<p class="Mystatus">交易关闭</p>
+																</div>
+															</li>
+															<li class="td td-change">
+																<div class="am-btn am-btn-danger anniu">
+																	删除订单</div>
+															</li>
+														</div>
+														<!-- 待发货 -->
+														<div class="move-right" ng-if="o.status==2 || o.status==10">
+															<li class="td td-status">
+																<div class="item-status">
+																	<p class="Mystatus">买家已付款</p>
+																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																</div>
+															</li>
+															<li class="td td-change">
+																<div class="am-btn am-btn-danger anniu">
+																	提醒发货</div>
+															</li>
+														</div>
+														<!-- 待收货 -->
+														<div class="move-right" ng-if="o.status==3 || o.status==10">
+															<li class="td td-status">
+																<div class="item-status">
+																	<p class="Mystatus">卖家已发货</p>
+																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
+																	<p class="order-info"><a href="#">延长收货</a></p>
+																</div>
+															</li>
+															<li class="td td-change">
+																<div class="am-btn am-btn-danger anniu">
+																	确认收货</div>
+															</li>
+														</div>
+														
 													</div>
 												</div>
 											</div>
@@ -275,11 +285,11 @@
 											
 											
 											<!--交易失败-->
-											<div class="order-status0">
+											<!-- <div class="order-status0">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -406,13 +416,13 @@
 													</div>
 												</div>
 											</div>											
-											
+											 -->
 											<!--待发货-->
-											<div class="order-status2">
+											<!-- <div class="order-status2">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -539,14 +549,14 @@
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> -->
 
 											<!--不同状态订单-->
-											<div class="order-status3">
+											<!-- <div class="order-status3">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -643,14 +653,15 @@
 													</div>
 												</div>
 
-											</div>
+											</div> -->
 
 										</div>
 
 									</div>
 
 								</div>
-								<div class="am-tab-panel am-fade" id="tab2">
+								
+								<!-- <div class="am-tab-panel am-fade" id="tab2">
 
 									<div class="order-top">
 										<div class="th th-item">
@@ -682,7 +693,7 @@
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -816,8 +827,8 @@
 										</div>
 
 									</div>
-								</div>
-								<div class="am-tab-panel am-fade" id="tab3">
+								</div> -->
+								<!-- <div class="am-tab-panel am-fade" id="tab3">
 									<div class="order-top">
 										<div class="th th-item">
 											<td class="td-inner">商品</td>
@@ -848,7 +859,7 @@
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -978,8 +989,8 @@
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="am-tab-panel am-fade" id="tab4">
+								</div> -->
+								<!-- <div class="am-tab-panel am-fade" id="tab4">
 									<div class="order-top">
 										<div class="th th-item">
 											<td class="td-inner">商品</td>
@@ -1010,7 +1021,7 @@
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -1110,8 +1121,8 @@
 										</div>
 									</div>
 								</div>
-
-								<div class="am-tab-panel am-fade" id="tab5">
+ -->
+								<!-- <div class="am-tab-panel am-fade" id="tab5">
 									<div class="order-top">
 										<div class="th th-item">
 											<td class="td-inner">商品</td>
@@ -1138,7 +1149,7 @@
 
 									<div class="order-main">
 										<div class="order-list">
-											<!--不同状态的订单	-->
+											不同状态的订单	
 										<div class="order-status4">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
@@ -1213,7 +1224,7 @@
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">1601430</a></div>
 													<span>成交时间：2015-12-20</span>
-													<!--    <em>店铺：小桔灯</em>-->
+													   <em>店铺：小桔灯</em>
 												</div>
 												<div class="order-content">
 													<div class="order-left">
@@ -1346,7 +1357,7 @@
 													</div>
 												</div>
 											</div>
-
+ -->
 
 										</div>
 

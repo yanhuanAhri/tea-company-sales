@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.yh.entity.Order;
+import com.yh.entity.OrderVo;
 
 @Repository
 @Mapper
@@ -21,8 +22,8 @@ public interface OrderMapper {
 	/**
 	 * 根据用户id和订单状态查看订单信息
 	 * @param userId
-	 * @param status //订单状态   0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后
+	 * @param status //订单状态   0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后、-10-交易关闭
 	 * @return
 	 */
-	public List<Order> findByStatus(@Param("userId")Long userId,@Param("status")Integer status);
+	public List<OrderVo> findByStatus(@Param("userId")Long userId,@Param("status")Integer status);
 }

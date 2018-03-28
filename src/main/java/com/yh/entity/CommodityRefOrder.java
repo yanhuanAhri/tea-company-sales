@@ -11,6 +11,15 @@ public class CommodityRefOrder {
 	private String commodityTitle;
 	private Integer buyNum;
 	private BigDecimal buyPrice;
+	
+	private String cover;
+	
+	public String getCover() {
+		return cover;
+	}
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
 	public Long getId() {
 		return id;
 	}

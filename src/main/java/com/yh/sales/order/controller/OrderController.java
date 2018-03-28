@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yh.entity.ShoppingCartVo;
@@ -87,7 +88,7 @@ public class OrderController {
 	 * @param session
 	 * @return
 	 */
-	@PostMapping("paymentOrder")
+	@PostMapping("paymentMyOrder")
 	public String toPaysuccess(@RequestBody String payMsg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session) {
 		User user=(User) session.getAttribute("user");
@@ -99,6 +100,15 @@ public class OrderController {
 			//要修改成失败界面
 			return "login";
 		}
-		
+	}
+	
+	@GetMapping("getMyOrder")
+	@ResponseBody
+	public Map<String,Object> getMyOrder(@RequestParam("status")Integer status,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		User user=(User) session.getAttribute("user");
+		Map<String, Object> map=orderService.getMyOrder(user, status);
+		map.put("code", "1");
+		return map;
 	}
 }

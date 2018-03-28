@@ -80,6 +80,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}
 		return false;
 	}
+	//记住登录之前的路径
 	private String returnUrl(String path,String params) {
 		if(path.contains("shoppingCart") || path.contains("ShoppingCart")) {
 			return "sales/shopcart";
@@ -90,6 +91,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				return "sales/shopcart";
 			}
 			return "introduction"+"?"+params;
+		}else if(path.contains("MyOrder") || path.contains("myOrder")) {
+			return "person/order";
 		}
 		return "";
 		

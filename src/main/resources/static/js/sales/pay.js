@@ -6,6 +6,23 @@
 		$scope.flag=0;
 		$scope.tip=true;
 		
+		$scope.buyNumChange=function($event,symbol){
+			var buyNum=0;
+			if(symbol=='-'){
+				//console.info($event);
+				 buyNum=parseInt($($event.target).next().val())-1;
+				// $($event.target).next().val(parseInt(buyNum)+1);
+			}else{
+				 buyNum=parseInt($($event.target).prev().val())+1;
+				// $($event.target).prev().val(parseInt(buyNum)-1)
+			}
+			if(buyNum>=0){
+				var promotionPrice=$($event.target).closest('.buy').prev().find('.price').text();
+				var sumPrice=buyNum*parseFloat(promotionPrice)
+				$($event.target).closest('.buy').next().find('.promotionPrice').text(sumPrice)
+				getPrice();
+			}
+		};
 		
 		$scope.createOrder=function(event){
 			var commodity=[];
@@ -13,20 +30,26 @@
 				//console.info(val);
 				var commodityNum=$(val).find(".commodityNum").val();
 				var buyNum=$(val).find(".buyNum").val();
+				//var buyNumT=$(val).find(".buyNum").text();
 				var commodityTitle=$(val).find(".commodityTitle").text();
 				var buyPrice=$(val).find(".price-now").text();
 				var commodityId=$(val).find(".commodityId").text();
+				var cover=$(val).find('.cover').text();
 				if(buyNum=='0'){
 					alert("购买的商品数量不能小于1哦~");
 					$scope.tip=false;
 					return false;
+				}
+				if(!commodityNum){
+					return;
 				}
 				var commodityMsg = {
 						'commodityNum':commodityNum,
 						'buyNum':buyNum,
 						'commodityTitle':commodityTitle,
 						'buyPrice':buyPrice,
-						'commodityId':commodityId
+						'commodityId':commodityId,
+						'cover':cover,
 					};
 				commodity.push(commodityMsg);
 			})
@@ -56,14 +79,14 @@
 					$("#inputPassword").click();
 				}
 			});
-		}
+		};
 		
 		//选择用户地址
 		$scope.selectAdd=function(id){
 			console.info(id);
 			$scope.flag=id;
 			console.info($scope.flag);
-		}
+		};
 		
 		
 		//查看用户所有地址信息
@@ -87,7 +110,7 @@
 			$(".expressage").each(function() {
 				expressagePrice += parseFloat($(this).text());
 			});
-			$scope.totalAmount=commodityPrice+expressagePrice;
+			$scope.totalAmount=commodityPrice;
 			$scope.paymentAmount=commodityPrice+expressagePrice;
 		}
 		getPrice();

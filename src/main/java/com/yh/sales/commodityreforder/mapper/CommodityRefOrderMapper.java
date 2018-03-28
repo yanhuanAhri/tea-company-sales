@@ -15,4 +15,6 @@ public interface CommodityRefOrderMapper {
 	public void saveCommodityRefOrder(List<CommodityRefOrder> commodityRefOrderList);
 	
 	public void updateCommodityRefOrder(@Param("commodityRefOrder")CommodityRefOrder commodityRefOrder,@Param("ref")CommodityRefOrder ref);
+	
+	public List<CommodityRefOrder> findByOrder(@Param("orderId")Long orderId);
 }

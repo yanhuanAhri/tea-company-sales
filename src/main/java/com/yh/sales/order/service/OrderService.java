@@ -19,6 +19,7 @@ import com.yh.core.util.SerialUtil;
 import com.yh.entity.Commodity;
 import com.yh.entity.CommodityRefOrder;
 import com.yh.entity.Order;
+import com.yh.entity.OrderVo;
 import com.yh.entity.ReceivingInfrom;
 import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
@@ -67,7 +68,7 @@ public class OrderService {
 			//商品详情跳转结算结算展示数据
 			if(msg.contains("&")) {
 				//shoppingCart=''&commodityArr[]=201702&commodityArr[]=201601
-				if(msg.contains("shoppingCart")) {
+				if(msg.contains("shoppingCart")) {//购物车到结算界面
 					msg=URLDecoder.decode(msg);
 					String[] str=msg.split("&");
 					List<String> commodityNumList=new ArrayList<>();
@@ -187,6 +188,7 @@ public class OrderService {
 			orderRef.setCommodityTitle(commodity.getString("commodityTitle"));
 			orderRef.setBuyNum(commodity.getInt("buyNum"));
 			orderRef.setBuyPrice(new BigDecimal(commodity.getString("buyPrice")));
+			orderRef.setCover(commodity.getString("cover"));
 			list.add(orderRef);
 		}
 		commodityRefOrderMapper.saveCommodityRefOrder(list);
@@ -222,12 +224,28 @@ public class OrderService {
 					orderMapper.updateOrder(order, orderNum);
 					Order orderMsg=orderMapper.findOne(orderNum, null);
 					//订单支付成功后需要的数据
-					map.put("totalAmount", orderMsg.getTotalAmount());
+					map.put("paymentAmount", orderMsg.getPaymentAmount());
 					ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId());
 					map.put("receiving", receiving);
 				}
 			}
 		}
+		return map;
+	}
+	
+	/**
+	 * 根据不同的状态，查看我的订单列表
+	 * @param user
+	 * @param status //订单状态 0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后、-10-交易关闭
+	 * @return
+	 */
+	public Map<String,Object> getMyOrder(User user,Integer status){
+		Map<String,Object> map=new HashMap<>();
+		if(status<0) {
+			status=null;
+		}
+		List<OrderVo> myOrder=orderMapper.findByStatus(user.getId(), status);
+		map.put("myOrder", myOrder);
 		return map;
 	}
 	

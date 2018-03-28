@@ -6,7 +6,7 @@
 		<result property="orderNum" column="order_num"/>
 		<result property="createTime" column="create_time"/>
 		<result property="createUserId" column="create_user_id"/>
-		<result property="paymentAmount" column="payment_mount"/>
+		<result property="paymentAmount" column="payment_amount"/>
 		<result property="totalAmount" column="total_amount"/>
 		<result property="status" column="status"/>
 		<result property="receivingId" column="receiving_id"/>
@@ -56,9 +56,42 @@
 		<if test="id!=null"> and id=#{id}</if>
 	</select>
 	
-	<!-- findByStatus -->
-	<select id="findByStatus" resultMap="order">
+	<resultMap type="OrderVo" id="myOrder">
+		<id property="id" column="id"/>
+		<result property="orderNum" column="order_num"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="paymentAmount" column="payment_amount"/>
+		<result property="totalAmount" column="total_amount"/>
+		<result property="status" column="status"/>
+		<result property="receivingId" column="receiving_id"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="putawayTime" column="putaway_time"/>
+		<result property="logisticsMode" column="logistics_mode"/>
+		<result property="paymentMode" column="payment_mode"/>
+		<result property="remark" column="remark"/>
+		<!-- <collection property="commodityRefOrder" select="com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper.findByOrder" column="order_id"></collection> -->
+		<collection property="commodityRefOrder" ofType="CommodityRefOrder">
+			<id property="id" column="r_id"/>
+			<result property="commodityId" column="commodity_id"/>
+			<result property="commodityNum" column="commodity_num"/>
+			<result property="orderId" column="order_id"/>
+			<result property="orderNum" column="order_num"/>
+			<result property="commodityTitle" column="commodity_title"/>
+			<result property="buyNum" column="buy_num"/>
+			<result property="buyPrice" column="buy_price"/>
+			<result property="cover" column="commodity_cover"/>
+		</collection>
+	</resultMap>
 	
+	<!-- findByStatus -->
+	<select id="findByStatus" resultMap="myOrder">
+		select o.*,r.id as r_id,r.commodity_id,r.commodity_num,r.order_id,r.order_num,
+		r.commodity_title,r.buy_num,r.buy_price,r.commodity_cover
+		from `order` o,commodity_ref_order r where o.id=r.order_id
+		<if test="userId!=null"> and o.create_user_id=#{userId}</if>
+		<if test="status!=null">and o.`status`=#{status}</if>
+		order by o.create_time desc
 	</select>
 
 </mapper>

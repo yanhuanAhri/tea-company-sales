@@ -10,16 +10,17 @@
 		<result property="commodityTitle" column="commodity_title"/>
 		<result property="buyNum" column="buy_num"/>
 		<result property="buyPrice" column="buy_price"/>
+		<result property="cover" column="commodity_cover"/>
 	</resultMap>
 	
 	<!-- saveCommodityRefOrder -->
 	<insert id="saveCommodityRefOrder" parameterType="java.util.ArrayList" >
 		insert into commodity_ref_order
-		(commodity_id,commodity_num,order_id,order_num,commodity_title,buy_num,buy_price)
+		(commodity_id,commodity_num,order_id,order_num,commodity_title,buy_num,buy_price,commodity_cover)
 		values
 		 <foreach collection="list" item="item" index="index" separator=",">  
       	 	(#{item.commodityId},#{item.commodityNum},#{item.orderId},#{item.orderNum},
-      	 	#{item.commodityTitle},#{item.buyNum},#{item.buyPrice})
+      	 	#{item.commodityTitle},#{item.buyNum},#{item.buyPrice},#{item.cover})
    		 </foreach>  
 		<!-- (#{commodityId},#{commodityNum},#{orderId},#{orderNum},#{commodityTitle},#{buyNum},#{buyPrice}) -->
 	</insert>
@@ -34,6 +35,7 @@
 		   	<if test="commodityRefOrder.orderNum!=null">order_num=#{commodityRefOrder.orderNum},</if>
 		   	<if test="commodityRefOrder.commodityTitle!=null">commodity_title=#{commodityRefOrder.commodityTitle},</if>
 		   	<if test="commodityRefOrder.buyNum!=null">buy_num=#{commodityRefOrder.buyNum},</if>
+		   	<if test="commodityRefOrder.cover!=null">commodity_cover=#{commodityRefOrder.cover},</if>
 		   	<if test="commodityRefOrder.buyPrice!=null">buy_price=#{commodityRefOrder.buyPrice},</if>
 	   </set>
 	   <where>
@@ -44,5 +46,12 @@
 		   	<if test="ref.orderNum!=null">and order_num=#{ref.orderNum},</if>
 	   </where>
 	</update>
+	
+	<!-- findByOrder -->
+	<select id="findByOrder" resultMap="commodityRefOrder">
+		select * from commodity_ref_order where 1=1
+		<if test="orderNum!=null">and order_num=#{orderNum}</if>
+		<if test="orderId!=null">and order_id=#{orderId}</if>
+	</select>
 
 </mapper>
