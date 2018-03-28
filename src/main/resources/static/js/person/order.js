@@ -6,9 +6,9 @@ var app = angular.module("orderApp", ['ngMessages']);
 		
 		$scope.myOrder=[]
 	
-		var getMyOrder=function(status){
+		/*var getMyOrder=function(status){
 			service.getMyOrder(parseInt(status),getOrderCallback);
-		}
+		}*/
 		
 		var getOrderCallback= function(data) {
 			if(data.code!=1){
