@@ -23,7 +23,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			".css", ".map", ".js", ".woff", ".woff2", ".ttf", ".xls", ".xlsx", ".doc", ".docx", ".txt", ".ppt",
 			".pptx");
 	
-	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/home","/login.html","/login","home.html","/");
+	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/login.html","/login","/home.html","/","/searchTea");
 	 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -33,11 +33,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	         //如果是公开地址则放行  
 	         return true;  
 	      }  
+		 //错误页面回到首页
+		 if(path.contains("error")) {
+			 response.sendRedirect(request.getContextPath()+"/");
+			 return false;
+		 }
 		 HttpSession session = request.getSession();  
 		 User user=(User) session.getAttribute("user");
 		 if(user!= null && user.getUserName()!=null && !user.getUserName().isEmpty()) {
 			 return true;
 		 }
+		
 		 //request.getRealPath(path);
 		 //request.getRequestDispatcher("login.html").forward(request, response);
 		   /*if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){ //如果是ajax请求响应头会有x-requested-with  
@@ -52,6 +58,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		 if(!StringUtils.isEmpty(url)) {
 			 session.setAttribute("url", url);
 		 }
+		
     	response.sendRedirect(request.getContextPath()+"/login.html");
 	     //  }
 		 

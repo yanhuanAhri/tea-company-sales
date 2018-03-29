@@ -84,29 +84,57 @@
 	    <if test="commodityNum!=null"> and commodity_num= #{commodityNum} </if>
 	</select>
 	
-	<!--   添加新的管理员对象 
-	<insert id="addAdmin" parameterType="Admin">
-		insert into admin
-		(adminName,adminPassword,adminPhone,adminEmail,adminRealName,adminPower,adminStatus,leaveTime)
-		values(#{adminName},#{adminPassword},#{adminPhone},#{adminEmail},#{adminRealName},#{adminPower},#{adminStatus},#{leaveTime})
-	</insert>
-
-	修改管理员信息
-	<update id="updAdmin" parameterType="Admin">
-		<if test="id != null">
-			update admin
-			<set>
-				<if test="adminPassword!=null">adminPassword=#{adminPassword},</if>
-				<if test="adminPhone!=null">adminPhone=#{adminPhone},</if>
-				<if test="adminEmail!=null">adminEmail=#{adminEmail},</if>
-				<if test="adminRealName!=null">adminRealName=#{adminRealName},</if>
-				<if test="adminPower!=null">adminPower=#{adminPower},</if>
-				<if test="adminStatus!=null">adminStatus=#{adminStatus},</if>
-				<if test="leaveTime!=null">leaveTime=#{leaveTime}</if>
-			</set>
-			<where>id=#{id}</where>
-		</if>
-		
-	</update>
-	  -->
+	<!-- 商品搜索 -->
+	<resultMap id="commodityVo" type="CommodityVo">
+		<result property="commodityNum" column="commodity_num"/>
+		<result property="productNum" column="product_num"/>
+		<result property="soldOutNum" column="sold_out_num"/>
+		<result property="tradeName" column="trade_name"/>
+		<result property="marketPrice" column="market_price"/>
+		<result property="promotionPrice" column="promotion_price"/>
+		<result property="teaName" column="tea_name"/>
+		<result property="productType" column="product_type"/>
+		<result property="pickYear" column="pick_year"/>
+		<result property="pickSeason" column="pick_season"/>
+		<result property="goodsGrade" column="goods_grade"/>
+		<result property="netContent" column="net_content"/>
+		<result property="purpose" column="purpose"/>
+		<result property="specification" column="specification"/>
+		<result property="status" column="status"/>
+		<result property="cover" column="cover"/>
+	</resultMap>
+	<!-- getCommodityVoBySearch -->
+	<select id="findCommodityVoBySearch" resultMap="commodityVo">
+		select c.commodity_num as commodity_num,c.product_num as product_num,c.sold_out_num as sold_out_num,
+		c.trade_name as trade_name,c.market_price as market_price,c.promotion_price as promotion_price,c.tea_name astea_name,
+		c.product_type as product_type,c.pick_year as pick_year,c.pick_season as pick_season,c.goods_grade as goods_grade,
+		c.net_content as net_content,c.purpose as purpose,c.specification as specification,c.status as status,
+		i.path as cover 
+		from commodity c,commodity_img i where c.id=i.commodity_id and i.type=1 and c.status=1
+		<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
+		<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
+		<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
+		<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
+		<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
+		<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
+		<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
+		<if test="search!=null">and c.trade_name LIKE CONCAT('%',#{search},'%')</if><!-- LIKE CONCAT('%',#{empname},'%' ) -->
+		<if test="sort!=null"> order by ${sort}  </if>
+		<if test="pageStart!=null and pageSize!=null">limit #{pageStart},#{pageSize}</if>
+	</select>
+	<!-- getCountBySearch -->
+	<select id="getCountBySearch"  resultType="Integer">
+		select 
+		count(1)
+		from commodity c,commodity_img i where c.id=i.commodity_id and i.type=1 and c.status=1
+		<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
+		<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
+		<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
+		<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
+		<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
+		<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
+		<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
+		<if test="search!=null">and c.trade_name LIKE CONCAT('%',#{search},'%')</if>
+	</select>
+	
 </mapper>
