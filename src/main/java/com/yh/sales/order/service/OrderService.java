@@ -102,11 +102,11 @@ public class OrderService {
 								ShoppingCartVo buyVo=new ShoppingCartVo();
 								buyVo.setCommodityId(commodity.getId());
 								buyVo.setCommodityNum(commodity.getCommodityNum());
-								buyVo.setCommodityTitle(commodity.getTradeName());
-								/*buyVo.setCommodityTitle(
+								//buyVo.setCommodityTitle(commodity.getTradeName());
+								buyVo.setCommodityTitle(
 										"【"+commodity.getTradeName()+"】 "+commodity.getTeaName()+" "+commodity.getPickYear()+" "
 									   +commodity.getPickSeason()+" "+commodity.getProductType()+" "+commodity.getGoodsGrade()
-									   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));*/
+									   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));
 								buyVo.setBuyNum(Integer.valueOf(buyNum));
 								buyVo.setStatus(commodity.getStatus());
 								buyVo.setRepertoryStatus(commodity.getRepertoryStatus());

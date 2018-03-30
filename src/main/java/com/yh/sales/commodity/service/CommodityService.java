@@ -59,13 +59,21 @@ public class CommodityService {
 		Integer pageStart=0;
 		Integer pageSize=12; 
 		StringBuffer sort=new StringBuffer("c.create_time desc");
-		if(msg!=null && StringUtils.isNotBlank(msg)) {
-			JSONObject msgObj=JSONObject.fromObject(msg);
-			//String sortParam=msgObj.getString("sortParam");
-			//if(sortParam.isEmpty()||sortParam)
-		}
 		CommodityVo commodityVo=new CommodityVo();
+		if(msg!=null && StringUtils.isNotBlank(msg) && !msg.equals("null")) {
+			JSONObject msgObj=JSONObject.fromObject(msg);
+			commodityVo.setProductType(msgObj.getString("productType").equals("null")? null:msgObj.getString("productType"));
+			commodityVo.setPickYear(msgObj.getString("pickYear").equals("null")? null:msgObj.getString("pickYear"));
+			commodityVo.setPurpose((msgObj.getString("purpose").equals("null")? null:(msgObj.getString("purpose").equals("自饮")? 1:2)));
+			Integer pageNum=msgObj.getInt("pageNum");
+			pageStart=pageSize*(pageNum-1);
+		}
+		//数据为空返回查询的第一页
 		List<CommodityVo> list=commodityMapper.findCommodityVoBySearch(search, commodityVo, pageStart, pageSize, sort.toString());
+		if(list.isEmpty()) {
+			pageStart=0;
+			list=commodityMapper.findCommodityVoBySearch(search, commodityVo, pageStart, pageSize, sort.toString());
+		}
 		Integer count=commodityMapper.getCountBySearch(search, commodityVo);
 		map.put("commodityVoList", list);
 		map.put("count", count);

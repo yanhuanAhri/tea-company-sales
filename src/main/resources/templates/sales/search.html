@@ -24,6 +24,10 @@
 	<script src="angularjs/1.5.11/angular-messages.min.js"></script>
 	
 	<script type="text/javascript" src="../js/sales/search.js"></script>
+	<style type="text/css">
+		li a{cursor: pointer;}
+		dd a{cursor: pointer;}
+	</style>
 </head>
 
 <body ng-app="searchApp" ng-controller="searchCtrl">
@@ -70,8 +74,8 @@
 			<a name="index_none_header_sysc" href="#"></a>
 			<form>
 			 	<input id="firstSearch" name="firstSearch" th:value="${search}" style="display: none;">
-				<input id="searchInput"  name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off"> 
-				<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+				<input id="searchInput" ng-value="search" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off"> 
+				<input ng-click="searchClick()" id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
 			</form>
 		</div>
 	</div>
@@ -128,32 +132,35 @@
 									<dt class="am-badge am-round">品牌</dt>
 
 									<div class="dd-conent">
-										<dd class="select-all selected">
-											<a href="#">全部</a>
+										<dd class="select-all selected" ng-click="filterClick()">
+											<a >全部</a>
 										</dd>
-										<dd>
-											<a href="#">百草味</a>
+										<dd ng-click="filterClick()">
+											<a >乌龙茶</a>
 										</dd>
-										<dd>
-											<a href="#">良品铺子</a>
+										<dd ng-click="filterClick()">
+											<a >红茶</a>
 										</dd>
-										<dd>
-											<a href="#">新农哥</a>
+										<dd ng-click="filterClick()">
+											<a >绿茶</a>
 										</dd>
-										<dd>
-											<a href="#">楼兰蜜语</a>
+										<dd ng-click="filterClick()">
+											<a>黑茶</a>
 										</dd>
-										<dd>
-											<a href="#">口水娃</a>
+										<dd ng-click="filterClick()">
+											<a >白茶</a>
 										</dd>
-										<dd>
-											<a href="#">考拉兄弟</a>
+										<dd ng-click="filterClick()">
+											<a >花茶</a>
+										</dd>
+										<dd ng-click="filterClick()">
+											<a >茶器</a>
 										</dd>
 									</div>
 
 								</dl>
 							</li>
-							<li class="select-list">
+							<!-- <li class="select-list">
 								<dl id="select2">
 									<dt class="am-badge am-round">种类</dt>
 									<div class="dd-conent">
@@ -174,26 +181,43 @@
 										</dd>
 									</div>
 								</dl>
-							</li>
+							</li> -->
 							<li class="select-list">
 								<dl id="select3">
-									<dt class="am-badge am-round">选购热点</dt>
+									<dt class="am-badge am-round">采摘年份</dt>
 									<div class="dd-conent">
-										<dd class="select-all selected">
-											<a href="#">全部</a>
+										<dd class="select-all selected" ng-click="filterClick()">
+											<a >全部</a>
 										</dd>
-										<dd>
-											<a href="#">手剥松子</a>
+										<dd ng-click="filterClick()">
+											<a >2018</a>
 										</dd>
-										<dd>
-											<a href="#">薄壳松子</a>
+										<dd ng-click="filterClick()">
+											<a >2017</a>
 										</dd>
-										<dd>
-											<a href="#">进口零食</a>
+										<dd ng-click="filterClick()">
+											<a>2016</a>
 										</dd>
-										<dd>
-											<a href="#">有机零食</a>
+										<dd ng-click="filterClick()">
+											<a >2015</a>
 										</dd>
+									</div>
+								</dl>
+							</li>
+							<li class="select-list">
+								<dl id="select2">
+									<dt class="am-badge am-round">用途</dt>
+									<div class="dd-conent">
+										<dd class="select-all selected" ng-click="filterClick()">
+											<a >全部</a>
+										</dd>
+										<dd ng-click="filterClick()">
+											<a >自饮</a>
+										</dd>
+										<dd ng-click="filterClick()">
+											<a >礼盒</a>
+										</dd>
+										
 									</div>
 								</dl>
 							</li>
@@ -289,9 +313,9 @@
 					<div class="clear"></div>
 					<!--分页 -->
 					<ul class="am-pagination am-pagination-right">
-						<li ng-class="tipNum==1? 'am-disabled':''"><a>&laquo;</a></li>
-						<li ng-repeat="n in pageNumber" ng-class="n==tipNum?'am-active':''"><a>{{n}}<a></a></li>
-						<li ng-class="tipNum==pageNumber.length? 'am-disabled':''"><a>&raquo;</a></li>
+						<li ng-click="pageNum('','-')" ng-class="tipNum==1? 'am-disabled':''"><a>&laquo;</a></li>
+						<li ng-click="pageNum(n,'')" ng-repeat="n in pageNumber" ng-class="n==tipNum?'am-active':''"><a>{{n}}<a></a></li>
+						<li ng-click="pageNum('','+')" ng-class="tipNum==pageNumber.length? 'am-disabled':''"><a>&raquo;</a></li>
 					</ul>
 
 				</div>

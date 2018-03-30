@@ -38,11 +38,11 @@ public class ShoppingCartService {
 				Commodity commodity=commodityMapper.findOneById(null, commodityNum);
 				shoppingCart.setCommodityId(commodity.getId());
 				shoppingCart.setCommodityNum(commodity.getCommodityNum());
-				shoppingCart.setCommodityTitle(commodity.getTradeName());
-				/*shoppingCart.setCommodityTitle(
+				//shoppingCart.setCommodityTitle(commodity.getTradeName());
+				shoppingCart.setCommodityTitle(
 						"【"+commodity.getTradeName()+"】 "+commodity.getTeaName()+" "+commodity.getPickYear()+" "
 					   +commodity.getPickSeason()+" "+commodity.getProductType()+" "+commodity.getGoodsGrade()
-					   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));*/
+					   +" "+commodity.getNetContent()+"克 "+(commodity.getPurpose()==1 ? "自饮":"礼盒"));
 				shoppingCart.setBuyNum(buyNum);
 				shoppingCart.setUnitPrice(commodity.getPromotionPrice());
 				shoppingCart.setCreateTime(new Date());

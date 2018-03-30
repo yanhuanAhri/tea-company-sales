@@ -4,6 +4,9 @@
 		//全局变量
 		$scope.pageNumber=[]
 		$scope.tipNum=1;
+		$scope.productType=null;
+		$scope.pickYear=null;
+		$scope.purpose=null;
 		$scope.teaSort=[
 				{
 					'teaName':'乌龙茶',
@@ -39,9 +42,62 @@
 				}
 			];
 		
+		var filterData=function(){
+			var productType=$("#select1").find(".selected").children().text();
+			var pickYear=$("#select3").find(".selected").children().text();
+			var purpose=$("#select2").find(".selected").children().text();
+			$scope.productType=(productType=='全部'? null:productType);
+			$scope.pickYear=(pickYear=='全部'? null:pickYear);
+			$scope.purpose=(purpose=='全部'? null:purpose);
+		}
+		$scope.searchClick=function(){
+			filterData();
+			var data={
+					//搜素数据组建
+					'pageNum':'1',
+					'productType':$scope.productType,
+					'pickYear':$scope.pickYear,
+					'purpose':$scope.purpose,
+					
+			}
+			var search=$("#searchInput").val();
+			service.searchTea(search,data,searchTeaCallback)
+		}
 		
+		$scope.filterClick=function(){
+			filterData();
+			var data={
+					//搜素数据组建
+					'pageNum':$scope.tipNum,
+					'productType':$scope.productType,
+					'pickYear':$scope.pickYear,
+					'purpose':$scope.purpose,
+					
+			}
+			service.searchTea($scope.search,data,searchTeaCallback)
+		}
 		
-		
+		$scope.pageNum=function(num,symbol){
+			if(num!==''){
+				$scope.tipNum=num;
+			}else if(symbol!=''){
+				if((symbol=='-' && $scope.tipNum<='1') || (symbol=='+' && $scope.tipNum>=$scope.pageNumber.length)){
+					return;
+				}
+				$scope.tipNum=$scope.tipNum+parseInt(symbol+'1');
+			}
+			filterData();
+			//data数据组建
+			var data={
+					//搜素数据组建
+					'pageNum':$scope.tipNum,
+					'productType':$scope.productType,
+					'pickYear':$scope.pickYear,
+					'purpose':$scope.purpose,
+					
+			}
+			service.searchTea($scope.search,data,searchTeaCallback)
+		}
 		
 		var searchTeaCallback= function(data) {
 			if(data.code!=1){
@@ -49,15 +105,22 @@
 			}else{
 				$scope.count=data.count;
 				$scope.search=data.search;
-				var pageNumber=parseInt($scope.count)/12+1;
+				var pageNumber=parseInt(parseInt($scope.count)/12);
+				if(parseInt($scope.count)%12>0){
+					pageNumber=pageNumber+1;
+				}
+				$scope.pageNumber=[];
 				for(var i=1;i<=pageNumber;i++){
 					$scope.pageNumber.push(i);
+				}
+				if($scope.tipNum>pageNumber){
+					$scope.tipNum=1;
 				}
 				$scope.commodityList=data.commodityVoList;
 			}
 		}
-		var search=$("#firstSearch").val();
-		service.searchTea(search,null,searchTeaCallback)
+		$scope.search=$("#firstSearch").val();
+		service.searchTea($scope.search,null,searchTeaCallback)
 	}]);
 
 
