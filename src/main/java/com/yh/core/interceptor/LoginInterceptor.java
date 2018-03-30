@@ -23,7 +23,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			".css", ".map", ".js", ".woff", ".woff2", ".ttf", ".xls", ".xlsx", ".doc", ".docx", ".txt", ".ppt",
 			".pptx");
 	
-	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/login.html","/login","/home.html","/","/searchTea","/shoppingCartCount");
+	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/login.html","/login","/home.html","/","/searchTea","/shoppingCartCount","/homeData");
 	 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

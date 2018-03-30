@@ -25,16 +25,7 @@ public class CommodityService {
 	@Autowired
 	private CommodityImgMapper commodityImgMapper;
 	
-	/*public void saveCommodity(Commodity commodity) {
-		if(!StringUtils.isEmpty(commodity)) {
-			Long id=commodityMapper.saveCommodity(commodity);
-			if(id!=null) {
-				//teji+jijie+lurunianfen+id
-				//lcommodity.setCommodityId(""+id);
-			}
-		}
-	}
-	*/
+	
 	/**
 	 * 查看商品详情
 	 * @param commodityNum 商品编号
@@ -87,8 +78,41 @@ public class CommodityService {
 		return map;
 	}
 	
+	/**
+	 * 首页数据
+	 * @return
+	 */
 	public Map<String,Object> getIndexData(){
 		Map<String,Object> map=new HashMap<>();
+		
+		List<CommodityVo> newCommodity=commodityMapper.findCommodityVoBySearch(null, null, 0, 7, "create_time desc");//新品
+		List<CommodityVo> hotCommodity=commodityMapper.findCommodityVoBySearch(null, null, 0, 7, "sold_out_num desc");//爆款
+		CommodityVo commodityVo=new CommodityVo();
+		commodityVo.setProductType("乌龙茶");
+		List<CommodityVo> oolong =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");//乌龙茶
+		commodityVo.setProductType("红茶");
+		List<CommodityVo>  blackTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		commodityVo.setProductType("绿茶");
+		List<CommodityVo>   greenTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		commodityVo.setProductType("黑茶");
+		List<CommodityVo>  darkGreenTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		commodityVo.setProductType("白茶");
+		List<CommodityVo>  whiteTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		commodityVo.setProductType("花茶");
+		List<CommodityVo>  scentedTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		commodityVo.setProductType("茶器");
+		List<CommodityVo>  teaSet =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		
+		map.put("newCommodity", newCommodity);
+		map.put("hotCommodity", hotCommodity);
+		map.put("oolong", oolong);
+		map.put("blackTea", blackTea);
+		map.put("greenTea", greenTea);
+		map.put("darkGreenTea", darkGreenTea);
+		map.put("whiteTea", whiteTea);
+		map.put("scentedTea", scentedTea);
+		map.put("teaSet", teaSet);
+		
 		return map;
 	}
 

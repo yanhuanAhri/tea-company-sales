@@ -100,24 +100,20 @@
 		}
 		
 		var searchTeaCallback= function(data) {
-			if(data.code!=1){
-				window.location.href = "/login.html/"
-			}else{
-				$scope.count=data.count;
-				$scope.search=data.search;
-				var pageNumber=parseInt(parseInt($scope.count)/12);
-				if(parseInt($scope.count)%12>0){
-					pageNumber=pageNumber+1;
-				}
-				$scope.pageNumber=[];
-				for(var i=1;i<=pageNumber;i++){
-					$scope.pageNumber.push(i);
-				}
-				if($scope.tipNum>pageNumber){
-					$scope.tipNum=1;
-				}
-				$scope.commodityList=data.commodityVoList;
+			$scope.count=data.count;
+			$scope.search=data.search;
+			var pageNumber=parseInt(parseInt($scope.count)/12);
+			if(parseInt($scope.count)%12>0){
+				pageNumber=pageNumber+1;
 			}
+			$scope.pageNumber=[];
+			for(var i=1;i<=pageNumber;i++){
+				$scope.pageNumber.push(i);
+			}
+			if($scope.tipNum>pageNumber){
+				$scope.tipNum=1;
+			}
+			$scope.commodityList=data.commodityVoList;
 		}
 		$scope.search=$("#firstSearch").val();
 		service.searchTea($scope.search,null,searchTeaCallback);

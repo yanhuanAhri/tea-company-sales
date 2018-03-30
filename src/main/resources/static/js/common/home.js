@@ -43,27 +43,31 @@ var app = angular.module("mainApp", ['ngMessages']);
 			service.getMyOrder(parseInt(status),getOrderCallback);
 		}*/
 		
-		/*var getOrderCallback= function(data) {
-			if(data.code!=1){
-				window.location.href = "/login.html/"
-			}else{
-				//$scope.count=data.count;
-				$scope.myOrder=data.myOrder;
-			}
+		var getHomeDataCallback= function(data) {
+			//$scope.myOrder=data.myOrder;
+			$scope.data=data;
+			/*$scope.newCommodity=data.newCommodity;
+			$scope.hotCommodity=data.hotCommodity;
+			$scope.oolong=data.oolong;
+			$scope.blackTea=data.blackTea;
+			$scope.greenTea=data.greenTea;
+			$scope.darkGreenTea=data.darkGreenTea;
+			$scope.whiteTea=data.whiteTea;
+			$scope.scentedTea=data.scentedTea;
+			$scope.teaSet=data.teaSet;*/
 		}
-		service.getMyOrder(parseInt('-1'),getOrderCallback);*/
+		service.getHomeData(getHomeDataCallback);
 			
 	}]);
 		
   
 	app.factory('mainService', [ '$q', '$http','$timeout', function ($q, $http,$timeout) {
 		
-		var getMyOrder=function(status,getOrderCallback){
-			//status=;
-			var url='getMyOrder?status='+status
+		var getHomeData=function(getHomeDataCallback){
+			var url='homeData';
 			$http.get(url).then(
 	    			function (response) {
-	    				getOrderCallback(response.data);
+	    				getHomeDataCallback(response.data);
 			});
 		}
 		

@@ -71,31 +71,14 @@ public class CommodityController {
 			@RequestBody String msg,Model model,HttpServletResponse response){
 		Map<String,Object> map=commodityService.searchCommodity(search, msg);
 		map.put("search", search);
-		map.put("code", "1");
 		return map;
 	}
 	
-	/*@PostMapping("saveCommodity")
-	public void save(@RequestParam(name="commodity",required=true) Commodity commodity,
-			HttpServletResponse response ) {
-		commodityService.saveCommodity(commodity);
-	}*/
-	
-	/*@RequestMapping(value="order",method = RequestMethod.POST)
+	@GetMapping("homeData")
 	@ResponseBody
-	public void save(@RequestParam(name = "msg", required = true) String msg,@RequestParam(name = "gathering1", required = false) MultipartFile gathering1,
-			@RequestParam(name = "gathering2", required = false) MultipartFile gathering2,@RequestParam(name = "gathering3", required = false) MultipartFile gathering3,
-				@RequestParam(name = "invoice", required = false) MultipartFile invoice,HttpServletResponse response ){
-		try {
-			closeAccountService.closeAccount(msg,gathering1,invoice,gathering2,gathering3);
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-
-			try {
-				response.sendError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-			} catch (IOException e1) {
-				LOG.error(e.getMessage(), e1);
-		    }
-		}	
-	}*/
+	public Map<String,Object> homeData(Model model,HttpServletResponse response){
+		Map<String,Object> map=commodityService.getIndexData();
+		return map;
+	}
+	
 }
