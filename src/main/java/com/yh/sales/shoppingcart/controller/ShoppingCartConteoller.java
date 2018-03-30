@@ -52,6 +52,7 @@ public class ShoppingCartConteoller {
 				shoppingCartService.saveShoppingCart(commodityNum, Integer.valueOf(buyNum), user);
 				map.put("code", "1");
 				map.put("msg", "加入购物车成功");
+				session.setAttribute("shopCartCount", shoppingCartService.getCount(user, null).get("count"));
 				return map;
 	}
 	
@@ -72,6 +73,21 @@ public class ShoppingCartConteoller {
 		User user=(User) session.getAttribute("user");
 		Map<String,Object> map=new HashMap<>();
 		shoppingCartService.delShopping(commodityNums, user);
+		session.setAttribute("shopCartCount", shoppingCartService.getCount(user, null).get("count"));
+		map.put("code", "1");
+		return map;
+	}
+	
+	@GetMapping("shoppingCartCount")
+	@ResponseBody
+	public Map<String,Object> getCount(Model model,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		User user=(User) session.getAttribute("user");
+		Map<String,Object> map=new HashMap<>();
+		if(user==null ) {
+			return map;
+		}
+		map=shoppingCartService.getCount(user, null);
 		map.put("code", "1");
 		return map;
 	}

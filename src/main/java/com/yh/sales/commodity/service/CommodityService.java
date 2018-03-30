@@ -54,6 +54,12 @@ public class CommodityService {
 		return map;
 	}
 	
+	/**
+	 * 商品搜索
+	 * @param search 搜索框输入数据
+	 * @param msg 页面选择数据
+	 * @return
+	 */
 	public Map<String,Object> searchCommodity(String search,String msg){
 		Map<String,Object> map=new HashMap<>();
 		Integer pageStart=0;
@@ -68,15 +74,21 @@ public class CommodityService {
 			Integer pageNum=msgObj.getInt("pageNum");
 			pageStart=pageSize*(pageNum-1);
 		}
-		//数据为空返回查询的第一页
+		
 		List<CommodityVo> list=commodityMapper.findCommodityVoBySearch(search, commodityVo, pageStart, pageSize, sort.toString());
-		if(list.isEmpty()) {
+		//数据为空返回查询的第一页数据
+		if(list.isEmpty() && pageStart!=0) {
 			pageStart=0;
 			list=commodityMapper.findCommodityVoBySearch(search, commodityVo, pageStart, pageSize, sort.toString());
 		}
 		Integer count=commodityMapper.getCountBySearch(search, commodityVo);
 		map.put("commodityVoList", list);
 		map.put("count", count);
+		return map;
+	}
+	
+	public Map<String,Object> getIndexData(){
+		Map<String,Object> map=new HashMap<>();
 		return map;
 	}
 

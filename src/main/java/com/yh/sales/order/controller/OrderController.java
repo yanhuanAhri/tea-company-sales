@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
 import com.yh.sales.order.service.OrderService;
+import com.yh.sales.shoppingcart.service.ShoppingCartService;
 
 @Configuration
 @Controller
@@ -29,6 +30,8 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 	
 	//跳转结算界面静态路由，需删除
 	/*@GetMapping("pay.html")
@@ -57,6 +60,7 @@ public class OrderController {
 		User user=(User) session.getAttribute("user");
 		List<ShoppingCartVo> list=orderService.toBepaidMsg(msg, user,params);
 		model.addAttribute("buyCommodityList", list);
+		session.setAttribute("shopCartCount", shoppingCartService.getCount(user, null).get("count"));
 		return "sales/pay";
 	}
 	

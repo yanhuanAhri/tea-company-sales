@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.druid.util.StringUtils;
 import com.yh.entity.User;
+import com.yh.sales.shoppingcart.service.ShoppingCartService;
 import com.yh.sales.user.service.UserService;
 
 @Controller
@@ -24,6 +25,8 @@ import com.yh.sales.user.service.UserService;
 public class LoginController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 	
 	@RequestMapping(value="login.html",method=RequestMethod.GET)
 	private String goLogin(Model map) {
@@ -58,6 +61,7 @@ public class LoginController {
 			return "login";
 		}
 		session.setAttribute("user", user);
+		session.setAttribute("shopCartCount", shoppingCartService.getCount(user, null).get("count"));
 		model.addAttribute("code", "1");
 		model.addAttribute("msg", "登录成功");
 		String url=(String) session.getAttribute("url");
