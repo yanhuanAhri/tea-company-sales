@@ -85,23 +85,23 @@ public class CommodityService {
 	public Map<String,Object> getIndexData(){
 		Map<String,Object> map=new HashMap<>();
 		
-		List<CommodityVo> newCommodity=commodityMapper.findCommodityVoBySearch(null, null, 0, 7, "create_time desc");//新品
-		List<CommodityVo> hotCommodity=commodityMapper.findCommodityVoBySearch(null, null, 0, 7, "sold_out_num desc");//爆款
+		List<CommodityVo> newCommodity=commodityMapper.findCommodityVoBySearch(null, null, 0, 7, "c.create_time desc");//新品
+		List<CommodityVo> hotCommodity=commodityMapper.findCommodityVoBySearch(null, null, 0, 7, "c.sold_out_num desc");//爆款
 		CommodityVo commodityVo=new CommodityVo();
 		commodityVo.setProductType("乌龙茶");
-		List<CommodityVo> oolong =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");//乌龙茶
+		List<CommodityVo> oolong =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");//乌龙茶
 		commodityVo.setProductType("红茶");
-		List<CommodityVo>  blackTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		List<CommodityVo>  blackTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
 		commodityVo.setProductType("绿茶");
-		List<CommodityVo>   greenTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		List<CommodityVo>   greenTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
 		commodityVo.setProductType("黑茶");
-		List<CommodityVo>  darkGreenTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		List<CommodityVo>  darkGreenTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
 		commodityVo.setProductType("白茶");
-		List<CommodityVo>  whiteTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		List<CommodityVo>  whiteTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
 		commodityVo.setProductType("花茶");
-		List<CommodityVo>  scentedTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		List<CommodityVo>  scentedTea =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
 		commodityVo.setProductType("茶器");
-		List<CommodityVo>  teaSet =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "create_time desc,sold_out_num desc");
+		List<CommodityVo>  teaSet =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
 		
 		map.put("newCommodity", newCommodity);
 		map.put("hotCommodity", hotCommodity);

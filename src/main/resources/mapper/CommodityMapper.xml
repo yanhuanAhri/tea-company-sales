@@ -106,19 +106,22 @@
 	<!-- getCommodityVoBySearch -->
 	<select id="findCommodityVoBySearch" resultMap="commodityVo">
 		select c.commodity_num as commodity_num,c.product_num as product_num,c.sold_out_num as sold_out_num,
-		c.trade_name as trade_name,c.market_price as market_price,c.promotion_price as promotion_price,c.tea_name astea_name,
+		c.trade_name as trade_name,c.market_price as market_price,c.promotion_price as promotion_price,c.tea_name as tea_name,
 		c.product_type as product_type,c.pick_year as pick_year,c.pick_season as pick_season,c.goods_grade as goods_grade,
 		c.net_content as net_content,c.purpose as purpose,c.specification as specification,c.status as status,
 		i.path as cover 
 		from commodity c left join commodity_img i on c.id=i.commodity_id  where i.type=1 and c.status=1
-		<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
-		<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
-		<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
-		<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
-		<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
-		<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
-		<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
+		<if test="commodityVo!=null">
+			<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
+			<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
+			<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
+			<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
+			<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
+			<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
+			<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
+		</if>
 		<if test="search!=null">and c.trade_name LIKE CONCAT('%',#{search},'%')</if><!--  or c.search LIKE CONCAT('%',#{search},'%') --><!-- LIKE CONCAT('%',#{empname},'%' ) -->
+		GROUP BY c.commodity_num
 		<if test="sort!=null"> order by ${sort}  </if>
 		<if test="pageStart!=null and pageSize!=null">limit #{pageStart},#{pageSize}</if>
 	</select>
@@ -126,15 +129,19 @@
 	<select id="getCountBySearch"  resultType="Integer">
 		select 
 		count(1)
-		from commodity c,commodity_img i where c.id=i.commodity_id and i.type=1 and c.status=1
-		<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
-		<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
-		<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
-		<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
-		<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
-		<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
-		<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
+		from (select count(1) from commodity c,commodity_img i where c.id=i.commodity_id and i.type=1 and c.status=1
+		<if test="commodityVo!=null">
+			<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
+			<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
+			<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
+			<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
+			<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
+			<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
+			<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
+		</if>
+		
 		<if test="search!=null">and c.trade_name LIKE CONCAT('%',#{search},'%')</if>
+		GROUP BY c.commodity_num ) f 
 	</select>
 	
 </mapper>

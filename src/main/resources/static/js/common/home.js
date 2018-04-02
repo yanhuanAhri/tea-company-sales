@@ -44,7 +44,6 @@ var app = angular.module("mainApp", ['ngMessages']);
 		}*/
 		
 		var getHomeDataCallback= function(data) {
-			//$scope.myOrder=data.myOrder;
 			$scope.data=data;
 			/*$scope.newCommodity=data.newCommodity;
 			$scope.hotCommodity=data.hotCommodity;
@@ -96,7 +95,7 @@ var app = angular.module("mainApp", ['ngMessages']);
 			});
 		}*/
 		return {
-			getMyOrder:getMyOrder,
+			getHomeData:getHomeData,
 		}
 		
 	}]);

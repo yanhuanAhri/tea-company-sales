@@ -254,7 +254,7 @@
 								 <a ng-href="introduction?commodityNum={{c.commodityNum}}">
 									<div class="i-pic limit">
 										<img ng-src="{{c.cover}}" width=230px height=230px/>
-										<p class="title fl">{{c.tradeName}}</p>
+										<p class="title fl"> {{'【'+c.tradeName+'】'+ c.teaName+ c.pickYear+ c.pickSeason+ c.productType+ c.goodsGrade+ c.netContent+'克'+ (c.purpose==1? '自饮':'礼盒')}}</p>
 										<p class="price fl">
 											<b>¥</b> <strong>{{c.promotionPrice}}</strong>
 										</p>
