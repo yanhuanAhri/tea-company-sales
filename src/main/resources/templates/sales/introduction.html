@@ -399,7 +399,7 @@
 		</div>
 
 		<!--优惠套装-->
-		<div class="match">
+		<!-- <div class="match">
 			<div class="match-title">优惠套装</div>
 			<div class="match-comment">
 				<ul class="like_list">
@@ -434,7 +434,7 @@
 					<li class="plus_icon"><i class="am-icon-angle-right"></i></li>
 				</ul>
 			</div>
-		</div>
+		</div> -->
 		<div class="clear"></div>
 
 
@@ -443,24 +443,24 @@
 		<div class="introduce">
 			<div class="browse">
 				<div class="mc">
-					<ul>
+					<ul ng-if="teaSet.length>0">
 						<div class="mt">
 							<h2>看了又看</h2>
 						</div>
 
-						<li class="first">
+						<li class="first" ng-repeat="t in teaSet">
 							<div class="p-img">
-								<a href="#"> <img class="" src="../images/browse1.jpg">
+								<a ng-href="introduction?commodityNum={{t.commodityNum}} "> <img class="" ng-src="{{t.cover}}" width="190" height="190">
 								</a>
 							</div>
 							<div class="p-name">
-								<a href="#"> 【三只松鼠_开口松子】零食坚果特产炒货东北红松子原味 </a>
+								<a ng-href="introduction?commodityNum={{t.commodityNum}} ">  {{'【'+t.tradeName+'】'+ t.teaName+ t.pickYear+ t.pickSeason+ t.productType+ t.goodsGrade+ t.netContent+'克'+ (t.purpose==1? '自饮':'礼盒')}}</a>
 							</div>
 							<div class="p-price">
-								<strong>￥35.90</strong>
+								<strong>￥{{t.promotionPrice}}</strong>
 							</div>
 						</li>
-						<li>
+						<!-- <li>
 							<div class="p-img">
 								<a href="#"> <img class="" src="../images/browse1.jpg">
 								</a>
@@ -508,7 +508,7 @@
 								<strong>￥35.90</strong>
 							</div>
 						</li>
-
+ -->
 					</ul>
 				</div>
 			</div>

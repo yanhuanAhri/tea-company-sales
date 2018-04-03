@@ -43,6 +43,9 @@ var app = angular.module("introdutionApp", []);
 			 //('/buyCommodity', { 'msg': data},'post')
 			// service.buyNow(data);
 		}
+		service.getTeaSet(function(data){
+			$scope.teaSet=data.teaSet;
+		});
 		
 	}]);
 		
@@ -50,6 +53,12 @@ var app = angular.module("introdutionApp", []);
   
 	app.factory('introductionService', [ '$q', '$http','$timeout', function ($q, $http,$timeout) {
 		
+		var getTeaSet=function(getTeaSetCallbackFun){
+			$http.get('teaSet').then(
+	    			function (response) {
+	    				getTeaSetCallbackFun(response.data);
+				});
+		}
 		
 		var addToShopingCart = function(data, callbackFun) {
 			var url='addCommodityToShopCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
@@ -75,6 +84,7 @@ var app = angular.module("introdutionApp", []);
 			$http.post("buyCommodity",angular.toJson(data)).then(function (response) {});
 		}
 		return {
+			getTeaSet:getTeaSet,
 			addToShopingCart:addToShopingCart,
 			buyNow:buyNow,
 		}

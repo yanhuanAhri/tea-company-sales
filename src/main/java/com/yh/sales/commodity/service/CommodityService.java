@@ -18,6 +18,7 @@ import com.yh.sales.commodityimg.mapper.CommodityImgMapper;
 
 import net.sf.json.JSONObject;
 
+
 @Service
 public class CommodityService {
 	@Autowired
@@ -113,6 +114,19 @@ public class CommodityService {
 		map.put("scentedTea", scentedTea);*/
 		map.put("teaSet", teaSet);
 		
+		return map;
+	}
+	
+	/**
+	 * 茶器（看了又看）
+	 * @return
+	 */
+	public Map<String,Object> getTeaSet(){
+		Map<String,Object> map=new HashMap<>();
+		CommodityVo commodityVo=new CommodityVo();
+		commodityVo.setProductType("茶器");
+		List<CommodityVo>  teaSet =commodityMapper.findCommodityVoBySearch(null, commodityVo, 0, 7, "c.create_time desc,c.sold_out_num desc");
+		map.put("teaSet", teaSet);
 		return map;
 	}
 

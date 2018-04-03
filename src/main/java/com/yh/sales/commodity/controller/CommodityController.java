@@ -59,6 +59,7 @@ public class CommodityController {
 	}
 	
 	/**
+	 * 商品搜索
 	 * @param search
 	 * @param msg
 	 * @param model
@@ -74,10 +75,23 @@ public class CommodityController {
 		return map;
 	}
 	
+	/**
+	 * 首页数据
+	 * @param model
+	 * @param response
+	 * @return
+	 */
 	@GetMapping("homeData")
 	@ResponseBody
 	public Map<String,Object> homeData(Model model,HttpServletResponse response){
 		Map<String,Object> map=commodityService.getIndexData();
+		return map;
+	}
+	
+	@GetMapping("teaSet")
+	@ResponseBody
+	public Map<String,Object> getTeaSet(Model model,HttpServletResponse response){
+		Map<String,Object> map=commodityService.getTeaSet();
 		return map;
 	}
 	
