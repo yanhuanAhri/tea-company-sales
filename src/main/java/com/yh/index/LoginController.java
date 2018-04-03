@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.util.StringUtils;
 import com.yh.entity.User;
 import com.yh.sales.shoppingcart.service.ShoppingCartService;
+import com.yh.sales.user.service.SendMail;
 import com.yh.sales.user.service.UserService;
 
 @Controller
@@ -27,6 +29,9 @@ public class LoginController {
 	private UserService userService;
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	private SendMail sendMail;
 	
 	@RequestMapping(value="login.html",method=RequestMethod.GET)
 	private String goLogin(Model map) {
@@ -55,6 +60,15 @@ public class LoginController {
 		}
 		User user=userService.login(account, password);
 		
+	/*	try {
+			sendMail.sendHtmlMail("1428563923@qq.com");
+			System.out.println();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		*/
+		
 		if(user==null || user.equals("") || user.getUserName()==null) {
 			model.addAttribute("code", "0");
 			model.addAttribute("msg", "用户名或密码错误");
@@ -80,6 +94,10 @@ public class LoginController {
 		return "home";
 	}
 		
+	
+	/*@RequestMapping
+	@ResponseBody
+	public void*/
 		
 
 }
