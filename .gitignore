@@ -1,0 +1,19 @@
+# Maven
+target/
+
+# Eclipse
+.project
+.externalToolBuilders/
+.metadata
+.settings
+.classpath
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# gitignore
+.gitignore
