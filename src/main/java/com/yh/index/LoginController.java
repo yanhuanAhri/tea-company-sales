@@ -95,7 +95,8 @@ public class LoginController {
 	public String register(@RequestBody String msg,Model model,
 			HttpServletRequest request, HttpSession session,HttpServletResponse response) {
 		if(userService.register(msg)) {
-			model.addAttribute("code", "1");
+			model.addAttribute("code", "0");
+			model.addAttribute("msg", "注册成功，请去邮箱查看邮件，激活该账号！");
 		}else {
 			model.addAttribute("code", "0");
 			model.addAttribute("msg", "该注册账号已经存在了，请不要重复注册");

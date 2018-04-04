@@ -21,6 +21,8 @@ public interface CommodityMapper {
 	
 	public Commodity findOneById(@Param("id")Long id,@Param("commodityNum")String commodityNum);
 	
+	//public Integer
+	
 	/**
 	 * 商品搜索
 	 * @param search  输入框搜索条件
