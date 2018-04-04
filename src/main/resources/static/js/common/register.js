@@ -8,7 +8,21 @@ var app = angular.module("registerApp", ['ngMessages']);
 			service.getMyOrder(parseInt(status),getOrderCallback);
 		}*/
 		
-		
+		$scope.emailRegister=function(){
+			var agree=$scope.agree1;
+			if(!agree){
+				alert("请先勾选服务协议~");
+				return;
+			}
+			var password=$scope.passwordEmail;
+			var passwordRe=$scope.passwordRepeatEmail;
+			if(password!=passwordRe){
+				alert("两次密码不一致！");
+				return;
+			}
+			
+			$('#emailRegister').submit();
+		}
 			
 	}]);
 		

@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			".pptx");
 	
 	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/login.html","/login","/home.html",
-			"/","/searchTea","/shoppingCartCount","/homeData","/teaSet","/register.html");
+			"/","/searchTea","/shoppingCartCount","/homeData","/teaSet","/register.html","/register","/active");
 	 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

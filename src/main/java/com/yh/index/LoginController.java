@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,19 +60,14 @@ public class LoginController {
 			return "login";
 		}
 		User user=userService.login(account, password);
-		
-	/*	try {
-			sendMail.sendHtmlMail("1428563923@qq.com");
-			System.out.println();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		*/
-		
 		if(user==null || user.equals("") || user.getUserName()==null) {
 			model.addAttribute("code", "0");
 			model.addAttribute("msg", "用户名或密码错误");
+			return "login";
+		}
+		if(user.getIsActive()!=1) {
+			model.addAttribute("code", "0");
+			model.addAttribute("msg", "该账号未激活，请激活该账号后再登录！");
 			return "login";
 		}
 		session.setAttribute("user", user);
@@ -95,9 +91,17 @@ public class LoginController {
 	}
 		
 	
-	/*@RequestMapping
-	@ResponseBody
-	public void*/
+	@RequestMapping(value = "register", method = RequestMethod.POST)
+	public String register(@RequestBody String msg,Model model,
+			HttpServletRequest request, HttpSession session,HttpServletResponse response) {
+		if(userService.register(msg)) {
+			model.addAttribute("code", "1");
+		}else {
+			model.addAttribute("code", "0");
+			model.addAttribute("msg", "该注册账号已经存在了，请不要重复注册");
+		}
+		return "login";
+	}
 		
 
 }

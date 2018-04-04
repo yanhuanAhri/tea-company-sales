@@ -17,25 +17,10 @@
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"  javaType="java.util.Date"/>
 		<result property="updateTime" column="update_time"  jdbcType="TIMESTAMP" javaType="java.util.Date"/>
 		<result property="paymentCode" column="payment_code"/>
+		<result property="isActive" column="is_active"/>
 		<!-- <result property="createTime" column="create_time" javaType="java.util.Date" /> -->
 	</resultMap>
-      
-    <!-- 若不需要自动返回主键，将useGeneratedKeys="true" keyProperty="id"去掉即可(当然如果不需要自动返回主键，直接用注解即可) -->  
-  <!--   <insert id="insertUserWithBackId" parameterType="User" useGeneratedKeys="true" keyProperty="id" >  
-       <![CDATA[ 
-       INSERT INTO user-info  
-       ( 
-           login_name, 
-           password 
-       ) 
-       VALUES 
-       ( 
-           #{loginName, jdbcType=VARCHAR}, 
-           #{password, jdbcType=VARCHAR} 
-       ) 
-       ]]>  
-   </insert>  
-    -->
+ 
    <select id="findByUserName" resultMap="user">
     	select * from user_info where user_name=#{userName}
    </select>
@@ -49,5 +34,45 @@
    		select * from user_info where id=#{id}
    </select>
    
+   <!-- modifyUser -->
+   <update id="modifyUser" parameterType="User">
+   		<if test="user.userName!=null || user.email!=null || user.phone!=null">
+   			update user_info
+   			<set>
+				<if test="user.password != null">password=#{user.password},</if>
+				<if test="user.nickName != null">nick_name=#{user.nickName},</if>
+				<if test="user.headPortrair != null">head_portrair=#{user.headPortrair},</if>
+				<if test="user.sex != null">sex=#{user.sex},</if>
+				<if test="user.birthday != null">birthday=#{user.birthday},</if>
+				<if test="user.integral != null">integral=#{user.integral},</if>
+				<if test="user.paymentCode != null">payment_code=#{user.paymentCode},</if>
+				<if test="user.isActive != null">is_active=#{user.isActive},</if>
+				<if test="user.updateTime != null">update_time=#{user.updateTime},</if>
+			</set>
+			<where>
+				1=1
+		   		<if test="user.userName !=null">and user_name=#{user.userName}</if>
+		   		<if test="user.email !=null">and email=#{user.email}</if>
+			   	<if test="user.phone !=null">and phone=#{user.phone}</if>
+		   </where>
+   		</if>
+   </update>
+   
+   <!-- saveUser -->
+      <insert id="saveUser" parameterType="User">
+      	insert into user_info
+      	(user_name,password,nick_name,email,phone,head_portrair,sex,birthday,integral,
+      	create_time,update_time,payment_code,is_active)
+      	values
+      	(#{user.userName},#{user.password},#{user.nickName},#{user.email},#{user.phone},
+      	#{user.headPortrair},#{user.sex},#{user.birthday},#{user.integral},#{user.createTime},
+      	#{user.updateTime},#{user.paymentCode},#{user.isActive})
+      </insert>
       
+      <!-- deleteUser -->
+      <delete id="deleteUser">
+      	delete from user_info where 1=1
+      	<if test="email!=null">and email=#{email}</if>
+      	<if test="phone!=null">and phone=#{phone}</if>
+      </delete>
 </mapper> 

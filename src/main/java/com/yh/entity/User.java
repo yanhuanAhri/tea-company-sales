@@ -17,7 +17,14 @@ public class User{
 	private Date createTime;
 	private Date updateTime;
 	private String paymentCode;
+	private Integer isActive;
 	
+	public Integer getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Integer isActive) {
+		this.isActive = isActive;
+	}
 	public String getPaymentCode() {
 		return paymentCode;
 	}

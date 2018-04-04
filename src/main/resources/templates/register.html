@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <head lang="en">
@@ -16,6 +15,12 @@
 <link href="../css/dlstyle.css" rel="stylesheet" type="text/css">
 <script src="../AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 <script src="../AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
+
+		<script type="text/javascript" src="../angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular-messages.min.js"></script>
+		<script src="angularjs/1.5.11/angular-touch.min.js"></script>
+		<script src="angularjs/1.5.11/angular-animate.min.js"></script>
+		<script type="text/javascript" src="../js/common/register.js"></script>
 
 </head>
 
@@ -40,71 +45,68 @@
 
 					<div class="am-tabs-bd">
 						<div class="am-tab-panel am-active">
-							<form method="post" action="register">
+							<form method="post" action="register" id="emailRegister">
 
-								<div class="user-email">
+								<div class="user-email email">
 									<label for="email"><i class="am-icon-envelope-o"></i></label> <input
-										type="email" name="email" id="email" placeholder="请输入邮箱账号">
+										type="email" name="email" ng-model="email" id="email" placeholder="请输入邮箱账号">
 								</div>
-								<div class="user-pass">
+								<div class="user-pass email">
 									<label for="password"><i class="am-icon-lock"></i></label> <input
-										type="password" name="password" id="password"
+										type="password" name="password" ng-model="passwordEmail" id="passwordEmail"
 										placeholder="设置密码">
 								</div>
-								<div class="user-pass">
+								<div class="user-pass email">
 									<label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-									<input type="password" name="password" id="passwordRepeat"
+									<input type="password" name="passwordRe" ng-model="passwordRepeatEmail" id="passwordRepeatEmail"
 										placeholder="确认密码">
 								</div>
+							</form>
 
-
-
-								<div class="login-links">
-									<label for="reader-me"> <input id="reader-me agree1"
-										type="checkbox"> 点击表示您同意商城《服务协议》
+								<div class="login-links email">
+									<label for="reader-me"> <input ng-model="agree1" id="reader-me agree1" value="true" type="checkbox"> 点击表示您同意商城《服务协议》
 									</label>
 								</div>
-								<div class="am-cf">
-									<input type="submit" name="" value="注册"
+								<div class="am-cf email">
+									<input type="submit" name="" value="注册" ng-click="emailRegister()"
 										class="am-btn am-btn-primary am-btn-sm am-fl">
 								</div>
-							</form>
 						</div>
 
 						<div class="am-tab-panel">
 							<form method="post" action="register">
-								<div class="user-phone">
+								<div class="user-phone phone">
 									<label for="phone"><i
 										class="am-icon-mobile-phone am-icon-md"></i></label> <input type="tel"
 										name="" id="phone" placeholder="请输入手机号">
 								</div>
-								<div class="verification">
+								<div class="verification phone">
 									<label for="code"><i class="am-icon-code-fork"></i></label> <input
 										type="tel" name="" id="code" placeholder="请输入验证码"> <a
 										class="btn" href="javascript:void(0);"
 										onclick="sendMobileCode();" id="sendMobileCode"> <span
 										id="dyMobileButton">获取</span></a>
 								</div>
-								<div class="user-pass">
+								<div class="user-pass phone">
 									<label for="password"><i class="am-icon-lock"></i></label> <input
-										type="password" name="" id="password" placeholder="设置密码">
+										type="password" name="password" id="passwordPhone" placeholder="设置密码">
 								</div>
-								<div class="user-pass">
+								<div class="user-pass phone">
 									<label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-									<input type="password" name="" id="passwordRepeat"
+									<input type="password" name="passwordRe" id="passwordRepeatPhone"
 										placeholder="确认密码">
 								</div>
-
-								<div class="login-links">
-									<label for="reader-me"> <input id="reader-me agree2"
-										type="checkbox"> 点击表示您同意商城《服务协议》
+							</form>
+								<div class="login-links phone">
+									<label for="reader-me"> <input id="reader-me agree2" value="true"
+										type="checkbox" ng-model="agree2"> 点击表示您同意商城《服务协议》
 									</label>
 								</div>
-								<div class="am-cf">
+								<div class="am-cf phone">
 									<input type="submit" name="" value="注册"
 										class="am-btn am-btn-primary am-btn-sm am-fl">
 								</div>
-							</form>
+							
 							<hr>
 						</div>
 

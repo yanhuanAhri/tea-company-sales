@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>账号激活</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+		<link rel="stylesheet" href="../AmazeUI-2.4.2/assets/css/amazeui.css" />
+		<link href="../css/dlstyle.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+
+		<div class="login-boxtitle">
+			<a href="home.html"><img alt="logo" src="../images/logobig.png" /></a>
+		</div>
+
+		<div class="login-banner">
+			<div class="login-main">
+				<div class="login-banner-bg"><span></span><img style="padding: 5% 0px;" src="../images/big.jpg" /></div>
+				<div class="login-box">
+
+					<h3 class="title">账号激活</h3>
+
+					<div class="clear"></div>
+
+					<div class="login-form">
+						<div class="errorMsg"> 
+							<h1 style="font-size: 38px;color: #FF6A6A;margin: 10% 5%;" th:text="${msg}">账号激活</h1>
+							<a class="login" style="color: gray;margin: 10% 5%;" th:if="${code}==1" href="login.html">去登录</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--底部  -->
+		<div class="footer " th:include="./common/footer::footer"></div>
+	</body>
+
+</html>

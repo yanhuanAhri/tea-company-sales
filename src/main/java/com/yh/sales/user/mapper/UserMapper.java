@@ -24,4 +24,9 @@ public interface UserMapper {
     public User findByEmail(@Param("email") String email);
     public User findByPhone(@Param("phone") String phone);
     public User findById(@Param("id")Long id);
+    
+    public void modifyUser(@Param("user")User user);
+    
+    public void saveUser(@Param("user")User user);
+    public void deleteUser(@Param("email")String email,@Param("phone")String phone);
 }
