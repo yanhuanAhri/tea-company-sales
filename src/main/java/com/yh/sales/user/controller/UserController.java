@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.stat.TableStat.Mode;
 import com.yh.entity.User;
 import com.yh.sales.user.service.UserService;
 
@@ -41,6 +43,12 @@ public class UserController {
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
 	public User findByUserName() {
 		return userService.findByUserName("zhangsan");
+	}
+	
+	//去个人中心页面
+	@GetMapping("personal.html")
+	public String toPersonal(Model model) {
+		return  "person/personal";
 	}
 
 	@RequestMapping(value = "active", method = RequestMethod.GET)
