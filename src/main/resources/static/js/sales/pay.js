@@ -92,10 +92,13 @@
 		//查看用户所有地址信息
 		var getAllReceivingCallback= function(data) {
 			if(data.code!=1){
-				window.location.href = "/login.html/"
+				window.location.href = "/login.html"
 			}else{
 				//$scope.count=data.count;
 				$scope.receivingInfo=data.receivingList;
+				if($scope.receivingInfo.length<=0){
+					window.location.href = "/address.html"
+				}
 			}
 		}
 		service.getAllReceiving(getAllReceivingCallback);

@@ -77,6 +77,27 @@
 		</if>
 	</update>
 	
+	<!-- updateCommodityProductNum -->
+	<update id="updateCommodityProductNum">
+		<foreach collection="commodityList" item="commodity" open=" " close=" "  separator=";">
+			update  commodity 
+			set sold_out_num=(sold_out_num +  ${commodity.soldOutNum}),
+			product_num=(product_num - ${commodity.soldOutNum} )
+			where commodity_num=#{commodity.commodityNum}
+			<!-- set sold_out_num=#{commodity.soldOutNum},
+			product_num=#{commodity.productNum}
+			where commodity_num=${commodity.commodityNum} -->
+		</foreach>
+	</update>
+	
+	<!-- findByCommodityNum -->
+	<select id="findByCommodityNum" resultMap="commodity">
+		select * from commodity where commodity_num in
+		<foreach collection="commodityNumList" item="commodityNum" open="(" close=")" separator=",">
+		  #{commodityNum}
+		</foreach>
+	</select>
+	
 	<!-- findOneById -->
 	<select id="findOneById" resultMap="commodity">
 	   select * from commodity where 1=1
@@ -125,6 +146,7 @@
 		<if test="sort!=null"> order by ${sort}  </if><!-- order by 不能用？传参数的方式 -->
 		<if test="pageStart!=null and pageSize!=null">limit #{pageStart},#{pageSize}</if>
 	</select>
+	
 	<!-- getCountBySearch -->
 	<select id="getCountBySearch"  resultType="Integer">
 		select 

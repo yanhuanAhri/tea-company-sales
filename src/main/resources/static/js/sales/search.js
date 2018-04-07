@@ -125,6 +125,9 @@
 				$scope.shopCartCount='';
 			}
 		});
+		service.getTeaSet(function(data){
+			$scope.teaSet=data.teaSet;
+		});
 	}]);
 
 
@@ -143,7 +146,14 @@
 	    				callback(response.data);
 				});
 		}
+		var getTeaSet=function(getTeaSetCallbackFun){
+			$http.get('teaSet').then(
+	    			function (response) {
+	    				getTeaSetCallbackFun(response.data);
+				});
+		}
 		return {
+			getTeaSet:getTeaSet,
 			searchTea:searchTea,
 			getShoppingCartCount:getShoppingCartCount,
 			

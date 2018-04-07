@@ -69,18 +69,6 @@ var app = angular.module("introdutionApp", []);
 		};
 		
 		var buyNow=function(data){
-			/*var fileParams = new FormData();
-            fileParams.append('msg', angular.toJson(data));
-            $http({
-                method:'POST',
-                url: 'buyCommodity',
-                data: fileParams,
-                headers: {'Content-Type': undefined},
-                transformRequest: angular.identity
-               }).then(function (response) {
-                });*/
-            
-			//不能用ajax提交，待续……
 			$http.post("buyCommodity",angular.toJson(data)).then(function (response) {});
 		}
 		return {

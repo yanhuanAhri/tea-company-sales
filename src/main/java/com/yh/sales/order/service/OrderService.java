@@ -179,9 +179,12 @@ public class OrderService {
 		Order order=orderMapper.findOne(orderNum, null);
 		JSONArray commodityArr=JSONArray.fromObject(commodityMsg);
 		List<CommodityRefOrder> list=new ArrayList<>();
+		List<Commodity> commodities=new ArrayList<>();
+		List<String> commodityNums=new ArrayList<>();
 		for(int i=0;i<commodityArr.size();i++) {
 			JSONObject commodity=commodityArr.getJSONObject(i);
 			CommodityRefOrder orderRef=new CommodityRefOrder();
+			Commodity commodityVo=new Commodity();
 			orderRef.setCommodityId(commodity.getLong("commodityId"));
 			orderRef.setCommodityNum(commodity.getString("commodityNum"));
 			orderRef.setOrderId(order.getId());
@@ -190,10 +193,32 @@ public class OrderService {
 			orderRef.setBuyNum(commodity.getInt("buyNum"));
 			orderRef.setBuyPrice(new BigDecimal(commodity.getString("buyPrice")));
 			orderRef.setCover(commodity.getString("cover"));
+			
+			commodityVo.setSoldOutNum(commodity.getLong("buyNum"));
+			commodityVo.setCommodityNum(commodity.getString("commodityNum"));
+			if(commodityVo!=null) {
+				commodities.add(commodityVo);
+				commodityNums.add(commodity.getString("commodityNum"));
+			}
 			list.add(orderRef);
 		}
+		commodityMapper.updateCommodityProductNum(commodities);
+		//updateCommodityProductNum(commodities, commodityNums);
 		commodityRefOrderMapper.saveCommodityRefOrder(list);
 	}
+	
+	/*private void updateCommodityProductNum(List<Commodity> commodities,List<String> commodityNums) {
+		List<Commodity> commodityList=commodityMapper.findByCommodityNum(commodityNums);
+		for(Commodity entity:commodityList) {
+			for(Commodity vo:commodities) {
+				if(entity.getCommodityNum()==vo.getCommodityNum()) {
+					entity.setSoldOutNum(entity.getSoldOutNum()+vo.getSoldOutNum());
+					entity.setProductNum(entity.getProductNum()-vo.getSoldOutNum());
+				}
+			}
+		}
+		commodityMapper.updateCommodityProductNum(commodityList);
+	}*/
 	
 	/**
 	 * 付款

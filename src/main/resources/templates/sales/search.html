@@ -268,25 +268,29 @@
 						</ul>
 					</div>
 					
-					<div class="search-side">
+					<div class="search-side" ng-if="teaSet.length>0">
 
-						<div class="side-title">经典搭配</div>
+						<div class="side-title" >经典搭配</div>
 
-						<li>
+						<li ng-repeat="t in teaSet">
 							<div class="i-pic check">
-								<img src="../images/cp.jpg" />
-								<p class="check-title">萨拉米 1+1小鸡腿</p>
+								<a ng-href="introduction?commodityNum={{t.commodityNum}} "> <img class="" ng-src="{{t.cover}}" width="190" height="190">
+								</a>
+								<p class="check-title">
+									<a ng-href="introduction?commodityNum={{t.commodityNum}} ">  {{'【'+t.tradeName+'】'+ t.teaName+ t.pickYear+ t.pickSeason+ t.productType+ t.goodsGrade+ t.netContent+'克'+ (t.purpose==1? '自饮':'礼盒')}}</a>
+							    </p>
 								<p class="price fl">
-									<b>¥</b> <strong>29.90</strong>
+									<b>¥</b> <strong>{{t.promotionPrice}}</strong>
 								</p>
 								<p class="number fl">
-									销量<span>1110</span>
+									销量<span>{{t.soldOutNum}}</span>
 								</p>
 							</div>
 						</li>
-						<li>
+					<!-- 	<li>
 							<div class="i-pic check">
-								<img src="../images/cp2.jpg" />
+								<a ng-href="introduction?commodityNum={{t.commodityNum}} "> <img class="" ng-src="{{t.cover}}" width="190" height="190">
+								</a>
 								<p class="check-title">ZEK 原味海苔</p>
 								<p class="price fl">
 									<b>¥</b> <strong>8.90</strong>
@@ -298,7 +302,8 @@
 						</li>
 						<li>
 							<div class="i-pic check">
-								<img src="../images/cp.jpg" />
+								<a ng-href="introduction?commodityNum={{t.commodityNum}} "> <img class="" ng-src="{{t.cover}}" width="190" height="190">
+								</a>
 								<p class="check-title">萨拉米 1+1小鸡腿</p>
 								<p class="price fl">
 									<b>¥</b> <strong>29.90</strong>
@@ -307,7 +312,7 @@
 									销量<span>1110</span>
 								</p>
 							</div>
-						</li>
+						</li> -->
 
 					</div>
 					<div class="clear"></div>
