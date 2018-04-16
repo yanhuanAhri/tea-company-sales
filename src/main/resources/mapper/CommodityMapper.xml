@@ -133,9 +133,9 @@
 		i.path as cover 
 		from commodity c left join commodity_img i on c.id=i.commodity_id  where i.type=1 and c.status=1
 		<if test="commodityVo!=null">
-			<if test="commodityVo.tradeName!=null">and c.trade_name=#{commodityVo.tradeName}</if>
-			<if test="commodityVo.teaName!=null"> and c.tea_name=#{commodityVo.teaName}</if>
-			<if test="commodityVo.productType!=null"> and c.product_type=#{commodityVo.productType}</if>
+			<if test="commodityVo.tradeName!=null">and c.trade_name LIKE CONCAT('%',#{commodityVo.tradeName},'%')</if>
+			<if test="commodityVo.teaName!=null"> and c.tea_name LIKE CONCAT('%',#{commodityVo.teaName},'%')</if>
+			<if test="commodityVo.productType!=null"> and c.product_type LIKE CONCAT('%',#{commodityVo.productType},'%')</if>
 			<if test="commodityVo.pickYear!=null"> and c.pick_year=#{commodityVo.pickYear}</if>
 			<if test="commodityVo.pickSeason!=null"> and c.pick_season=#{commodityVo.pickSeason}</if>
 			<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
