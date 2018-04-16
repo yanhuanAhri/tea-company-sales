@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.yh.core.util.DesUtil;
+import com.yh.core.util.EncryptionUtil;
 import com.yh.core.util.URLBuilder;
 import com.yh.entity.User;
 import com.yh.sales.user.mapper.UserMapper;
@@ -32,6 +33,8 @@ public class UserService {
 	 private String discOutDateTime;
 	 @Value("${des.key}")
 	 private String desDey;
+	 @Value("${encryption.way}")
+	 private String encryptionWay;
 	 
 	 
 	 
@@ -47,6 +50,7 @@ public class UserService {
 		  User accountUser=userMapper.findByUserName(account);
 		  User emailUser=userMapper.findByEmail(account);
 		  User phoneUser=userMapper.findByPhone(account);
+		  password= EncryptionUtil.getHash(password,encryptionWay);
 		  User user=new User();
 		  if(accountUser!=null && !String.valueOf(accountUser).isEmpty() && accountUser.getPassword().equals(password)) {
 			  user=accountUser;
@@ -79,6 +83,7 @@ public class UserService {
 							phone=arr[j].split("=")[1];
 						}else if(arr[j].contains("password")) {
 							password=arr[j].split("=")[1];
+							 password= EncryptionUtil.getHash(password,encryptionWay);
 						}
 					}
 				  User user=new User();

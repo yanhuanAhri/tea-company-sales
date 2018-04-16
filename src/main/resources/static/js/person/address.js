@@ -5,16 +5,52 @@ var app = angular.module("addressApp", ['ngMessages']);
 	app.controller('addressCtrl', [ '$scope', '$http', '$rootScope','addressService', function($scope,  $http, $rootScope,service) {
 		
 		$scope.receivingInfo==[];
+		$scope.addressProvinceArr=[];
+		$scope.addressCityArr=[];
+		$scope.addressDistrictArr=[];
+		
+		
+		$scope.onChange=function(name,level){
+			selectionChange(name,level);
+		}
+		var selectionChange=function(name,level){
+			console.info(name,level);
+			/*console.info("$scope.addressProvinceArr:"+$scope.addressProvinceArr);
+			console.info("$scope.addressCityArr"+$scope.addressCityArr);
+			console.info("$scope.addressDistrictArr"+$scope.addressDistrictArr);*/
+			
+			var arr=[]
+			if(level==1){
+				arr=$scope.addressProvinceArr;
+			}else if(level==2){
+				arr=$scope.addressCityArr;
+			}else if(level==3){
+				arr=$scope.addressDistrictArr;
+			}
+			/*console.info("arr:"+arr)*/
+			var id=0;
+			for(var i=0;i<arr.length;i++){
+				if(name==arr[i].name){
+					id=arr[i].id;
+					break;
+				}
+			}
+			service.getArea(id,function(data){
+				if(data[0].level==2){
+					$scope.addressCityArr=data;
+					$scope.addressDistrictArr=[];
+				}else if(data[0].level==3){
+					$scope.addressDistrictArr=data;
+				}
+			})
+		}
 		
 		$scope.saveReceiving=function(){
-			var addressCity=$("#addressCity").val();
-			var addressDistrict=$("#addressDistrict").val();
-			$(".addressCity").find("option:selected").text();
-			if(!$scope.addressProvince || !addressCity || addressDistrict){
+			if(!$scope.addressProvince || !$scope.addressCity || !$scope.addressDistrict){
 				alert("请选择所在地！！！")
 				return;
 			}
-			var receiptAddress=$scope.addressProvince+' '+addressCity+' '+addressDistrict+' '+$scope.addressMsg;
+			var receiptAddress=$scope.addressProvince+' '+$scope.addressCity+' '+$scope.addressDistrict+' '+$scope.addressMsg;
 			var data={
 					'id':$scope.id,
 				'consignee':$scope.consignee,
@@ -59,14 +95,24 @@ var app = angular.module("addressApp", ['ngMessages']);
 					$scope.consigneePhone=data.receiving.consigneePhone;
 					var addressArr=data.receiving.receiptAddress.split(" ");
 					
-					$("#addressProvince").html('<option selected>' + addressArr[0] + "</option>");
-					$("#addressCity").html('<option selected>' + addressArr[1] + "</option>");
-					$("#addressDistrict").html('<option selected>' + addressArr[2] + "</option>");
+					$scope.addressProvince= addressArr[0] ;
+					/*service.addressProvince(function(data){
+						$scope.addressProvinceArr=data;
+					})*/
+					selectionChange(addressArr[0],1);
+					$scope.addressCity=addressArr[1];
+					selectionChange(addressArr[1],2);
+					
+					$scope.addressDistrict=addressArr[2];
+					
+					
 					$scope.addressMsg=addressArr[3];
 					//service.getAllReceiving(getAllReceivingCallback);
 				}
 			});
 		}
+		
+	
 		
 		var selection=function(id,value){
 			var lis=$('#'+id).find('option');
@@ -90,9 +136,9 @@ var app = angular.module("addressApp", ['ngMessages']);
 			}
 		}
 		service.getAllReceiving(getAllReceivingCallback);
-		$scope.area=[];
-		service.getArea(function(data){
-			$scope.area=data;
+		
+		service.addressProvince(function(data){
+			$scope.addressProvinceArr=data;
 		})
 		//getArea
 	}]);
@@ -131,8 +177,14 @@ var app = angular.module("addressApp", ['ngMessages']);
 						callbackFun(response.data);
 			});
 		}
-		var getArea=function(callbackFun){
+		var addressProvince=function(callbackFun){
 			$http.get('getArea').then(
+	    			function (response) {
+						callbackFun(response.data);
+			});
+		}
+		var getArea=function(id,callbackFun){
+			$http.get('getArea?parentId='+id).then(
 	    			function (response) {
 						callbackFun(response.data);
 			});
@@ -143,6 +195,7 @@ var app = angular.module("addressApp", ['ngMessages']);
 			setDefaultAddress:setDefaultAddress,
 			getReceiving:getReceiving,
 			delReceiving:delReceiving,
+			addressProvince:addressProvince,
 			getArea:getArea
 		}
 		

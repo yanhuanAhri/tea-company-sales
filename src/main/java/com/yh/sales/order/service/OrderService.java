@@ -13,8 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.yh.core.util.EncryptionUtil;
 import com.yh.core.util.SerialUtil;
 import com.yh.entity.Commodity;
 import com.yh.entity.CommodityRefOrder;
@@ -51,6 +53,9 @@ public class OrderService {
 	private UserMapper userMapper;
 	@Autowired
 	private ShoppingCartMapper shoppingCartMapper;
+	
+	@Value("${encryption.way}")
+	 private String encryptionWay;
 	
 	private static Map<String,Object> toDelete=new HashMap<>();
 	
@@ -232,28 +237,40 @@ public class OrderService {
 		//paymentCode=123456&orderNum=ORDERZHANGSAN15221560486001
 		if(StringUtils.isNotBlank(payMsg)) {
 			if(payMsg.contains("&")) {
-				String paymentCode=null,orderNum=null;
-				String[] payArr=payMsg.split("&");
-				for(int i=0;i<payArr.length;i++) {
-					if(payArr[i].contains("paymentCode")) {
-						paymentCode=payArr[i].split("=")[1];
-					}else if(payArr[i].contains("orderNum")) {
-						orderNum=payArr[i].split("=")[1];
+				
+				try {
+					String paymentCode=null,orderNum=null;
+					String[] payArr=payMsg.split("&");
+					for(int i=0;i<payArr.length;i++) {
+						if(payArr[i].contains("paymentCode")) {
+							paymentCode=payArr[i].split("=")[1];
+							paymentCode= EncryptionUtil.getHash(paymentCode,encryptionWay);
+						}else if(payArr[i].contains("orderNum")) {
+							orderNum=payArr[i].split("=")[1];
+							if(orderNum.contains("%")) {
+								orderNum= URLDecoder.decode(orderNum, "utf-8");
+							}
+						}
 					}
+					if(paymentCode.equals(userMapper.findById(user.getId()).getPaymentCode())) {
+						//支付密码正确修改订单状态
+						Order order=new Order();
+						order.setPutawayTime(new Date());
+						order.setUpdateTime(new Date());
+						order.setStatus(2);
+						orderMapper.updateOrder(order, orderNum);
+						Order orderMsg=orderMapper.findOne(orderNum, null);
+						//订单支付成功后需要的数据
+						map.put("paymentAmount", orderMsg.getPaymentAmount());
+						ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId());
+						map.put("receiving", receiving);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.getMessage();
+					System.out.println(e.getMessage());
 				}
-				if(paymentCode.equals(userMapper.findById(user.getId()).getPaymentCode())) {
-					//支付密码正确修改订单状态
-					Order order=new Order();
-					order.setPutawayTime(new Date());
-					order.setUpdateTime(new Date());
-					order.setStatus(2);
-					orderMapper.updateOrder(order, orderNum);
-					Order orderMsg=orderMapper.findOne(orderNum, null);
-					//订单支付成功后需要的数据
-					map.put("paymentAmount", orderMsg.getPaymentAmount());
-					ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId());
-					map.put("receiving", receiving);
-				}
+				
 			}
 		}
 		return map;

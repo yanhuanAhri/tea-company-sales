@@ -158,14 +158,33 @@
 											</div>
 										</div>
 										
-										<div class="am-form-group" data-toggle="distpicker">
+									<!-- 	<select class="form-control" id="subscriptionId" name="subscriptionId" ng-model="subscriptionId"  
+											placeholder="订阅号必选" required ng-change='onChange()'>
+										  <option ng-repeat="v in officialAccountsList" value="{{v.id}}-{{v.name}}">{{v.name}}</option>
+										</select>-->
+										
+										<div class="am-form-group" >
+											<label for="user-address" class="am-form-label">所在地</label>
+											<div class="am-form-content address">
+												<select id="addressProvince" name="addressProvince" ng-model="addressProvince" ng-change='onChange(addressProvince,1)'> 
+													<option ng-repeat="p in addressProvinceArr" value="{{p.name}}">{{p.name}}</option>
+												</select>
+												<select id="addressCity" name="addressCity" ng-model="addressCity" ng-change='onChange(addressCity,2)'>
+													<option ng-repeat="c in addressCityArr" id="{{c.id}}" value="{{c.name}}">{{c.name}}</option>
+												</select>
+												<select id="addressDistrict" name="addressDistrict" ng-model="addressDistrict" ng-change='onChange(addressDistrict,3)'>
+													<option ng-repeat="d in addressDistrictArr" id="{{d.id}}" value="{{d.name}}">{{d.name}}</option>
+												</select>
+											</div>
+										</div>
+										<!-- <div class="am-form-group" data-toggle="distpicker">
 											<label for="user-address" class="am-form-label">所在地</label>
 											<div class="am-form-content address">
 												<select id="addressProvince" name="addressProvince" ng-model="addressProvince" data-province="---- 选择省 ----"> </select>
 												<select id="addressCity" name="addressCity" ng-model="addressCity" data-city="---- 选择市 ----"> </select>
 												<select id="addressDistrict" name="addressDistrict" ng-model="addressDistrict" data-district="---- 选择区 ----"> </select>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="am-form-group">
 											<label for="user-intro" class="am-form-label">详细地址</label>

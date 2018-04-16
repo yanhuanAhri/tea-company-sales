@@ -88,7 +88,7 @@ public class EncryptionUtil {
         return null;  
     }  
   
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
     	//第一种
         System.out.println(getHash("123456", "MD5"));  
         System.out.println(getHash("123456", "SHA") + "\n");  
@@ -100,6 +100,6 @@ public class EncryptionUtil {
       //第三种
         System.out.println(getHash3("123456", "MD5"));  
         System.out.println(getHash3("123456", "SHA") + "\n");  
-    }  
+    }  */
   
 }

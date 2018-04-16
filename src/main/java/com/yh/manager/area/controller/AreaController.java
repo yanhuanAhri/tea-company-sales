@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yh.entity.Area;
@@ -23,8 +24,9 @@ public class AreaController {
 	
 	@GetMapping("getArea")
 	@ResponseBody
-	public List<Area> getArea(Model model,HttpServletResponse response){
-		return areaService.getArea();
+	public List<Area> getArea(@RequestParam(name="parentId",required = false)Long parentId,
+			Model model,HttpServletResponse response){
+		return areaService.findBy(parentId);
 	}
-	//@RequestParam(name="parentId",required = false)Long parentId,
+	//
 }
