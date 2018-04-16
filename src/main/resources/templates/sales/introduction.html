@@ -55,7 +55,7 @@
 			</div>
 			<div class="nav-cont">
 				<ul>
-					<li class="index"><a href="#">首页</a></li>
+					<li class="index"><a href="home.html">首页</a></li>
 					<li class="qc"><a href="#">闪购</a></li>
 					<li class="qc"><a href="#">限时抢</a></li>
 					<li class="qc"><a href="#">团购</a></li>
@@ -68,8 +68,8 @@
 			</div>
 		</div>
 		<ol class="am-breadcrumb am-breadcrumb-slash">
-			<li><a href="#">首页</a></li>
-			<li><a href="#" th:text="${commodity.productType}">分类</a></li>
+			<li><a href="home.html">首页</a></li>
+			<li><a ng-href="searchTea?search={{productType}}" id="productType" th:text="${commodity.productType}">分类</a></li>
 			<li class="am-active" th:text="${commodity.teaName}">内容</li>
 		</ol>
 		<script type="text/javascript">
@@ -1187,7 +1187,7 @@
 		</div>
 	</div>
 	<!--菜单 -->
-	<div class=tip>
+	<!-- <div class=tip>
 		<div id="sidebar">
 			<div id="wrap">
 				<div id="prof" class="item">
@@ -1256,7 +1256,7 @@
 						<div class="mp_tooltip">
 							客服中心<i class="icon_arrow_right_black"></i>
 						</div></li>
-					<!--二维码 -->
+					二维码
 					<li class="qtitem"><a href="#none"><span
 							class="mpbtn_qrcode"></span></a>
 						<div class="mp_qrcode" style="display: none;">
@@ -1267,7 +1267,7 @@
 							class="top"></span></a></li>
 				</div>
 
-				<!--回到顶部 -->
+				回到顶部
 				<div id="quick_links_pop" class="quick_links_pop hide"></div>
 
 			</div>
@@ -1323,7 +1323,7 @@
 			</div>
 			<div>充值</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- 弹框 -->
 	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

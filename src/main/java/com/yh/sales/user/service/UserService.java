@@ -44,18 +44,21 @@ public class UserService {
 	 * @return
 	 */
 	public User login(String account,String password) {
-		  User user=userMapper.findByUserName(account);
+		  User accountUser=userMapper.findByUserName(account);
 		  User emailUser=userMapper.findByEmail(account);
 		  User phoneUser=userMapper.findByPhone(account);
-		  if(user!=null && !String.valueOf(user).isEmpty() && user.getPassword().equals(password)) {
-			  return user;
+		  User user=new User();
+		  if(accountUser!=null && !String.valueOf(accountUser).isEmpty() && accountUser.getPassword().equals(password)) {
+			  user=accountUser;
 		  }else if(emailUser!=null && !String.valueOf(emailUser).isEmpty() && emailUser.getPassword().equals(password)) {
-			  return emailUser;
+			  user= emailUser;
 		  }else  if(phoneUser!=null && !String.valueOf(phoneUser).isEmpty() && phoneUser.getPassword().equals(password)) {
-			  return phoneUser;
+			  user= phoneUser;
 		  }
-		return new User();
-		  
+		  if(user.getIsActive().intValue()==1) {
+			  return user;
+		  }
+		  return new User();
 	  }
   
 	/**

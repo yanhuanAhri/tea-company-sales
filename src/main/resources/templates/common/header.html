@@ -5,7 +5,7 @@
 			<div class="topMessage">
 				<div class="menu-hd">
 					<a th:if="${session.user==null}" href="login.html" target="_top" class="h">亲，请登录</a>
-					<a th:if="${session.user==null}" href="#" target="_top">免费注册</a><!-- ${session.sessionValue} -->
+					<a th:if="${session.user==null}" href="register.html" target="_top">免费注册</a><!-- ${session.sessionValue} -->
 					<a th:unless="${session.user==null}" th:text="'欢迎您    '+${session.user.nickName}"></a>
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 			<div class="topMessage mini-cart">
 				<div class="menu-hd"><a id="mc-menu-hd" href="shoppingCart.html" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车
 	
-				</span><strong id="J_MiniCartNum" class="h" th:unless="${session.user==null}" th:text="${session.shopCartCount}"></strong></a></div>
+				</span><strong id="J_MiniCartNum shopCartCount" class="h" th:unless="${session.user==null}" th:text="${session.shopCartCount}"></strong></a></div>
 			</div>
 			<div class="topMessage favorite">
 				<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
@@ -30,7 +30,7 @@
 	<!--悬浮搜索框-->
 
 	<div class="nav white">
-		<div class="logo"><img src="../images/logo.png" /></div>
+		<!-- <div class="logo"><img src="../images/logo.png" /></div> -->
 		<div class="logoBig">
 			<li><img src="../images/logobig.png" /></li>
 		</div>

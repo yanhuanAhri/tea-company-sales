@@ -46,7 +46,12 @@ var app = angular.module("introdutionApp", []);
 		service.getTeaSet(function(data){
 			$scope.teaSet=data.teaSet;
 		});
-		
+		var getProductType=function(){
+			$scope.productType=$("#productType").text();
+			/*var count=$("#shopCartCount").text();
+			console.info($("#shopCartCount"));*/
+		}
+		getProductType();
 	}]);
 		
 	//}
