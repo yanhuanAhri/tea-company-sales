@@ -141,7 +141,7 @@
 			<if test="commodityVo.goodsGrade!=null"> and c.goods_grade=#{commodityVo.goodsGrade}</if>
 			<if test="commodityVo.purpose!=null"> and c.purpose=#{commodityVo.purpose}</if>
 		</if>
-		<if test="search!=null">and c.trade_name LIKE CONCAT('%',#{search},'%')</if><!--  or c.search LIKE CONCAT('%',#{search},'%') --><!-- LIKE CONCAT('%',#{empname},'%' ) -->
+		<if test="search!=null">and c.search LIKE CONCAT('%',#{search},'%')</if><!--  or c.search LIKE CONCAT('%',#{search},'%') --><!-- LIKE CONCAT('%',#{empname},'%' ) -->
 		GROUP BY c.commodity_num
 		<if test="sort!=null"> order by ${sort}  </if><!-- order by 不能用？传参数的方式 -->
 		<if test="pageStart!=null and pageSize!=null">limit #{pageStart},#{pageSize}</if>

@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			".pptx");
 	
 	private static final List<String> PASS_PATH=Arrays.asList("/introduction","/login.html","/login","/home.html",
-			"/","/searchTea","/shoppingCartCount","/homeData","/teaSet","/register.html","/register","/active");
+			"/","/searchTea","/shoppingCartCount","/homeData","/teaSet","/register.html","/register","/active","/getArea");
 	 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -69,17 +69,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		// TODO Auto-generated method stub
-		//String url = request.getRequestURI(); 
-		//response.sendRedirect("http://localhost:5050"+"/login");
-		//System.out.println();
 	}
 
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		// TODO Auto-generated method stub
-		/*String url = request.getRequestURI(); 
-		System.out.println();*/
 	}
 	
 	private boolean isPass(String path) {

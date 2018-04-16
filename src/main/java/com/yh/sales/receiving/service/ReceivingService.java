@@ -29,7 +29,11 @@ public class ReceivingService {
 			receiving.setCreateTime(new Date());
 			receiving.setCreateUserId(user.getId());
 			receiving.setUpdateTime(new Date());
-			receiving.setIsDefault(0);
+			if(receivingMapper.getCounts(user.getId())<=0) {
+				receiving.setIsDefault(1);
+			}else {
+				receiving.setIsDefault(0);
+			}
 			receivingMapper.saveReceiving(receiving);
 		}else {
 			ReceivingInfrom receInfo=receivingMapper.findById(receiving.getId());
@@ -80,6 +84,15 @@ public class ReceivingService {
 		ReceivingInfrom receivingInfrom=receivingMapper.findById(id);
 		map.put("receiving", receivingInfrom);
 		return map;
+	}
+	
+	/**
+	 * 删除单个地址
+	 * @param id
+	 * @param user
+	 */
+	public void delOneReceiving(Long id,User user) {
+		receivingMapper.deleteReceiving(id, user.getId());
 	}
 
 }

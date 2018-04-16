@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@MapperScan("com.yh.sales.*.mapper")
+@MapperScan("com.yh.*.*.mapper")
 public class TeaServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TeaServiceApplication.class, args);

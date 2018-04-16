@@ -44,7 +44,7 @@
 			<div class="long-title"><span class="all-goods">全部分类</span></div>
 			<div class="nav-cont">
 				<ul>
-					<li class="index"><a href="#">首页</a></li>
+					<li class="index"><a href="home.html">首页</a></li>
 					<li class="qc"><a href="#">闪购</a></li>
 					<li class="qc"><a href="#">限时抢</a></li>
 					<li class="qc"><a href="#">团购</a></li>
@@ -86,8 +86,8 @@
 								</div>
 								<div class="new-addr-btn">
 									<a class="a" ng-click="getReceiving(d.id)" ><i class="am-icon-edit"></i>编辑</a>
-									<span class="new-addr-bar">|</span>
-									<a href="javascript:void(0);" onclick="delClick(this);"><i class="am-icon-trash"></i>删除</a>
+									<!-- <span class="new-addr-bar">|</span> -->
+									<!-- <a href="javascript:void(0);" onclick="delClick(this);"><i class="am-icon-trash"></i>删除</a> -->
 								</div>
 							</li>
 
@@ -108,7 +108,7 @@
 								<div class="new-addr-btn">
 									<a  class="a" ng-click="getReceiving(r.id)"><i class="am-icon-edit"></i>编辑</a>
 									<span class="new-addr-bar">|</span>
-									<a href="javascript:void(0);" onclick="delClick(this);"><i class="am-icon-trash"></i>删除</a>
+									<a href="javascript:void(0);" ng-click="delClick(r.id);"><i class="am-icon-trash"></i>删除</a>
 								</div>
 							</li>
 						</ul>
@@ -131,14 +131,30 @@
 										<div class="am-form-group">
 											<label for="user-name" class="am-form-label">收货人</label>
 											<div class="am-form-content">
-												<input type="text" id="consignee" name="consignee" ng-model="consignee" placeholder="收货人">
+												<input type="text" id="consignee" name="consignee" ng-model="consignee" placeholder="收货人"
+												ng-minlength="2" ng-maxlength="20" required>
+												<div style="color: red" ng-messages="myForm.consignee.$error"
+													ng-messages-multiple>
+													<p class="error" ng-message="required">收货人必填</p>
+													<p class="error" ng-message="minlength">最小长度为2个字符</p>
+													<p class="error" ng-message="maxlength">最大长度为20个字符</p>
+													<!-- <p class="error" ng-message="pattern">必须为整数</p> -->
+												</div>
 											</div>
 										</div>
 
 										<div class="am-form-group">
 											<label for="user-phone" class="am-form-label">手机号码</label>
 											<div class="am-form-content">
-												<input id="consigneePhone" name="consigneePhone" ng-model="consigneePhone" placeholder="手机号必填" type="text">
+												<input id="consigneePhone" name="consigneePhone" ng-model="consigneePhone" placeholder="手机号必填" type="text"
+												  ng-minlength="5" ng-maxlength="11" required ng-pattern="/^\d{1,}$/">
+												<div style="color: red" ng-messages="myForm.consigneePhone.$error"
+													ng-messages-multiple>
+													<p class="error" ng-message="required">手机号码必填</p>
+													<p class="error" ng-message="minlength">最小长度为5个字符</p>
+													<p class="error" ng-message="maxlength">最大长度为11个字符</p>
+													<p class="error" ng-message="pattern">必须为整数</p>
+												</div>
 											</div>
 										</div>
 										
@@ -154,25 +170,22 @@
 										<div class="am-form-group">
 											<label for="user-intro" class="am-form-label">详细地址</label>
 											<div class="am-form-content">
-												<textarea  id="addressMsg" name="addressMsg" ng-model="addressMsg" rows="3" id="user-intro" placeholder="输入详细地址"></textarea>
-												<small>100字以内写出你的详细地址...</small>
-												<!-- <input type="text" class="form-control" id="textPublishReadTotal" name="textPublishReadTotal"
-													placeholder="周图文阅读数必填" ng-model="textPublishReadTotal"
-													ng-minlength="1" ng-maxlength="10" required 
-													ng-pattern="/^\d{1,}$/ " />
-												<div style="color: red" ng-messages="myForm.textPublishReadTotal.$error"
+												<textarea  id="addressMsg" name="addressMsg" ng-model="addressMsg" rows="3" id="user-intro" placeholder="输入详细地址"
+												ng-minlength="5" ng-maxlength="100" required ></textarea>
+												<div style="color: red" ng-messages="myForm.addressMsg.$error"
 													ng-messages-multiple>
-													<p class="error" ng-message="required">周图文阅读数必填</p>
-													<p class="error" ng-message="minlength">最小长度为1个字符</p>
-													<p class="error" ng-message="maxlength">最大长度为10个字符</p>
-													<p class="error" ng-message="pattern">必须为整数</p>
-												</div> -->
+													<p class="error" ng-message="required">详细地址必填</p>
+													<p class="error" ng-message="minlength">最小长度为5个字符</p>
+													<p class="error" ng-message="maxlength">最大长度为100个字符</p>
+												</div>
+												<small>100字以内写出你的详细地址...</small>
+												
 											</div>
 										</div>
 
 										<div class="am-form-group">
 											<div class="am-u-sm-9 am-u-sm-push-3">
-												<button type="submit" class="am-btn am-btn-danger" >保存</button><!-- ng-disabled="myForm.$invalid" -->
+												<button type="submit" class="am-btn am-btn-danger" ng-disabled="myForm.$invalid">保存</button><!-- ng-disabled="myForm.$invalid" -->
 												<a href="javascript: void(0)" class="am-close am-btn am-btn-danger" data-am-modal-close>取消</a>
 											</div>
 										</div>

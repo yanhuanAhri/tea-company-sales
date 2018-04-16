@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,11 +75,29 @@ public class ReceivingController {
 		return map;
 	}
 	
+	/**
+	 * 查看单个地址信息
+	 * @param id
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@GetMapping("getReceiving")
 	@ResponseBody
 	public Map<String,Object> getReceiving(@RequestParam("id") Long id,
 			Model model,HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map=receivingService.findOneReceiving(id);
+		map.put("code", "1");
+		return map;
+	}
+	@DeleteMapping("delReceiving")
+	@ResponseBody
+	public Map<String,Object> delReceiving(@RequestParam("id") Long id,HttpSession session,
+			Model model,HttpServletRequest request,HttpServletResponse response){
+		Map<String,Object> map=new HashMap<>();
+		User user=(User) session.getAttribute("user");
+		receivingService.delOneReceiving(id, user);
 		map.put("code", "1");
 		return map;
 	}

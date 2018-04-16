@@ -38,7 +38,7 @@
 			<div class="topMessage">
 				<div class="menu-hd">
 					<a href="login.html" target="_top" class="h">亲，请登录</a>
-					<a href="#" target="_top">免费注册</a>
+					<a href="register.html" target="_top">免费注册</a>
 				</div>
 			</div>
 		</ul>
@@ -50,7 +50,7 @@
 				<div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
 			</div>
 			<div class="topMessage mini-cart">
-				<div class="menu-hd"><a id="mc-menu-hd" href="shoppingCart.html" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车
+				<div class="menu-hd"><a id="mc-menu-hd" href="shoppingCart.html target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车
 	
 				</span><strong id="J_MiniCartNum" class="h">{{shopCartCount}}</strong></a></div>
 			</div>
@@ -90,7 +90,7 @@
 				</div>
 				<div class="nav-cont">
 					<ul>
-						<li class="index"><a href="#">首页</a></li>
+						<li class="index"><a href="home.html">首页</a></li>
 						<li class="qc"><a href="#">闪购</a></li>
 						<li class="qc"><a href="#">限时抢</a></li>
 						<li class="qc"><a href="#">团购</a></li>
@@ -113,7 +113,7 @@
 
 						</div> -->
 						<ul class="select">
-							<p class="title font-normal">
+							<p class="title font-normal" ng-if="search!=null && search!='undefined'">
 								<span class="fl">{{search}}</span> <span class="total fl">搜索到<strong
 									class="num">{{count}}</strong>件相关商品
 								</span>
@@ -129,7 +129,7 @@
 							<div class="clear"></div>
 							<li class="select-list">
 								<dl id="select1">
-									<dt class="am-badge am-round">品牌</dt>
+									<dt class="am-badge am-round">分类</dt>
 
 									<div class="dd-conent">
 										<dd class="select-all selected" ng-click="filterClick()">
