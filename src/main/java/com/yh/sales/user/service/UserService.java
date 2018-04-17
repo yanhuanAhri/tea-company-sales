@@ -193,6 +193,9 @@ public class UserService {
     	User userModify=new User();
     	userModify.setId(user.getId());
     	userModify.setIntegral(userInfo.getIntegral()+integral);
+    	userModify.setUpdateTime(new Date());
+    	userModify.setUserName(user.getUserName());
+    	userModify.setEmail(user.getEmail());
     	userMapper.modifyUser(userModify);
     }
     

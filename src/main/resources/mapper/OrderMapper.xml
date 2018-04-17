@@ -70,7 +70,7 @@
 		<result property="logisticsMode" column="logistics_mode"/>
 		<result property="paymentMode" column="payment_mode"/>
 		<result property="remark" column="remark"/>
-		<!-- <collection property="commodityRefOrder" select="com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper.findByOrder" column="order_id"></collection> -->
+		<!-- <collection property="commodityRefOrder" select="com.yh.sales.common.mapper.CommodityRefOrderMapper.findByOrder" column="order_id"></collection> -->
 		<collection property="commodityRefOrder" ofType="CommodityRefOrder">
 			<id property="id" column="r_id"/>
 			<result property="commodityId" column="commodity_id"/>

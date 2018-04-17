@@ -1,4 +1,4 @@
-package com.yh.sales.commodityreforder.mapper;
+package com.yh.sales.common.mapper;
 
 import java.util.List;
 

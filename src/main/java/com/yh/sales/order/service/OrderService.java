@@ -21,13 +21,15 @@ import com.yh.core.util.SerialUtil;
 import com.yh.entity.Commodity;
 import com.yh.entity.CommodityRefOrder;
 import com.yh.entity.Order;
+import com.yh.entity.OrderLog;
 import com.yh.entity.OrderVo;
 import com.yh.entity.ReceivingInfrom;
 import com.yh.entity.ShoppingCartVo;
 import com.yh.entity.User;
 import com.yh.sales.commodity.mapper.CommodityMapper;
-import com.yh.sales.commodityimg.mapper.CommodityImgMapper;
-import com.yh.sales.commodityreforder.mapper.CommodityRefOrderMapper;
+import com.yh.sales.common.mapper.CommodityImgMapper;
+import com.yh.sales.common.mapper.CommodityRefOrderMapper;
+import com.yh.sales.common.mapper.OrderLogMapper;
 import com.yh.sales.order.mapper.OrderMapper;
 import com.yh.sales.receiving.mapper.ReceivingMapper;
 import com.yh.sales.shoppingcart.mapper.ShoppingCartMapper;
@@ -54,6 +56,8 @@ public class OrderService {
 	private UserMapper userMapper;
 	@Autowired
 	private ShoppingCartMapper shoppingCartMapper;
+	@Autowired
+	private OrderLogMapper orderLogMapper;
 	@Autowired
 	private UserService userService;
 	
@@ -164,7 +168,11 @@ public class OrderService {
 			//商品关系
 			if(StringUtils.isNotBlank(commodityMsg)) {
 				orderMapper.saveOrder(order);
-				saveOrderRef(order.getOrderNum(),commodityMsg);
+				Order orderInfo=orderMapper.findOne(order.getOrderNum(), null);
+				//订单日志
+				saveOrderLog(orderInfo.getId(), orderInfo.getOrderNum(), 0, order.getRemark(), user.getId());
+				//商品订单关系表
+				saveOrderRef(orderInfo,commodityMsg);
 				map.put("orderNum", order.getOrderNum());
 				//购物车下单，删除
 				String params=toDelete.get(user.getId().toString()+"type").toString();
@@ -182,11 +190,11 @@ public class OrderService {
 	
 	/**
 	 * 保存商品订单关系表数据
-	 * @param orderNum
+	 * @param order
 	 * @param commodityMsg
 	 */
-	private void saveOrderRef(String orderNum,String commodityMsg) {
-		Order order=orderMapper.findOne(orderNum, null);
+	private void saveOrderRef(Order order,String commodityMsg) {
+		//Order order=orderMapper.findOne(orderNum, null);
 		JSONArray commodityArr=JSONArray.fromObject(commodityMsg);
 		List<CommodityRefOrder> list=new ArrayList<>();
 		List<Commodity> commodities=new ArrayList<>();
@@ -265,6 +273,8 @@ public class OrderService {
 						order.setStatus(2);
 						orderMapper.updateOrder(order, orderNum);
 						Order orderMsg=orderMapper.findOne(orderNum, null);
+						//订单日志
+						saveOrderLog(orderMsg.getId(), orderMsg.getOrderNum(), 2, null, user.getId());
 						//支付成功修改用户积分
 						userService.addIntegral(user, orderMsg.getPaymentAmount());
 						//订单支付成功后需要的数据
@@ -312,5 +322,26 @@ public class OrderService {
 			map.put("receiving", receiving);
 		}
 		return map;
+	}
+	
+	/**
+	 * 订单日志保存
+	 * @param orderId
+	 * @param orderNum
+	 * @param orderStatus 订单状态  -10-交易关闭、0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后
+	 * @param remark
+	 * @param userId
+	 */
+	private void saveOrderLog(Long orderId,String orderNum,Integer orderStatus,String remark,Long userId){
+		OrderLog entity=new OrderLog();
+		entity.setOrderId(orderId);
+		entity.setOrderNum(orderNum);
+		entity.setOrderStatus(orderStatus);
+		entity.setCreateTime(new Date());
+		entity.setCreateUserId(userId);
+		if(remark!=null && StringUtils.isNotBlank(remark)) {
+			entity.setRemark(remark);
+		}
+		orderLogMapper.saveOrderLog(entity);
 	}
 }

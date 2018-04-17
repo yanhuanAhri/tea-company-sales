@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.yh.sales.common.mapper.OrderLogMapper"> 
+	<resultMap id="orderLog" type="OrderLog">
+		<id property="id" column="id"/>
+		<result property="orderId" column="oder_id"/>
+		<result property="orderNum" column="order_num"/>
+		<result property="orderStatus" column="order_status"/>
+		<result property="remark" column="remark"/>
+		
+		<result property="createTime" column="create_time" />
+		<result property="createUserId" column="create_user_id"  />
+	</resultMap>
+	
+	<!--getOrderLog  -->
+	<select id="getOrderLog" resultMap="orderLog">
+	   select * from order_log where order_num= #{orderNum}
+	</select>
+	
+	<!-- saveOrderLog -->
+	<insert id="saveOrderLog" parameterType="java.util.ArrayList" >
+		insert into order_log
+		(oder_id,order_num,order_status,remark,create_time,create_user_id)
+		values
+    	(#{orderLog.orderId},#{orderLog.orderNum},#{orderLog.orderStatus},
+    	#{orderLog.remark},#{orderLog.createTime},#{orderLog.createUserId})
+	</insert>
+	
+</mapper>

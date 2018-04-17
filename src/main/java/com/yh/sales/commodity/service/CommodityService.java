@@ -14,7 +14,7 @@ import com.yh.entity.Commodity;
 import com.yh.entity.CommodityImg;
 import com.yh.entity.CommodityVo;
 import com.yh.sales.commodity.mapper.CommodityMapper;
-import com.yh.sales.commodityimg.mapper.CommodityImgMapper;
+import com.yh.sales.common.mapper.CommodityImgMapper;
 
 import net.sf.json.JSONObject;
 
