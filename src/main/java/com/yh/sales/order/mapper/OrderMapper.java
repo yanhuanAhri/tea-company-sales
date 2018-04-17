@@ -25,5 +25,5 @@ public interface OrderMapper {
 	 * @param status //订单状态   0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后、-10-交易关闭
 	 * @return
 	 */
-	public List<OrderVo> findByStatus(@Param("userId")Long userId,@Param("status")Integer status);
+	public List<OrderVo> findByStatus(@Param("userId")Long userId,@Param("statusList")List<Integer> statusList);
 }

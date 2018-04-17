@@ -2,6 +2,7 @@ package com.yh.sales.user.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -39,17 +40,32 @@ public class UserController {
 	 * userService.addUserWithBackId(loginname, password); }
 	 */
 
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
 	public User findByUserName() {
 		return userService.findByUserName("zhangsan");
-	}
+	}*/
 	
-	//去个人中心页面
+	//个人中心页面
 	@GetMapping("personal.html")
-	public String toPersonal(Model model) {
+	public String toPersonal(Model model,HttpSession session,
+			HttpServletRequest request,HttpServletResponse response) {
+		User user=(User) session.getAttribute("user");
+		user=userService.findById(user.getId());
+		session.setAttribute("user", user);
 		return  "person/personal";
 	}
+	
+	@GetMapping("personInfo.html")
+	public String toInformation(Model model) {
+		//,HttpSession session,HttpServletRequest request,HttpServletResponse response
+		/*User user=(User) session.getAttribute("user");
+		user=userService.findById(user.getId());
+		session.setAttribute("user", user);*/
+		return  "person/information";
+	}
+	
+	
 
 	@RequestMapping(value = "active", method = RequestMethod.GET)
 	public String active(@RequestParam("token")String token,Model model,

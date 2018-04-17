@@ -108,7 +108,7 @@ public class OrderController {
 	
 	@GetMapping("getMyOrder")
 	@ResponseBody
-	public Map<String,Object> getMyOrder(@RequestParam("status")Integer status,
+	public Map<String,Object> getMyOrder(@RequestParam(name="status",required = false)List<Integer> status,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		User user=(User) session.getAttribute("user");
 		Map<String, Object> map=orderService.getMyOrder(user, status);

@@ -13,9 +13,22 @@
 		<link href="../css/vipstyle.css" rel="stylesheet" type="text/css">
 		<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="../AmazeUI-2.4.2/assets/js/amazeui.js"></script>
+		
+		<!-- <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" > -->
+		
+		<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+		
+		<script type="text/javascript" src="../angularjs/1.6.2/angular.min.js"></script>
+		<script type="text/javascript" src="../angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular.min.js"></script>
+		<script src="angularjs/1.5.11/angular-messages.min.js"></script>
+		<script src="angularjs/1.5.11/angular-touch.min.js"></script>
+		<script src="angularjs/1.5.11/angular-animate.min.js"></script>
+		
+		<script type="text/javascript" src="../js/person/personal.js"></script>
 	</head>
 
-	<body>
+	<body ng-app="personalApp" ng-controller ="personalCtrl">
 		<!--头 -->
 		<header>
 			<article>
@@ -23,43 +36,31 @@
 				<div  class="hmtop" th:include="./common/header :: header"></div>
 			</article>
 		</header>
-		<div class="nav-table">
-			<div class="long-title"><span class="all-goods">全部分类</span></div>
-			<div class="nav-cont">
-				<ul>
-					<li class="index"><a href="#">首页</a></li>
-					<li class="qc"><a href="#">闪购</a></li>
-					<li class="qc"><a href="#">限时抢</a></li>
-					<li class="qc"><a href="#">团购</a></li>
-					<li class="qc last"><a href="#">大包装</a></li>
-				</ul>
-				<div class="nav-extra">
-					<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
-					<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
-				</div>
-			</div>
-		</div>
+		<!-- 首页分类那些 -->
+		<div class="nav-table"  th:include="./common/navtable :: navtable"></div>
 		<b class="line"></b>
 		<div class="center">
 			<div class="col-main">
 				<div class="main-wrap">
-					<div class="wrap-left">
+					<div class="wrap-left" style="width: 150%">
 						<div class="wrap-list">
 							<div class="m-user">
 								<!--个人信息 -->
 
 								<div class="m-userinfo">
-									<a href="news.html">
-										<div class="tipsBox"><i class="am-icon-envelope"></i></div>
+										<!--  -->
+									<a href="#">
+										<div class="tipsBox"><!-- <i class="glyphicon glyphicon-edit"></i> --></div>
 									</a>
 									<div class="m-baseinfo">
 										<a class="m-pic" href="information.html">
-											<img src="../images/getAvatar.do.jpg">
+											<img th:if="${session.user.headPortrair==null}"  src="../images/getAvatar.do.jpg">
+											<img th:unless="${session.user.headPortrair==null}" th:src="${session.user.headPortrair}">
 										</a>
 										<div class="m-info">
-											<em class="s-name">小叮当</em>
+											<em class="s-name" th:text="${session.user.userName}">小叮当</em>
 											<div class="vip1"><a href="#"><span></span><em>会员专享</em></a></div>
-											<div class="safeText"><a href="safety.html">账户安全:<em style="margin-left:20px ;">60</em>分</a>
+											<div class="safeText"><a href="#">账户安全:<em style="margin-left:20px ;">60</em>分</a>
 												<div class="progressBar"><span style="left: -95px;" class="progress"></span></div>
 											</div>
 											<div class="m-address">
@@ -67,12 +68,12 @@
 											</div>
 										</div>
 									</div>
-									<div class="m-right">
+									<!-- <div class="m-right">
 										<div class="m-new">
 											<a href="news.html"><i class="am-icon-dropbox  am-icon-md" style="padding-right:5px ;"></i>消息盒子</a>
 										</div>
 
-									</div>
+									</div> -->
 								</div>
 
 								<!--个人资产-->
@@ -81,20 +82,20 @@
 										<i class="s-icon"></i>个人资产
 									</div>
 									<p class="m-coupon">
-										<a href="coupon.html">
+										<a href="#">
 											<em class="m-num">2</em>
 											<span class="m-title">优惠券</span>
 										</a>
 									</p>
-									<p class="m-wallet">
-										<a href="wallet.html">
+									<!-- <p class="m-wallet">
+										<a href="#">
 											<em class="m-num">0.00</em>
 											<span class="m-title">账户余额</span>
 										</a>
-									</p>
+									</p> -->
 									<p class="m-bill">
-										<a href="pointnew.html">
-											<em class="m-num">10</em>
+										<a href="#">
+											<em class="m-num" th:text="${session.user.integral}">10</em>
 											<span class="m-title">总积分</span>
 										</a>
 									</p>
@@ -132,7 +133,7 @@
 							<div class="m-order">
 								<div class="s-bar">
 									<i class="s-icon"></i>我的订单
-									<a class="i-load-more-item-shadow" href="order.html">全部订单</a>
+									<a class="i-load-more-item-shadow" href="myOrder.html">全部订单</a>
 								</div>
 								<ul>
 									<li><a href="order.html"><i><img src="../images/pay.png"/></i><span>待付款</span></a></li>
@@ -141,32 +142,38 @@
 									<li><a href="order.html"><i><img src="../images/comment.png"/></i><span>待评价<em class="m-num">3</em></span></a></li>
 									<li><a href="change.html"><i><img src="../images/refund.png"/></i><span>退换货</span></a></li>
 								</ul>
-								<div class="orderContentBox">
+								<div class="orderContentBox" ng-repeat="o in myOrder" ng-if="myOrder.length<4">
 									<div class="orderContent">
 										<div class="orderContentpic">
 											<div class="imgBox">
-												<a href="orderinfo.html"><img src="../images/youzi.jpg"></a>
+												<a href="orderinfo.html"><img  ng-src="{{o.commodityRefOrder[0].cover}}"></a>
 											</div>
 										</div>
 										<div class="detailContent">
-											<a href="orderinfo.html" class="delivery">签收</a>
+										<!--  -10-交易关闭、0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后 -->
+											<a ng-if="o.status==0" href="orderinfo.html" class="delivery">付款</a>
+											<a ng-if="o.status==3" href="orderinfo.html" class="delivery">签收</a>
+											<a ng-if="o.status==4" href="orderinfo.html" class="delivery">评价</a>
 											<div class="orderID">
-												<span class="time">2016-03-09</span>
-												<span class="splitBorder">|</span>
-												<span class="time">21:52:47</span>
+												<span class="time">{{o.updateTime}}</span>
+												<!-- <span class="splitBorder">|</span>
+												<span class="time">21:52:47</span> -->
 											</div>
 											<div class="orderID">
-												<span class="num">共1件商品</span>
+												<span class="num">共{{o.commodityRefOrder.length}}件商品</span>
 											</div>
 										</div>
-										<div class="state">待评价</div>
-										<div class="price"><span class="sym">¥</span>23.<span class="sym">80</span></div>
+										<div ng-if="o.status==0" class="state">待付款</div>
+										<div ng-if="o.status==2" class="state">待发货</div>
+										<div ng-if="o.status==3" class="state">待收货</div>
+										<div ng-if="o.status==4" class="state">待评价</div>
+										<div class="price"><span class="sym">¥</span>{{o.paymentAmount}}<!-- <span class="sym">80</span> --></div>
 
 									</div>
 									<a href="javascript:void(0);" class="btnPay">再次购买</a>
 								</div>
 
-								<div class="orderContentBox">
+								<!-- <div class="orderContentBox">
 									<div class="orderContent">
 										<div class="orderContentpic">
 											<div class="imgBox">
@@ -189,7 +196,7 @@
 
 									</div>
 									<a href="javascript:void(0);" class="btnPay">再次购买</a>
-								</div>
+								</div> -->
 							</div>
 							<!--九宫格-->
 							<div class="user-squaredIcon">
@@ -278,7 +285,7 @@
 					<div class="wrap-right">
 
 						<!-- 日历-->
-						<div class="day-list">
+						<!-- <div class="day-list">
 							<div class="s-title">
 								每日新鲜事
 							</div>
@@ -292,9 +299,9 @@
 									<li><a><p>春日护肤面膜不可少，你选对了吗？</p></a></li>									
 								</ul>
 							</div>
-						</div>
+						</div> -->
 						<!--新品 -->
-						<div class="new-goods">
+						<!-- <div class="new-goods">
 							<div class="s-bar">
 								<i class="s-icon"></i>今日新品
 								<a class="i-load-more-item-shadow">15款新品</a>
@@ -309,7 +316,7 @@
 								</a>
 								<a class="follow">收藏</a>
 							</div>
-						</div>						
+						</div>		 -->				
 
 						 <!--热卖推荐 -->
 						<!--<div class="new-goods">

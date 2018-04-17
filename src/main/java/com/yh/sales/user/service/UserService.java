@@ -2,6 +2,7 @@ package com.yh.sales.user.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -59,10 +60,7 @@ public class UserService {
 		  }else  if(phoneUser!=null && !String.valueOf(phoneUser).isEmpty() && phoneUser.getPassword().equals(password)) {
 			  user= phoneUser;
 		  }
-		  if(user.getIsActive().intValue()==1) {
-			  return user;
-		  }
-		  return new User();
+		  return user;
 	  }
   
 	/**
@@ -183,8 +181,27 @@ public class UserService {
 			return null;
 		}
     }
-    public User findByUserName(String userName) {
+    
+    /**
+     * 积分修改
+     * @param user
+     * @param paymentAmount 支付金额
+     */
+    public void addIntegral(User user,BigDecimal paymentAmount) {
+    	Integer integral=paymentAmount.divideToIntegralValue(new BigDecimal("10")).intValue();
+    	User userInfo=userMapper.findById(user.getId());
+    	User userModify=new User();
+    	userModify.setId(user.getId());
+    	userModify.setIntegral(userInfo.getIntegral()+integral);
+    	userMapper.modifyUser(userModify);
+    }
+    
+    public User findById(Long userId) {
+    	return userMapper.findById(userId);
+    }
+    /*public User findByUserName(String userName) {
     	 User user=userMapper.findByUserName(userName);
     	 return user;
-    }
+    }*/
+    
 }

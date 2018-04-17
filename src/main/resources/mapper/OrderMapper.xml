@@ -90,7 +90,11 @@
 		r.commodity_title,r.buy_num,r.buy_price,r.commodity_cover
 		from `order` o,commodity_ref_order r where o.id=r.order_id
 		<if test="userId!=null"> and o.create_user_id=#{userId}</if>
-		<if test="status!=null">and o.`status`=#{status}</if>
+		<if test="statusList!=null">and o.`status` in
+			<foreach collection="statusList" item="status" open="(" close=")" separator=",">  
+           		 #{status}  
+        	</foreach>  
+		</if>
 		order by o.create_time desc
 	</select>
 

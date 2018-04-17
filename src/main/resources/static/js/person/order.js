@@ -6,9 +6,6 @@ var app = angular.module("orderApp", ['ngMessages']);
 		
 		$scope.myOrder=[]
 	
-		/*var getMyOrder=function(status){
-			service.getMyOrder(parseInt(status),getOrderCallback);
-		}*/
 		
 		var getOrderCallback= function(data) {
 			if(data.code!=1){
@@ -18,7 +15,7 @@ var app = angular.module("orderApp", ['ngMessages']);
 				$scope.myOrder=data.myOrder;
 			}
 		}
-		service.getMyOrder(parseInt('-1'),getOrderCallback);
+		service.getMyOrder(null,getOrderCallback);
 			
 	}]);
 		
@@ -27,37 +24,19 @@ var app = angular.module("orderApp", ['ngMessages']);
 		
 		var getMyOrder=function(status,getOrderCallback){
 			//status=;
-			var url='getMyOrder?status='+status
+			var url;
+			if(status==null){
+				url='getMyOrder'
+			}else{
+				 url='getMyOrder?status='+status
+			}
 			$http.get(url).then(
 	    			function (response) {
 	    				getOrderCallback(response.data);
 			});
 		}
 		
-		/*var saveReceivingInfo = function(data, callbackFun) {
-			$http.post('saveReceivingInfo',angular.toJson(data)).then(
-    			function (response) {
-					callbackFun(response);
-			});
-		};
-		var getAllReceiving=function(callbackFun){
-			$http.get('findUserReceiving').then(
-	    			function (response) {
-						callbackFun(response.data);
-			});
-		}
-		var setDefaultAddress=function(id,callbackFun){
-			$http.get('defaultReceiving?id='+id).then(
-	    			function (response) {
-						callbackFun(response);
-			});
-		}
-		var getReceiving=function(id,callbackFun){
-			$http.get('getReceiving?id='+id).then(
-	    			function (response) {
-						callbackFun(response.data);
-			});
-		}*/
+		
 		return {
 			getMyOrder:getMyOrder,
 		}

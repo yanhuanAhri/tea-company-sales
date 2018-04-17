@@ -32,6 +32,7 @@ import com.yh.sales.order.mapper.OrderMapper;
 import com.yh.sales.receiving.mapper.ReceivingMapper;
 import com.yh.sales.shoppingcart.mapper.ShoppingCartMapper;
 import com.yh.sales.user.mapper.UserMapper;
+import com.yh.sales.user.service.UserService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -53,6 +54,8 @@ public class OrderService {
 	private UserMapper userMapper;
 	@Autowired
 	private ShoppingCartMapper shoppingCartMapper;
+	@Autowired
+	private UserService userService;
 	
 	@Value("${encryption.way}")
 	 private String encryptionWay;
@@ -138,7 +141,9 @@ public class OrderService {
 			JSONObject msgObj=JSONObject.fromObject(msg);
 			//保存商品
 			Order order=new Order();
-			order.setOrderNum(SerialUtil.generateOrderSerial("ORDER"+user.getUserName().toUpperCase()));
+			String name=user.getUserName().toUpperCase();
+			name=name.replace("@", "").replace(".", "");
+			order.setOrderNum(SerialUtil.generateOrderSerial("ORDER"+name));
 			order.setCreateTime(new Date());
 			order.setCreateUserId(user.getId());
 			order.setPaymentAmount(new BigDecimal(msgObj.getString("paymentAmount")));
@@ -260,6 +265,8 @@ public class OrderService {
 						order.setStatus(2);
 						orderMapper.updateOrder(order, orderNum);
 						Order orderMsg=orderMapper.findOne(orderNum, null);
+						//支付成功修改用户积分
+						userService.addIntegral(user, orderMsg.getPaymentAmount());
 						//订单支付成功后需要的数据
 						map.put("paymentAmount", orderMsg.getPaymentAmount());
 						ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId());
@@ -282,11 +289,11 @@ public class OrderService {
 	 * @param status //订单状态 0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后、-10-交易关闭
 	 * @return
 	 */
-	public Map<String,Object> getMyOrder(User user,Integer status){
+	public Map<String,Object> getMyOrder(User user,List<Integer> status){
 		Map<String,Object> map=new HashMap<>();
-		if(status<0) {
+		/*if(status<0) {
 			status=null;
-		}
+		}*/
 		List<OrderVo> myOrder=orderMapper.findByStatus(user.getId(), status);
 		map.put("myOrder", myOrder);
 		return map;
