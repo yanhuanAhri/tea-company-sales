@@ -76,7 +76,7 @@
 											<td class="td-inner">数量</td>
 										</div>
 										<div class="th th-operation">
-											<td class="td-inner">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><!-- 商品操作 -->
+											<td class="td-inner">商品操作</td><!--  -->
 										</div>
 										<div class="th th-amount">
 											<td class="td-inner">合计</td>
@@ -96,7 +96,7 @@
 											<div class="order-status5" ng-repeat="o in myOrder">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">{{o.orderNum}}</a></div>
-													<span style="">成交时间：{{o.createTime | date:'yyyy-MM-dd'}}</span>
+													<span style="">成交时间：{{o.putawayTime==null? o.createTime:o.putawayTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
 													<!--    <em>店铺：小桔灯</em>-->
 												</div>
 												<div class="order-content">
@@ -128,12 +128,12 @@
 																	<span>×</span>{{r.buyNum}}
 																</div>
 															</li>
-															<!-- <li class="td td-operation" ng-if="o.status==2 || o.status==3 || o.status==4">
+															<li class="td td-operation" ng-if="o.status==2 || o.status==3 || o.status==4">
 																<div class="item-operation">
 																	<a href="refund.html">退款</a>
 																	<a href="refund.html" ng-if="o.status==3 || o.status==4">/退货</a>
 																</div>
-															</li> -->
+															</li>
 															<li class="td td-operation">
 																<div class="item-operation">
 																	
@@ -245,7 +245,7 @@
 											<td class="td-inner">数量</td>
 										</div>
 										<div class="th th-operation">
-											<td class="td-inner">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+											<td class="td-inner">商品操作</td>
 										</div>
 										<div class="th th-amount">
 											<td class="td-inner">合计</td>
@@ -263,7 +263,7 @@
 											<div class="order-status1" ng-repeat="po in myOrder" ng-if="po.status==0">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">{{po.orderNum}}</a></div>
-													<span>成交时间：{{po.createTime | date:'yyyy-MM-dd'}}</span>
+													<span>成交时间：{{po.putawayTime==null? po.createTime:po.putawayTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
 													   <!-- <em>店铺：小桔灯</em> -->
 												</div>
 												<div class="order-content">
@@ -295,11 +295,11 @@
 																	<span>×</span>{{r.buyNum}}
 																</div>
 															</li>
-															<!-- <li class="td td-operation">
+															<li class="td td-operation">
 																<div class="item-operation">
 
 																</div>
-															</li> -->
+															</li>
 														</ul>
 														
 													</div>
@@ -346,7 +346,7 @@
 											<td class="td-inner">数量</td>
 										</div>
 										<div class="th th-operation">
-											<td class="td-inner">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+											<td class="td-inner">商品操作</td>
 										</div>
 										<div class="th th-amount">
 											<td class="td-inner">合计</td>
@@ -364,7 +364,7 @@
 											<div class="order-status2"  ng-repeat="do in myOrder" ng-if="do.status==2">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">{{do.orderNum}}</a></div>
-													<span>成交时间：{{do.createTime | date:'yyyy-MM-dd'}}</span>
+													<span>成交时间：{{do.putawayTime==null? do.createTime:do.putawayTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
 													   <!-- <em>店铺：小桔灯</em> -->
 												</div>
 												<div class="order-content">
@@ -397,11 +397,11 @@
 																	<span>×</span>{{r.buyNum}}
 																</div>
 															</li>
-															<!-- <li class="td td-operation">
+															<li class="td td-operation">
 																<div class="item-operation">
 																	<a href="refund.html">退款</a>
 																</div>
-															</li> -->
+															</li>
 														</ul>
 
 														
@@ -445,7 +445,7 @@
 											<td class="td-inner">数量</td>
 										</div>
 										<div class="th th-operation">
-											<td class="td-inner">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+											<td class="td-inner">商品操作</td>
 										</div>
 										<div class="th th-amount">
 											<td class="td-inner">合计</td>
@@ -463,7 +463,7 @@
 											<div class="order-status3" ng-repeat="wo in myOrder" ng-if="wo.status==3">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">{{wo.orderNum}}</a></div>
-													<span>成交时间：{{ro.createTime | date:'yyyy-MM-dd'}}</span>
+													<span>成交时间：{{wo.putawayTime==null? wo.createTime:wo.putawayTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
 													   <!-- <em>店铺：小桔灯</em> -->
 												</div>
 												<div class="order-content">
@@ -496,11 +496,11 @@
 																	<span>×</span>{{r.buyNum}}
 																</div>
 															</li>
-															<!-- <li class="td td-operation">
+															<li class="td td-operation">
 																<div class="item-operation">
-																	<a href="refund.html">退款/退货</a>
+																	<a href="#">退款/退货</a>
 																</div>
-															</li> -->
+															</li>
 														</ul>
 
 													</div>
@@ -545,7 +545,7 @@
 											<td class="td-inner">数量</td>
 										</div>
 										<div class="th th-operation">
-											<td class="td-inner">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+											<td class="td-inner">商品操作</td>
 										</div>
 										<div class="th th-amount">
 											<td class="td-inner">合计</td>
@@ -563,7 +563,7 @@
 										<div class="order-status4" ng-repeat="ro in myOrder" ng-if="ro.status==4">
 												<div class="order-title">
 													<div class="dd-num">订单编号：<a href="javascript:;">{{ro.orderNum}}</a></div>
-													<span>成交时间：{{ro.createTime | date:'yyyy-MM-dd'}}</span>
+													<span>成交时间：{{ro.putawayTime==null? ro.createTime:ro.putawayTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
 
 												</div>
 												<div class="order-content">
@@ -595,11 +595,11 @@
 																	<span>×</span>{{r.buyNum}}
 																</div>
 															</li>
-															<!-- <li class="td td-operation">
+															<li class="td td-operation">
 																<div class="item-operation">
-																	<a href="refund.html">退款/退货</a>
+																	<!-- <a href="refund.html">退款/退货</a> -->
 																</div>
-															</li> -->
+															</li>
 														</ul>
 													</div>
 													<div class="order-right">

@@ -14,7 +14,6 @@ var app = angular.module("orderinfoApp", ['ngMessages']);
 			if(data.code!=1){
 				window.location.href = "/login.html/"
 			}else{
-				//$scope.count=data.count;
 				$scope.order=data.order;
 				$scope.receiving=data.receiving;
 			}
