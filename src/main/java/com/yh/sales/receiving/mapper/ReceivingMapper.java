@@ -19,7 +19,12 @@ public interface ReceivingMapper {
 	
 	public List<ReceivingInfrom> findByCreateUserId(@Param("userId")Long userId);
 	
-	public ReceivingInfrom findById(@Param("id")Long id);
+	/**
+	 * @param id
+	 * @param userId 可为null
+	 * @return
+	 */
+	public ReceivingInfrom findById(@Param("id")Long id,@Param("userId")Long userId);
 	
 	public void deleteReceiving(@Param("receivingId")Long receivingId,@Param("userId")Long userId);
 	

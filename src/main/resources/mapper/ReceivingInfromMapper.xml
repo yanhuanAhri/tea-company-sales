@@ -22,6 +22,7 @@
 	<!-- findById -->
 	<select id="findById" resultMap="receivingInfo">
 		select * from receiving_info where id=#{id}
+		<if test="userId!=null"> and create_user_id=#{userId}</if>
 	</select>
 	
 	<!-- findByStatus -->

@@ -36,7 +36,7 @@ public class ReceivingService {
 			}
 			receivingMapper.saveReceiving(receiving);
 		}else {
-			ReceivingInfrom receInfo=receivingMapper.findById(receiving.getId());
+			ReceivingInfrom receInfo=receivingMapper.findById(receiving.getId(),user.getId());
 			if(receiving.getIsDefault()==null) {
 				receiving.setIsDefault(receInfo.getIsDefault());
 			}
@@ -81,7 +81,7 @@ public class ReceivingService {
 	 */
 	public Map<String,Object> findOneReceiving(Long id){
 		Map<String,Object> map=new HashMap<>();
-		ReceivingInfrom receivingInfrom=receivingMapper.findById(id);
+		ReceivingInfrom receivingInfrom=receivingMapper.findById(id,null);
 		map.put("receiving", receivingInfrom);
 		return map;
 	}

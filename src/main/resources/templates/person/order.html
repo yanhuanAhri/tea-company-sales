@@ -157,7 +157,7 @@
 																<div class="item-status">
 																	<p class="Mystatus">交易成功</p>
 																	<p class="order-info"><a href="orderinfo.html"  ng-if="o.status==4">去评价</a></p>
-																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
 																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
 																</div>
 															</li>
@@ -172,6 +172,7 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">等待买家付款</p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
 																	<p class="order-info"><a href="orderinfo.html">取消订单</a></p>
 																</div>
 															</li>
@@ -185,6 +186,7 @@
 														<div class="move-right" ng-if="o.status=='-10'">
 															<li class="td td-status">
 																<div class="item-status">
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
 																	<p class="Mystatus">交易关闭</p>
 																</div>
 															</li>
@@ -198,7 +200,7 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">买家已付款</p>
-																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
 																</div>
 															</li>
 															<li class="td td-change">
@@ -211,7 +213,7 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">卖家已发货</p>
-																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
 																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
 																	<p class="order-info"><a href="#">延长收货</a></p>
 																</div>

@@ -1,7 +1,5 @@
 package com.yh.sales.order.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +40,12 @@ public class OrderController {
 	@GetMapping("myOrder.html")
 	public String goMyOrder(Model model) {
 		return "person/order";
+	}
+	
+	@GetMapping("orderinfo.html")
+	public String goOrderinfo(@RequestParam("orderNum")String orderNum,Model model) {
+		model.addAttribute("orderNum", orderNum);
+		return "person/orderinfo";
 	}
 	
 	/**
@@ -106,12 +110,37 @@ public class OrderController {
 		}
 	}
 	
+	/**
+	 * 订单列表
+	 * @param status
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("getMyOrder")
 	@ResponseBody
 	public Map<String,Object> getMyOrder(@RequestParam(name="status",required = false)List<Integer> status,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		User user=(User) session.getAttribute("user");
 		Map<String, Object> map=orderService.getMyOrder(user, status);
+		map.put("code", "1");
+		return map;
+	}
+	/**
+	 * 订单详情
+	 * @param orderNum
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("getOrderInfo")
+	@ResponseBody
+	public Map<String,Object> getOrderInfo(@RequestParam("orderNum")String orderNum,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		User user=(User) session.getAttribute("user");
+		Map<String, Object> map=orderService.getOrderInfo(user, orderNum);
 		map.put("code", "1");
 		return map;
 	}

@@ -269,7 +269,7 @@ public class OrderService {
 						userService.addIntegral(user, orderMsg.getPaymentAmount());
 						//订单支付成功后需要的数据
 						map.put("paymentAmount", orderMsg.getPaymentAmount());
-						ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId());
+						ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId(),null);
 						map.put("receiving", receiving);
 					}
 				} catch (Exception e) {
@@ -291,12 +291,26 @@ public class OrderService {
 	 */
 	public Map<String,Object> getMyOrder(User user,List<Integer> status){
 		Map<String,Object> map=new HashMap<>();
-		/*if(status<0) {
-			status=null;
-		}*/
-		List<OrderVo> myOrder=orderMapper.findByStatus(user.getId(), status);
+		List<OrderVo> myOrder=orderMapper.findByStatus(user.getId(), status,null);
 		map.put("myOrder", myOrder);
 		return map;
 	}
 	
+	/**
+	 * 订单详情
+	 * @param user
+	 * @param orderNum
+	 * @return
+	 */
+	public Map<String,Object> getOrderInfo(User user,String orderNum){
+		Map<String,Object> map=new HashMap<>();
+		List<OrderVo> orderVoList=orderMapper.findByStatus(user.getId(), null, orderNum);
+		if(orderVoList!=null && !orderVoList.isEmpty() && orderVoList.size()==1) {
+			OrderVo orderVo=orderVoList.get(0);
+			ReceivingInfrom receiving=receivingMapper.findById(orderVo.getReceivingId(),user.getId());
+			map.put("order", orderVo);
+			map.put("receiving", receiving);
+		}
+		return map;
+	}
 }

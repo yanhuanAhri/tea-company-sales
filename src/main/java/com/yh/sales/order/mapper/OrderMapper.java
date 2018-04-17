@@ -23,7 +23,8 @@ public interface OrderMapper {
 	 * 根据用户id和订单状态查看订单信息
 	 * @param userId
 	 * @param status //订单状态   0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后、-10-交易关闭
+	 * @param orderNum  订单编号
 	 * @return
 	 */
-	public List<OrderVo> findByStatus(@Param("userId")Long userId,@Param("statusList")List<Integer> statusList);
+	public List<OrderVo> findByStatus(@Param("userId")Long userId,@Param("statusList")List<Integer> statusList,@Param("orderNum")String orderNum);
 }
