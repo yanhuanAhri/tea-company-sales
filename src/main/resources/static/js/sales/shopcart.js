@@ -7,7 +7,7 @@
 		$scope.selectAll=false;
 		$scope.totalAmount=0;
 		
-		$scope.modifyBuyNum=function(commodityNum,symbol){
+		$scope.modifyBuyNum=function(commodityNum,symbol,promotionPrice){
 			var buyNum=$("#buyNum").val();
 			var num=symbol+1;
 			buyNum=parseInt(buyNum)+parseInt(num);
@@ -19,14 +19,24 @@
 					'commodityNum':commodityNum,
 					'buyNum':parseInt(num)
 				};
-				service.modityBuyNum(data,function(obj){
-					if(obj.data.code!=1){
-						window.location.href = "/login.html/"
-					}else{
-						service.getShoppingCart(getShoppingCartCallback);
-					}
-					
-				});
+			service.modityBuyNum(data,function(obj){
+				if(obj.data.code!=1){
+					window.location.href = "/login.html/"
+				}else{
+					service.getShoppingCart(getShoppingCartCallback);
+				}
+				
+			});
+			//修改数量同时修改勾选商品总价
+			if($scope.commodityNums.length>0){
+				if(symbol=='+'){
+					$scope.totalAmount=parseFloat($scope.totalAmount)+parseFloat(promotionPrice);
+				}else if(symbol=='-'){
+					$scope.totalAmount=parseFloat($scope.totalAmount)-parseFloat(promotionPrice);
+				}
+				
+			}
+			
 		}
 		//单个删除
 		$scope.delshop=function(commodityNum){
@@ -83,6 +93,15 @@
 		}
 		//单选
 		$scope.select=function(commodityNum,price){
+			selectAmount(commodityNum,price);
+			if($scope.commodityNums.length==$scope.count){
+				$scope.selectAll=true;
+			}else{
+				$scope.selectAll=false;
+			}
+		}
+		//改变勾选总价
+		var selectAmount=function(commodityNum,price){
 			var index=$.inArray(commodityNum, $scope.commodityNums);//不包含在数组中,则返回 -1
 			if(index!='-1'){
 				$scope.commodityNums.splice(index,1);
@@ -91,13 +110,7 @@
 				$scope.commodityNums.push(commodityNum)
 				$scope.totalAmount=parseFloat($scope.totalAmount)+parseFloat(price);
 			}
-			if($scope.commodityNums.length==$scope.count){
-				$scope.selectAll=true;
-			}else{
-				$scope.selectAll=false;
-			}
 		}
-		
 		var getShoppingCartCallback= function(data) {
 			if(data.code!=1){
 				window.location.href = "/login.html/"

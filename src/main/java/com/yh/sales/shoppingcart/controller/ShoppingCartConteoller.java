@@ -42,7 +42,7 @@ public class ShoppingCartConteoller {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("addCommodityToShopCart")
+	@GetMapping("addToShoppingCart")
 	@ResponseBody
 	public Map<String,Object> addToShoppingCart(@RequestParam("commodityNum")String commodityNum,
 			@RequestParam("buyNum")String buyNum,
