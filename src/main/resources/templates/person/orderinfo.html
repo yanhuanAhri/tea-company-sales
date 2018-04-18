@@ -52,7 +52,7 @@
 								<strong class="am-text-danger am-text-lg">订单详情</strong>
 								 / 
 								 <small>Order&nbsp;details</small>
-								 <span id="orderNum" th:text="${orderNum}" style="display: none"></span>
+								 <span id="orderNum" th:text="${orderNum}" style="display: none"></span><!--  -->
 							</div>
 						</div>
 						<hr/>
@@ -120,6 +120,7 @@
 										<div class="time-list">
 											<span class="date">{{order.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
 										</div>
+										<p class="msg" th:text="${msg}" style="font-size: 20px;color: red;padding: 2% 0;"></p>
 										<!-- <div class="inquire">
 											<span class="package-detail">物流：天天快递</span>
 											<span class="package-detail">快递单号: </span>

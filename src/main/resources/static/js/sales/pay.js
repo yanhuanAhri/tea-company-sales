@@ -118,7 +118,9 @@
 		}
 		getPrice();
 		
-	
+		/*$scope.cancel=function(orderNum){
+			
+		}*/
 		
 	}]);
 

@@ -8,6 +8,7 @@ var app = angular.module("addressApp", ['ngMessages']);
 		$scope.addressProvinceArr=[];
 		$scope.addressCityArr=[];
 		$scope.addressDistrictArr=[];
+		$scope.idTip=null;
 		
 		
 		$scope.onChange=function(name,level){
@@ -15,10 +16,6 @@ var app = angular.module("addressApp", ['ngMessages']);
 		}
 		var selectionChange=function(name,level){
 			console.info(name,level);
-			/*console.info("$scope.addressProvinceArr:"+$scope.addressProvinceArr);
-			console.info("$scope.addressCityArr"+$scope.addressCityArr);
-			console.info("$scope.addressDistrictArr"+$scope.addressDistrictArr);*/
-			
 			var arr=[]
 			if(level==1){
 				arr=$scope.addressProvinceArr;
@@ -52,11 +49,12 @@ var app = angular.module("addressApp", ['ngMessages']);
 			}
 			var receiptAddress=$scope.addressProvince+' '+$scope.addressCity+' '+$scope.addressDistrict+' '+$scope.addressMsg;
 			var data={
-					'id':$scope.id,
+					'id':$scope.idTip,
 				'consignee':$scope.consignee,
 				'consigneePhone':$scope.consigneePhone,
 				'receiptAddress':receiptAddress
 			}
+			$scope.idTip=null
 			service.saveReceivingInfo(data,function(obj){
 				if(obj.data.code!=1){
 					window.location.href = "/login.html/"
@@ -85,7 +83,9 @@ var app = angular.module("addressApp", ['ngMessages']);
 				}
 			});
 		}
+		
 		$scope.getReceiving=function(id){
+			$scope.idTip=id;
 			service.getReceiving(id,function(data){
 				if(data.code!=1){
 					window.location.href = "/login.html/"

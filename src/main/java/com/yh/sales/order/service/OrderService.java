@@ -281,6 +281,11 @@ public class OrderService {
 						map.put("paymentAmount", orderMsg.getPaymentAmount());
 						ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId(),null);
 						map.put("receiving", receiving);
+						map.put("code", 1);
+					}else {
+						map.put("orderNum", orderNum);
+						map.put("code", 0);
+						map.put("msg", "支付密码错误");
 					}
 				} catch (Exception e) {
 					// TODO: handle exception

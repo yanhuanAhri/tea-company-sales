@@ -102,12 +102,16 @@ public class OrderController {
 		User user=(User) session.getAttribute("user");
 		Map<String, Object> map=orderService.pay(user, payMsg);
 		if(map!=null && !map.isEmpty()) {
-			model.addAllAttributes(map);
-			return "sales/paysuccess";
-		}else {
-			//要修改成失败界面
-			return "login";
+			if(map.get("code").toString().equals("1")) {
+				model.addAllAttributes(map);
+				return "sales/paysuccess";
+			}else if(map.get("code").toString().equals("0")){
+				model.addAllAttributes(map);
+				return "person/orderinfo";
+			}
 		}
+		//要修改成失败界面
+		return "login";
 	}
 	
 	/**

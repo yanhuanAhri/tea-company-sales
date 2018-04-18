@@ -3,16 +3,17 @@ var app = angular.module("introdutionApp", []);
 
 
 	app.controller('introductionCtrl', [ '$scope', '$http', '$rootScope','introductionService', function($scope,  $http, $rootScope,service) {
+		$scope.buyNum=1;
 		
 		$scope.addToShoppingCart=function(){
 			var commodityNum=$("#commodityNum").val();
-			var buyNum= $("input[name=buyNum]").val();
+			//var buyNum= $("input[name=buyNum]").val();
 			if(buyNum<2){
 				buyNum=1;
 			}
 			 var data={
 				'commodityNum':commodityNum,
-				'buyNum':buyNum
+				'buyNum':$scope.buyNum
 			};
 			service.addToShopingCart(data,function(obj){
 				if(obj.data.code!=1){
@@ -23,25 +24,34 @@ var app = angular.module("introdutionApp", []);
 				}
 			});
 		}
-		
+
+		$scope.buyNumChange=function($event,symbol){
+			
+			if(symbol=='-'){
+				//console.info($event);
+				$scope.buyNum=parseInt($($event.target).next().val())-1;
+				// $($event.target).next().val(parseInt(buyNum)+1);
+			}else{
+				var productNum=$("#productNum").text();
+				if(parseInt($scope.buyNum)<parseInt(productNum)){
+					$scope.buyNum=parseInt($($event.target).prev().val())+1;
+				}else{
+					alert("购买数量不能大于库存量！！！");
+				}
+				
+				// $($event.target).prev().val(parseInt(buyNum)-1)
+			}
+		};
 		$scope.buyNow=function(){
 			var commodityNum=$("#commodityNum").val();
-			var buyNum= $("input[name=buyNum]").val();
-			if(buyNum<2){
-				buyNum=1;
-			}
-			$("#buyNum").val(buyNum);
+			$("#buyNum").val($scope.buyNum);
 			 var data={
 				'commodityNum':commodityNum,
-				'buyNum':buyNum,
+				'buyNum':$scope.buyNum,
 				'type':'C'
 			};
 			 $("#buyForm").attr('action',"/buyCommodity?commodityNum="+commodityNum);
 			 $("#buyForm").submit();
-			// $('#buyForm').attr('action':'buyCommodity');
-			// $('#buyForm').submit('msg':data);
-			 //('/buyCommodity', { 'msg': data},'post')
-			// service.buyNow(data);
 		}
 		service.getTeaSet(function(data){
 			$scope.teaSet=data.teaSet;
