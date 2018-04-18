@@ -1,5 +1,6 @@
 package com.yh.sales.order.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,8 +111,21 @@ public class OrderController {
 				return "person/orderinfo";
 			}
 		}
-		//要修改成失败界面
-		return "login";
+		return "home";
+	}
+	
+	@PostMapping("cancelOrder")
+	public String cancelOrder(@RequestBody String msg,Model model,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		User user=(User) session.getAttribute("user");
+		String orderNum=orderService.cancelOrder(msg, user);
+		if(orderNum!=null) {
+			model.addAttribute("orderNum", orderNum);
+			return "person/orderinfo";
+		}else {
+			return "home";
+		}
+		
 	}
 	
 	/**

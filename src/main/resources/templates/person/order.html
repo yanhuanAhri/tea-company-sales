@@ -16,6 +16,7 @@
 		<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="../AmazeUI-2.4.2/assets/js/amazeui.js"></script>
 		
+		<link href="../css/modal.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
 		
 		<script type="text/javascript" src="../angularjs/1.6.2/angular.min.js"></script>
@@ -173,12 +174,12 @@
 																<div class="item-status">
 																	<p class="Mystatus">等待买家付款</p>
 																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
-																	<p class="order-info"><a href="orderinfo.html">取消订单</a></p>
+																	<p class="order-info orderCancel"><span style="cursor:pointer;">取消订单</span></p>
 																</div>
 															</li>
 															<li class="td td-change">
-																<a href="pay.html">
-																<div class="am-btn am-btn-danger anniu">
+																<!-- <a href="orderinfo.html?orderNum={{o.orderNum}}"> -->
+																<div class="am-btn am-btn-danger anniu theme-login">
 																	一键支付</div></a>
 															</li>
 														</div>
@@ -314,14 +315,14 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">等待买家付款</p>
-																	<p class="order-info"><a href="#">取消订单</a></p>
+																	<p class="order-info orderCancel"><span style="cursor:pointer;">取消订单</span></p>
 
 																</div>
 															</li>
 															<li class="td td-change">
-																<a href="pay.html">
-																<div class="am-btn am-btn-danger anniu">
-																	一键支付</div></a>
+																<!-- <a href="orderinfo.html?orderNum={{po.orderNum}}"></a> -->
+																<div class="am-btn am-btn-danger anniu theme-login">
+																	一键支付</div>
 															</li>
 														</div>
 													</div>
@@ -643,7 +644,81 @@
 			<!-- 个人中心侧边 -->
 			<aside class="menu"  th:include="./common/aside :: aside"></aside>
 		</div>
+		
+		<!--付款 弹框 -->
+			<div class='dlg-bg'></div>
+			<div class="theme-popover dlg1" ng2-if="tip">
+				<!-- 标题 -->
+				<div class="am-cf am-padding">
+					<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">确认付款</strong> / <small>Confirm the payment</small></div>
+				</div>
+				<hr/>
 
+				<div class="am-u-md-12">
+					<form class="am-form am-form-horizontal" action="paymentMyOrder" method="post">
+						<div class="am-form-group">
+							<label for="user-name" class="am-form-label">付款金额：</label>
+							<div class="am-form-content">￥{{order.paymentAmount}}</div>
+						</div>
+						<div class="am-form-group">
+							<label for="user-name" class="am-form-label">支付密码：</label>
+							<div class="am-form-content">
+								<input type="password" name="paymentCode" id="user-name" placeholder="请输入支付密码" style="width: 80%;">
+							</div>
+						</div>
+						<div class="am-form-group" style="display: none;">
+							<label for="user-name" class="am-form-label">订单编号：</label>
+							<div class="am-form-content">
+								<input type="text" name="orderNum" id="orderNum" placeholder="请输入支付密码" ng-model="order.orderNum" style="width: 80%;">
+							</div>
+						</div>
+						<div class="am-form-group theme-poptit">
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="submit" class="am-btn am-btn-danger">确认</button>
+								<p class="am-btn am-btn-danger close theme-close">取消</p>
+							<!-- 	<a ng-href="orderinfo.html?orderNum={{orderNum}}"> --><!-- </a> -->
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 订单取消弹框 -->
+			<div class="theme-popover dlg2" ng2-if="tip">
+
+				<!-- 标题 -->
+				<div class="am-cf am-padding">
+					<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">订单取消</strong> / <small>Cancel the order</small></div>
+				</div>
+				<hr/>
+
+				<div class="am-u-md-12">
+					<form class="am-form am-form-horizontal" action="cancelOrder" method="post">
+						<!-- <div class="am-form-group">
+							<label for="user-name" class="am-form-label">付款金额：</label>
+							<div class="am-form-content">￥{{order.paymentAmount}}</div>
+						</div> -->
+						<div class="am-form-group">
+							<label for="user-name" class="am-form-label">取消订单原因：</label>
+							<div class="am-form-content">
+								<textarea  name="remark" id="remark" placeholder="请输入取消订单的原因" style="width: 80%;"></textarea>
+							</div>
+						</div>
+						<div class="am-form-group" style="display: none;">
+							<label for="user-name" class="am-form-label">订单编号：</label>
+							<div class="am-form-content">
+								<input type="text" name="orderNum"  placeholder="请输入支付密码" ng-model="order.orderNum" style="width: 80%;">
+							</div>
+						</div>
+						<div class="am-form-group theme-poptit">
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="submit" class="am-btn am-btn-danger">确认</button>
+								<p class="am-btn am-btn-danger close theme-close">取消</p>
+							<!-- 	<a ng-href="orderinfo.html?orderNum={{orderNum}}"> --><!-- </a> -->
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 	</body>
 
 </html>

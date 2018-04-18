@@ -76,7 +76,7 @@ var app = angular.module("introdutionApp", []);
 		}
 		
 		var addToShopingCart = function(data, callbackFun) {
-			var url='addCommodityToShopCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
+			var url='addToShoppingCart?commodityNum='+data.commodityNum+'&buyNum='+data.buyNum;
 			$http.get(url).then(
     			function (response) {
 					callbackFun(response);

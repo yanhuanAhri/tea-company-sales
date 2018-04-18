@@ -43,4 +43,14 @@ var app = angular.module("orderApp", ['ngMessages']);
 		
 	}]);
 
+	$(document).on('click', '.theme-login', function() {
+		$('.dlg-bg,.dlg1').show()
+	})
+	$(document).on('click', '.orderCancel', function() {
+		$('.dlg-bg,.dlg2').show()
+	})
+	
+	$(document).on('click', '.theme-close', function() {
+		$('.dlg-bg,.dlg1,.dlg2').hide()
+	})
 

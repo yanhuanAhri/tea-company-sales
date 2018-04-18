@@ -267,12 +267,12 @@ public class OrderService {
 					}
 					if(paymentCode.equals(userMapper.findById(user.getId()).getPaymentCode())) {
 						//支付密码正确修改订单状态
-						Order order=new Order();
+						/*Order order=new Order();
 						order.setPutawayTime(new Date());
 						order.setUpdateTime(new Date());
 						order.setStatus(2);
-						orderMapper.updateOrder(order, orderNum);
-						Order orderMsg=orderMapper.findOne(orderNum, null);
+						orderMapper.updateOrder(order, orderNum);*/
+						Order orderMsg=updateOrderStatus(orderNum,2);
 						//订单日志
 						saveOrderLog(orderMsg.getId(), orderMsg.getOrderNum(), 2, null, user.getId());
 						//支付成功修改用户积分
@@ -281,6 +281,7 @@ public class OrderService {
 						map.put("paymentAmount", orderMsg.getPaymentAmount());
 						ReceivingInfrom receiving=receivingMapper.findById(orderMsg.getReceivingId(),null);
 						map.put("receiving", receiving);
+						map.put("orderNum", orderNum);
 						map.put("code", 1);
 					}else {
 						map.put("orderNum", orderNum);
@@ -296,6 +297,24 @@ public class OrderService {
 			}
 		}
 		return map;
+	}
+	
+	/**
+	 * 修改订单状态
+	 * @param orderNum
+	 * @param status
+	 * @return
+	 */
+	private Order updateOrderStatus(String orderNum,Integer status) {
+		Order order=new Order();
+		if(status==2) {
+			order.setPutawayTime(new Date());
+		}
+		order.setUpdateTime(new Date());
+		order.setStatus(status);
+		orderMapper.updateOrder(order, orderNum);
+		Order orderMsg=orderMapper.findOne(orderNum, null);
+		return orderMsg;
 	}
 	
 	/**
@@ -348,5 +367,34 @@ public class OrderService {
 			entity.setRemark(remark);
 		}
 		orderLogMapper.saveOrderLog(entity);
+	}
+	
+	/**
+	 * 取消交易
+	 * @param msg
+	 * @param user
+	 * @return
+	 */
+	public String cancelOrder(String msg,User user) {
+		if(StringUtils.isNotEmpty(msg)) {
+			if(msg.contains("&")) {
+				String orderNum=null,remark=null;
+				String[] msgArr=msg.split("&");
+				for(int i=0;i<msgArr.length;i++) {
+					if(msgArr[i].contains("remark")) {
+						remark=msgArr[i].split("=")[1];
+					}else if(msgArr[i].contains("orderNum")) {
+						orderNum=msgArr[i].split("=")[1];
+					}
+				}
+				if(orderNum!=null) {
+					// -10-交易关闭
+					Order order=updateOrderStatus(orderNum, -10);
+					saveOrderLog(order.getId(), orderNum, -10,remark, user.getId());
+					return orderNum;
+				}
+			}
+		}
+		return null;
 	}
 }
