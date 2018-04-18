@@ -5,7 +5,17 @@ var app = angular.module("orderApp", ['ngMessages']);
 	app.controller('orderCtrl', [ '$scope', '$http', '$rootScope','orderService', function($scope,  $http, $rootScope,service) {
 		
 		$scope.myOrder=[]
-	
+
+		$scope.payClick=function(orderNum,paymentAmount){
+			$scope.payOrderNum=orderNum;
+			$scope.paymentAmount=paymentAmount
+		}
+		$scope.cancelClick=function(orderNum){
+			$scope.cancelOrderNum=orderNum;
+		}
+		$scope.remind=function(){
+			alert("已提醒卖家发货");
+		}
 		
 		var getOrderCallback= function(data) {
 			if(data.code!=1){

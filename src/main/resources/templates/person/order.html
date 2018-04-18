@@ -174,13 +174,13 @@
 																<div class="item-status">
 																	<p class="Mystatus">等待买家付款</p>
 																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
-																	<p class="order-info orderCancel"><span style="cursor:pointer;">取消订单</span></p>
+																	<p class="order-info orderCancel" ng-click="cancelClick(o.orderNum)"><span style="cursor:pointer;">取消订单</span></p>
 																</div>
 															</li>
 															<li class="td td-change">
 																<!-- <a href="orderinfo.html?orderNum={{o.orderNum}}"> -->
-																<div class="am-btn am-btn-danger anniu theme-login">
-																	一键支付</div></a>
+																<div class="am-btn am-btn-danger anniu theme-login" ng-click="payClick(o.orderNum,o.paymentAmount)">
+																	一键支付</div><!-- </a> -->
 															</li>
 														</div>
 														<!-- 交易关闭   交易失败-->
@@ -205,7 +205,7 @@
 																</div>
 															</li>
 															<li class="td td-change">
-																<div class="am-btn am-btn-danger anniu">
+																<div class="am-btn am-btn-danger anniu" ng-click="remind()">
 																	提醒发货</div>
 															</li>
 														</div>
@@ -215,7 +215,7 @@
 																<div class="item-status">
 																	<p class="Mystatus">卖家已发货</p>
 																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
-																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
+																	<p class="order-info"><a href="orderinfo.html?orderNum={{o.orderNum}}">查看物流</a></p>
 																	<p class="order-info"><a href="#">延长收货</a></p>
 																</div>
 															</li>
@@ -315,13 +315,13 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">等待买家付款</p>
-																	<p class="order-info orderCancel"><span style="cursor:pointer;">取消订单</span></p>
+																	<p class="order-info orderCancel" ng-click="cancelClick(po.orderNum)"><span style="cursor:pointer;">取消订单</span></p>
 
 																</div>
 															</li>
 															<li class="td td-change">
 																<!-- <a href="orderinfo.html?orderNum={{po.orderNum}}"></a> -->
-																<div class="am-btn am-btn-danger anniu theme-login">
+																<div class="am-btn am-btn-danger anniu theme-login" ng-click="payClick(po.orderNum,po.paymentAmount)">
 																	一键支付</div>
 															</li>
 														</div>
@@ -418,11 +418,11 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">买家已付款</p>
-																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{do.orderNum}}">订单详情</a></p>
 																</div>
 															</li>
 															<li class="td td-change">
-																<div class="am-btn am-btn-danger anniu">
+																<div class="am-btn am-btn-danger anniu" ng-click="remind()">
 																	提醒发货</div>
 															</li>
 														</div>
@@ -516,8 +516,8 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">卖家已发货</p>
-																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
-																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{wo.orderNum}}">订单详情</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{wo.orderNum}}">查看物流</a></p>
 																	<p class="order-info"><a href="#">延长收货</a></p>
 																</div>
 															</li>
@@ -614,8 +614,8 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">交易成功</p>
-																	<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
-																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{ro.orderNum}}">订单详情</a></p>
+																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{ro.orderNum}}">查看物流</a></p>
 																</div>
 															</li>
 															<li class="td td-change">
@@ -658,7 +658,7 @@
 					<form class="am-form am-form-horizontal" action="paymentMyOrder" method="post">
 						<div class="am-form-group">
 							<label for="user-name" class="am-form-label">付款金额：</label>
-							<div class="am-form-content">￥{{order.paymentAmount}}</div>
+							<div class="am-form-content">￥{{paymentAmount}}</div>
 						</div>
 						<div class="am-form-group">
 							<label for="user-name" class="am-form-label">支付密码：</label>
@@ -669,7 +669,7 @@
 						<div class="am-form-group" style="display: none;">
 							<label for="user-name" class="am-form-label">订单编号：</label>
 							<div class="am-form-content">
-								<input type="text" name="orderNum" id="orderNum" placeholder="请输入支付密码" ng-model="order.orderNum" style="width: 80%;">
+								<input type="text" name="orderNum" id="orderNum" placeholder="请输入支付密码" ng-model="payOrderNum" style="width: 80%;">
 							</div>
 						</div>
 						<div class="am-form-group theme-poptit">
@@ -706,7 +706,7 @@
 						<div class="am-form-group" style="display: none;">
 							<label for="user-name" class="am-form-label">订单编号：</label>
 							<div class="am-form-content">
-								<input type="text" name="orderNum"  placeholder="请输入支付密码" ng-model="order.orderNum" style="width: 80%;">
+								<input type="text" name="orderNum"  placeholder="请输入支付密码" ng-model="cancelOrderNum" style="width: 80%;">
 							</div>
 						</div>
 						<div class="am-form-group theme-poptit">

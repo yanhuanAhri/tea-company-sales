@@ -114,6 +114,15 @@ public class OrderController {
 		return "home";
 	}
 	
+	/**
+	 * 订单取消
+	 * @param msg
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("cancelOrder")
 	public String cancelOrder(@RequestBody String msg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session){
@@ -125,7 +134,6 @@ public class OrderController {
 		}else {
 			return "home";
 		}
-		
 	}
 	
 	/**
