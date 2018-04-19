@@ -142,7 +142,7 @@
 									<li><a href="order.html"><i><img src="../images/comment.png"/></i><span>待评价<em class="m-num">3</em></span></a></li>
 									<li><a href="change.html"><i><img src="../images/refund.png"/></i><span>退换货</span></a></li>
 								</ul>
-								<div class="orderContentBox" ng-repeat="o in myOrder" ng-if="myOrder.length<4">
+								<div class="orderContentBox" ng-repeat="o in myOrder" ng-if="$index<4">
 									<div class="orderContent">
 										<div class="orderContentpic">
 											<div class="imgBox">
@@ -151,9 +151,9 @@
 										</div>
 										<div class="detailContent">
 										<!--  -10-交易关闭、0-待付款、1-完成、2-待发货、3-待收货、4-待评价、10-退款售后 -->
-											<a ng-if="o.status==0" href="orderinfo.html" class="delivery">付款</a>
-											<a ng-if="o.status==3" href="orderinfo.html" class="delivery">签收</a>
-											<a ng-if="o.status==4" href="orderinfo.html" class="delivery">评价</a>
+											<a ng-if="o.status==0" ng-href="orderinfo.html?orderNum={{o.orderNum}}" class="delivery">付款</a>
+											<a ng-if="o.status==3" ng-href="orderinfo.html?orderNum={{o.orderNum}}" class="delivery">签收</a>
+											<a ng-if="o.status==4" ng-href="orderinfo.html?orderNum={{o.orderNum}}" class="delivery">评价</a>
 											<div class="orderID">
 												<span class="time">{{o.updateTime}}</span>
 												<!-- <span class="splitBorder">|</span>

@@ -157,13 +157,13 @@
 															<li class="td td-status">
 																<div class="item-status">
 																	<p class="Mystatus">交易成功</p>
-																	<p class="order-info"><a href="orderinfo.html"  ng-if="o.status==4">去评价</a></p>
+																	<p class="order-info"><a ng-href="commentlist.html?orderNum={{o.orderNum}}"  ng-if="o.status==4">去评价</a></p>
 																	<p class="order-info"><a ng-href="orderinfo.html?orderNum={{o.orderNum}}">订单详情</a></p>
 																	<p class="order-info"><a href="logistics.html">查看物流</a></p>
 																</div>
 															</li>
 															<li class="td td-change">
-																<div class="am-btn am-btn-danger anniu">
+																<div class="am-btn am-btn-danger anniu" ng-click="delOrder(o.orderNum)">
 																	删除订单</div>
 															</li>
 														</div>
@@ -192,7 +192,7 @@
 																</div>
 															</li>
 															<li class="td td-change">
-																<div class="am-btn am-btn-danger anniu">
+																<div class="am-btn am-btn-danger anniu" ng-click="delOrder(o.orderNum)">
 																	删除订单</div>
 															</li>
 														</div>
@@ -400,7 +400,7 @@
 															</li>
 															<li class="td td-operation">
 																<div class="item-operation">
-																	<a href="refund.html">退款</a>
+																	<a href="#">退款</a>
 																</div>
 															</li>
 														</ul>
@@ -619,7 +619,7 @@
 																</div>
 															</li>
 															<li class="td td-change">
-																<a href="commentlist.html">
+																<a ng-href="commentlist.html?orderNum={{ro.orderNum}}">
 																	<div class="am-btn am-btn-danger anniu">
 																		评价商品</div>
 																</a>
@@ -706,7 +706,8 @@
 						<div class="am-form-group" style="display: none;">
 							<label for="user-name" class="am-form-label">订单编号：</label>
 							<div class="am-form-content">
-								<input type="text" name="orderNum"  placeholder="请输入支付密码" ng-model="cancelOrderNum" style="width: 80%;">
+								<input type="text" name="orderNum"   ng-model="cancelOrderNum" style="width: 80%;">
+								<!-- <input type="text" name="status" value="-10"  style="width: 80%;"> -->
 							</div>
 						</div>
 						<div class="am-form-group theme-poptit">

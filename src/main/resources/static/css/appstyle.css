@@ -13,6 +13,8 @@ img{width:100% ;}
 .item-opinion li i{display:inline-block;width:16px;height:16px;margin-right: 5px;}
 .item-opinion li i.op1,.item-opinion li i.op2{background:url(../images/iconfont-evaluate.png);background-size:16px 16px;}
 .item-opinion li i.op3{background:url(../images/iconfont-bad.png);background-size:16px 16px;}
+.item-opinion li i.good{background:url(../images/iconfont-good.png);background-size:16px 16px;}
+.item-opinion li i.badon{background:url(../images/iconfont-badon.png);background-size:16px 16px;}
 
 .item-opinion li i.op1.active{background:url(../images/iconfont-good.png);background-size:16px 16px;}
 .item-opinion li i.op2.active{background:url(../images/iconfont-middle.png);background-size:16px 16px;}
@@ -40,6 +42,8 @@ textarea{min-height:120px ;border: 1px solid #F5F8FA;;padding:10px ;margin: 0px 
 .filePic img{display: none;}
 .user-comment{max-width:1000px;margin:0px auto;}
 }
+
+
 
 
 

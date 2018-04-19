@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -127,13 +128,30 @@ public class OrderController {
 	public String cancelOrder(@RequestBody String msg,Model model,
 			HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		User user=(User) session.getAttribute("user");
-		String orderNum=orderService.cancelOrder(msg, user);
+		String orderNum=orderService.cancelOrder(msg, user,-10);
 		if(orderNum!=null) {
 			model.addAttribute("orderNum", orderNum);
 			return "person/orderinfo";
 		}else {
 			return "home";
 		}
+	}
+	
+	//订单删除
+	@PostMapping("delOrder")
+	@ResponseBody
+	public Map<String,Object> delOrder(@RequestBody String msg,Model model,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		User user=(User) session.getAttribute("user");
+		String orderNum=orderService.cancelOrder(msg, user,5);
+		Map<String,Object> map=new HashMap<>();
+		if(orderNum!=null) {
+			map.put("orderNum", orderNum);
+			map.put("code", 1);
+		}else {
+			map.put("code", 0);
+		}
+		return map;
 	}
 	
 	/**

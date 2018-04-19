@@ -96,6 +96,7 @@
         	</foreach>  
 		</if>
 		<if test="orderNum!=null"> and o.order_num=#{orderNum}</if>
+		and o.`status`!=5
 		order by o.create_time desc
 	</select>
 

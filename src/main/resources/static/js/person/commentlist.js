@@ -1,13 +1,17 @@
 
-var app = angular.module("orderinfoApp", ['ngMessages']);
+var app = angular.module("commentlistApp", ['ngMessages']);
 
 
-	app.controller('orderinfoCtrl', [ '$scope', '$http', '$rootScope','orderinfoService', function($scope,  $http, $rootScope,service) {
+	app.controller('commentlistCtrl', [ '$scope', '$http', '$rootScope','commentlistService', function($scope,  $http, $rootScope,service) {
 		
 		$scope.order=[];
+		$scope.type=[];
 		$scope.receiving=[];
 		$scope.orderNum=$("#orderNum").text();
 	
+		$scope.rementType=function(commodityNum,type){//3,2,1
+			$scope.type.push({'commodityNum':commodityNum,'type':type});
+		}
 		
 		var getOrderCallback= function(data) {
 			if(data.code!=1){
@@ -22,7 +26,7 @@ var app = angular.module("orderinfoApp", ['ngMessages']);
 	}]);
 		
   
-	app.factory('orderinfoService', [ '$q', '$http','$timeout', function ($q, $http,$timeout) {
+	app.factory('commentlistService', [ '$q', '$http','$timeout', function ($q, $http,$timeout) {
 		
 		var getOrder=function(orderNum,getOrderCallback){
 			//status=;
@@ -39,16 +43,3 @@ var app = angular.module("orderinfoApp", ['ngMessages']);
 		}
 		
 	}]);
-
-
-
-	$(document).on('click', '.theme-login', function() {
-		$('.dlg-bg,.dlg1').show()
-	})
-	$(document).on('click', '.orderCancel', function() {
-		$('.dlg-bg,.dlg2').show()
-	})
-	
-	$(document).on('click', '.theme-close', function() {
-		$('.dlg-bg,.dlg1,.dlg2').hide()
-	})

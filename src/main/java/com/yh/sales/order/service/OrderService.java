@@ -370,30 +370,45 @@ public class OrderService {
 	}
 	
 	/**
-	 * 取消交易
+	 * 取消交易  or 删除订单
 	 * @param msg
 	 * @param user
 	 * @return
 	 */
-	public String cancelOrder(String msg,User user) {
+	public String cancelOrder(String msg,User user,Integer status) {
 		if(StringUtils.isNotEmpty(msg)) {
-			if(msg.contains("&")) {
+			try {
 				String orderNum=null,remark=null;
 				String[] msgArr=msg.split("&");
-				for(int i=0;i<msgArr.length;i++) {
-					if(msgArr[i].contains("remark")) {
-						remark=msgArr[i].split("=")[1];
-					}else if(msgArr[i].contains("orderNum")) {
-						orderNum=msgArr[i].split("=")[1];
+				if(msg.contains("&")) {
+				
+					for(int i=0;i<msgArr.length;i++) {
+						if(msgArr[i].contains("remark")) {
+							remark=msgArr[i].split("=")[1];
+							if(remark.contains("%")) {
+								remark= URLDecoder.decode(remark, "utf-8");
+							}
+						}else if(msgArr[i].contains("orderNum")) {
+							orderNum=msgArr[i].split("=")[1];
+						}/*else if(msgArr[i].contains("status")) {
+							status=Integer.valueOf(msgArr[i].split("=")[1]);
+						}*/
 					}
+				}else {
+					JSONObject msgObj=JSONObject.fromObject(msg);
+						orderNum=msgObj.getString("orderNum");
 				}
-				if(orderNum!=null) {
+				if(orderNum!=null && status !=null) {
 					// -10-交易关闭
-					Order order=updateOrderStatus(orderNum, -10);
-					saveOrderLog(order.getId(), orderNum, -10,remark, user.getId());
+					Order order=updateOrderStatus(orderNum, status);
+					saveOrderLog(order.getId(), orderNum, status,remark, user.getId());
 					return orderNum;
 				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
 			}
+			
 		}
 		return null;
 	}

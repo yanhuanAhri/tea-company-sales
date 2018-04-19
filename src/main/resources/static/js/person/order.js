@@ -17,6 +17,25 @@ var app = angular.module("orderApp", ['ngMessages']);
 			alert("已提醒卖家发货");
 		}
 		
+		$scope.delOrder=function(orderNum){
+			if(confirm("确认要删除该订单吗")){
+				var data={
+						orderNum:orderNum
+				}
+				service.delOrder(data,function(data){
+					if(data.code==0){
+						window.location.href = "/home.html";
+					}else if(data.code==1){
+						service.getMyOrder(null,getOrderCallback);
+						alert("删除成功");
+					}else{
+						window.location.href = "/login.html";
+					}
+				});
+			}
+			
+		}
+		
 		var getOrderCallback= function(data) {
 			if(data.code!=1){
 				window.location.href = "/login.html/"
@@ -45,10 +64,17 @@ var app = angular.module("orderApp", ['ngMessages']);
 	    				getOrderCallback(response.data);
 			});
 		}
-		
+		//delOrder
+		var delOrder = function(data, callbackFun) {
+			$http.post('delOrder',angular.toJson(data)).then(
+    			function (response) {
+					callbackFun(response.data);
+			});
+		};
 		
 		return {
 			getMyOrder:getMyOrder,
+			delOrder:delOrder,
 		}
 		
 	}]);
