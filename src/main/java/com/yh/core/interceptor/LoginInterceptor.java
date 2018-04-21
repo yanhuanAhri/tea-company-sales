@@ -88,7 +88,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}else if(path.contains("receiving") || path.contains("Receiving") || path.contains("address")) {
 			return "person/address";
 		}else if(path.contains("introduction") || path.contains("commodity") || path.contains("Commodity")) {
-			if(params.contains("shoppingCart")) {
+			if(params.contains("shoppingCart")&&(!params.contains("addToShoppingCart"))) {
 				return "sales/shopcart";
 			}
 			return "introduction"+"?"+params;

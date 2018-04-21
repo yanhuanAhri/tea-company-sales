@@ -12,6 +12,10 @@
 		<result property="content" column="content"/>
 		<result property="createTime" column="create_time" />
 		<result property="createUserId" column="create_user_id" />
+		<collection property="user" ofType="User">
+			<id property="id" column="u_id"/>
+			<result property="nickName" column="nick_name"/>
+		</collection>
 		<collection property="commentImg" ofType="CommentImg">
 			<id property="id" column="i_id"/>
 			<result property="commentId" column="comment_id"/>
@@ -31,12 +35,23 @@
    		 </foreach>  
 	</insert>
 	
+	<!-- findByCommodityNum -->
+	<select id="findByCommodityNum" resultMap="commentVo">
+		select c.*,i.id as i_id,i.comment_id,i.create_user_id,i.path,u.id as u_id,u.nick_name
+		from commodity_comment c,commodity_comment_img i,user_info u 
+		where c.id=i.commentId and u.id=c.create_user_id
+		<if test="commodityNum!=null"> and c.commodityNum=#{commodityNum}</if>
+		order by c.create_time desc
+	</select>
 	
-	<!-- findByOrder -->
-	<!-- <select id="findByOrder" resultMap="commodityRefOrder">
-		select * from commodity_ref_order where 1=1
-		<if test="orderNum!=null">and order_num=#{orderNum}</if>
-		<if test="orderId!=null">and order_id=#{orderId}</if>
-	</select> -->
+	<!-- getCount -->
+	<select id="getCount" resultType="Integer">
+		select 
+		count(1)
+		from commodity_comment c,commodity_comment_img i,user_info u 
+		where c.id=i.commentId and u.id=c.create_user_id
+		<if test="commodityNum!=null"> and c.commodityNum=#{commodityNum}</if>
+		<if test="type!=null">and c.type=#{type}</if>
+	</select>
 
 </mapper>

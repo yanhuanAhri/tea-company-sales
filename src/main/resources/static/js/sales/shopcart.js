@@ -51,6 +51,9 @@
 						service.getShoppingCart(getShoppingCartCallback);
 					}
 				});
+				service.shoppingCartCount(function(obj){
+					$scope.shoppingCartCount=obj.data.count;
+				})
 			}
 		}
 		//删除所有
@@ -66,8 +69,14 @@
 						service.getShoppingCart(getShoppingCartCallback);
 					}
 				});
+				service.shoppingCartCount(function(obj){
+					$scope.shoppingCartCount=obj.data.count;
+				})
 			}
 		}
+		service.shoppingCartCount(function(obj){
+			$scope.shoppingCartCount=obj.data.count;
+		})
 		//下单
 		$scope.settleAccounts=function(){
 			if($scope.commodityNums.length!=0){
@@ -149,9 +158,16 @@
 						callbackFun(response);
 				});
 		}
+		var shoppingCartCount=function(callbackFun){
+			$http.get('shoppingCartCount').then(
+	    			function (response) {
+						callbackFun(response);
+				});
+		}
 		return {
 			getShoppingCart:getShoppingCart,
 			modityBuyNum:modityBuyNum,
 			delShopping:delShopping,
+			shoppingCartCount:shoppingCartCount,
 		}
 	}]);

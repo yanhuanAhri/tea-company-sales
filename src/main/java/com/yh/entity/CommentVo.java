@@ -13,8 +13,16 @@ public class CommentVo {
 	private String content;
 	private Long createUserId;
 	private Date createTime;
+	private List<User> user;
 	private List<CommentImg> commentImg;
 	
+	
+	public List<User> getUser() {
+		return user;
+	}
+	public void setUser(List<User> user) {
+		this.user = user;
+	}
 	public List<CommentImg> getCommentImg() {
 		return commentImg;
 	}

@@ -153,7 +153,30 @@ public class OrderController {
 		}
 		return map;
 	}
-	
+	/**
+	 * 商品收货
+	 * @param msg
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("deliveryOrder")
+	@ResponseBody
+	public Map<String,Object> deliveryOrder(@RequestBody String msg,Model model,
+			HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		User user=(User) session.getAttribute("user");
+		String orderNum=orderService.cancelOrder(msg, user,4);
+		Map<String,Object> map=new HashMap<>();
+		if(orderNum!=null) {
+			map.put("orderNum", orderNum);
+			map.put("code", 1);
+		}else {
+			map.put("code", 0);
+		}
+		return map;
+	}
 	/**
 	 * 订单列表
 	 * @param status

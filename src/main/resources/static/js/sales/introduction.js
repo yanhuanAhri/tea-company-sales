@@ -23,8 +23,13 @@ var app = angular.module("introdutionApp", []);
 				//	toastr["success"]("加入购物车成功");
 				}
 			});
+			service.shoppingCartCount(function(obj){
+				$scope.shoppingCartCount=obj.data.count;
+			})
 		}
-
+		service.shoppingCartCount(function(obj){
+			$scope.shoppingCartCount=obj.data.count;
+		})
 		$scope.buyNumChange=function($event,symbol){
 			
 			if(symbol=='-'){
@@ -86,10 +91,17 @@ var app = angular.module("introdutionApp", []);
 		var buyNow=function(data){
 			$http.post("buyCommodity",angular.toJson(data)).then(function (response) {});
 		}
+		var shoppingCartCount=function(callbackFun){
+			$http.get('shoppingCartCount').then(
+	    			function (response) {
+						callbackFun(response);
+				});
+		}
 		return {
 			getTeaSet:getTeaSet,
 			addToShopingCart:addToShopingCart,
 			buyNow:buyNow,
+			shoppingCartCount:shoppingCartCount
 		}
 		
 	}]);

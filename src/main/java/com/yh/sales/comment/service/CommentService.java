@@ -1,22 +1,49 @@
 package com.yh.sales.comment.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yh.entity.CommentVo;
+import com.yh.sales.comment.mapper.CommentMapper;
+
 @Service
 public class CommentService {
+	
+	@Autowired
+	private CommentMapper commentMapper;
 	
 	@Value("${img.url}")
 	private String imgUrl;
 	
-	
+	/**
+	 * 根据商品编号查找商品评论
+	 * @param commodityNum
+	 * @return
+	 */
+	public Map<String,Object> findByCommodityNum(String commodityNum){
+		Map<String,Object> map=new HashMap<>();
+		List<CommentVo> list=commentMapper.findByCommodityNum(commodityNum);
+		Integer count=commentMapper.getCount(commodityNum,null);
+		Integer good=commentMapper.getCount(commodityNum, 3);// 1-差评，2-中评，3-好评
+		Integer medium=commentMapper.getCount(commodityNum, 2);
+		Integer bad=commentMapper.getCount(commodityNum, 1);
+		map.put("CommentVoList", list);
+		map.put("count", count);
+		map.put("good", good);
+		map.put("medium", medium);
+		map.put("bad", bad);
+		return map;
+	}
 	
 	/**
      * 上传

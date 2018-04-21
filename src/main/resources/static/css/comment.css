@@ -1,0 +1,38 @@
+
+.bottom-box .avatar-list .item {
+    margin: 0 8px;
+}
+
+.form-group img{
+    width: 180px;
+    height: 125px;
+    margin: 3px;
+}
+.a1 {
+    display: inline-block;
+}
+
+.a1 .file {
+    margin: 8px 0;
+}
+
+.col-sm-10.material .m{
+    float: left;
+    text-align: center;
+}
+.c1 {
+    display: inline-block;
+}
+
+.file{
+    display: inline-block;
+    position: relative;
+}
+
+.img-del {
+    position: absolute;
+    cursor: pointer;
+    color: #ff8080;
+    right: 0;
+    top: 0;
+}

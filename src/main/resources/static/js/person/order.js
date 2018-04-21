@@ -33,7 +33,23 @@ var app = angular.module("orderApp", ['ngMessages']);
 					}
 				});
 			}
-			
+		}
+		$scope.deliveryOrder=function(orderNum){
+			if(confirm("确认签收该商品么")){
+				var data={
+						orderNum:orderNum
+				}
+				service.deliveryOrder(data,function(data){
+					if(data.code==0){
+						window.location.href = "/home.html";
+					}else if(data.code==1){
+						service.getMyOrder(null,getOrderCallback);
+						alert("签收成功");
+					}else{
+						window.location.href = "/login.html";
+					}
+				});
+			}
 		}
 		
 		var getOrderCallback= function(data) {
@@ -71,10 +87,17 @@ var app = angular.module("orderApp", ['ngMessages']);
 					callbackFun(response.data);
 			});
 		};
-		
+		//deliveryOrder
+		var deliveryOrder = function(data, callbackFun) {
+			$http.post('deliveryOrder',angular.toJson(data)).then(
+    			function (response) {
+					callbackFun(response.data);
+			});
+		};
 		return {
 			getMyOrder:getMyOrder,
 			delOrder:delOrder,
+			deliveryOrder:deliveryOrder,
 		}
 		
 	}]);
